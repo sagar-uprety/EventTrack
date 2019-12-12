@@ -18,6 +18,15 @@ app.get("/events", function(req, res) {
   res.render("events");
 });
 
+app.post("/events",function(req,res) {
+  res.redirect("/events")
+});
+
+app.get("/events/new",function (req,res) {
+  res.render("newEvent")
+});
+
+
 app.get("*", function(req, res) {
   res.send("Uh Oh!!! I guess you are a bit lost!!!"); 
 });
