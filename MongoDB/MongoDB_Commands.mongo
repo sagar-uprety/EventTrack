@@ -1,0 +1,9 @@
+db.events.insert({Name: "RussFest"})
+db.events.insert({Name: "Techcruch", Venue: "Silicon Valley"});
+db.events.find();
+db.events.find({Name: "RussFest"});
+db.events.update({Name:"Techcruch"}, {Name:"TechCrunch"}) 
+db.events.update({Name:"Techcruch"},{$set: {Name:"HackCrunch"}})
+db.events.insert({Name: "SciTech", Venue: "Washington"});
+db.events.remove({Name: "SciTech"})
+
