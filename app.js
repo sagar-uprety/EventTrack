@@ -69,17 +69,23 @@ app.get("/events", function(req, res) {
   });
 });
 
+//Create a new event and add to the Database
 app.post("/events", function(req, res) {
-  var Eventname = req.body.eventName;
-  var Eventvenue = req.body.eventVenue;
-  var Eventurl = req.body.eventURL;
-
-  event.create({
-    EventName: Eventname,
-    EventVenue: Eventvenue,
-    EventURL: Eventurl
-  })
-  res.redirect("/events");
+  var name = req.body.eventName;
+  var venue = req.body.eventVenue;
+  var url = req.body.eventURL;
+  var newEvent = {
+    EventName: name,
+    EventVenue: venue,
+    EventURL: url
+  };
+  event.create(newEvent, function(err, newlyCreated) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect("/events");
+    }
+  });
 });
 
 app.get("/events/new", function(req, res) {

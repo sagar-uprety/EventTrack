@@ -1,7 +1,8 @@
 <%- include ("partials/header") %>
 <div class="container">
     <a href="/events/new">Create a New Event</a>
-
+    <br><br>
+    <div class="columns">
     <% events.forEach(function(event){ %>
     <div class="column is-4">
     <div class="card">
@@ -25,6 +26,7 @@
     </div>
     </div>
     <% }); %>
+    </div>
   </div>
 </div>
 
