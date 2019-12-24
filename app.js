@@ -11,11 +11,11 @@ mongoose.set("useCreateIndex", true);
 mongoose.set("useUnifiedTopology", true);
 mongoose.connect("mongodb://localhost/EventTrack");
 
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
-app.set("view engine","ejs"); 
+app.set("view engine", "ejs");
 
-//initialization ends 
+//initialization ends
 
 var eventSchema = new mongoose.Schema({
   EventName: String,
@@ -23,46 +23,71 @@ var eventSchema = new mongoose.Schema({
   EventURL: String
 });
 
-var event= mongoose.model("event",eventSchema);
+var event = mongoose.model("event", eventSchema);
 
-var itFest= new event({
-  EventName: "IT Fest",
-  EventVenue: "Vancouver",
-  EventURL: "https://www.thesun.co.uk/wp-content/uploads/2019/01/CES2.jpg"
-});
+//addind data to database
 
-itFest.save(function (err, eventa) {
-  if(err){
-    console.log("Error");
+/* event.create(
+  {
+    EventName: "RussFest2",
+    EventVenue: "Silicon Valley",
+    EventURL: "https://www.thesun.co.uk/wp-content/uploads/2019/01/CES2.jpg"
+  },
+  function(err, addRes) {
+    if (err) {
+      console.log("Error");
+    } else {
+      console.log("New data saved");
+      console.log(addRes);
+    }
   }
-  else{
-    console.log("New data saved");
-    console.log(eventa);
+); */
+
+//finding data from database
+
+/* event.find({}, function(err, findRes) {
+  if (err) {
+    console.log("Error Found");
+    console.log(err);
+  } else {
+    console.log("All Events ....");
+    console.log(findRes);
   }
-});
+});  */
 
 app.get("/", function(req, res) {
   res.render("index");
 });
 
 app.get("/events", function(req, res) {
-  res.render("events");
+  event.find({}, function(err, allEvents) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render("events", { events: allEvents });
+    }
+  });
 });
 
-app.post("/events",function(req,res) {
-  var EventName= req.body.eventName;
-  var EventVenue= req.body.eventVenue;
-  var EventURL= req.body.eventURL;
+app.post("/events", function(req, res) {
+  var Eventname = req.body.eventName;
+  var Eventvenue = req.body.eventVenue;
+  var Eventurl = req.body.eventURL;
 
-  res.redirect("/events")
+  event.create({
+    EventName: Eventname,
+    EventVenue: Eventvenue,
+    EventURL: Eventurl
+  })
+  res.redirect("/events");
 });
 
-app.get("/events/new",function (req,res) {
-  res.render("newEvent")
+app.get("/events/new", function(req, res) {
+  res.render("newEvent");
 });
 
 app.get("*", function(req, res) {
-  res.send("Uh Oh!!! I guess you are a bit lost!!!"); 
+  res.send("Uh Oh!!! I guess you are a bit lost!!!");
 });
 
 var port = process.env.PORT || 3000;

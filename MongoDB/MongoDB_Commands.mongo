@@ -1,4 +1,5 @@
 db.events.insert({Name: "RussFest"})
+
 db.events.insert({Name: "Techcruch", Venue: "Silicon Valley"});
 db.events.find();
 db.events.find({Name: "RussFest"});
