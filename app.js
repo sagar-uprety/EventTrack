@@ -92,6 +92,17 @@ app.get("/events/new", function(req, res) {
   res.render("newEvent");
 });
 
+app.get("/events/:id",function(req,res){
+  event.findById(req.params.id, function(err, foundEvent){
+        if(err){
+            console.log(err);
+        } else {
+          //render show template with that campground
+            res.render("show", {events: foundEvent});
+        }
+  });
+})
+
 app.get("*", function(req, res) {
   res.send("Uh Oh!!! I guess you are a bit lost!!!");
 });

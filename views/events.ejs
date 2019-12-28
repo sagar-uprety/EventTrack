@@ -1,8 +1,8 @@
 <%- include ("partials/header") %>
 <div class="container">
-    <a href="/events/new">Create a New Event</a>
+    <a class="button is-rounded is-danger" href="/events/new">Create a New Event</a>
     <br><br>
-    <div class="columns">
+    <div class="columns is-multiline">
     <% events.forEach(function(event){ %>
     <div class="column is-4">
     <div class="card">
@@ -16,6 +16,7 @@
           <div class="media-content">
             <p class="title is-4"><%=event.EventName %></p>
           </div>
+          <a href= "/events/<%= event._id %>" class="button is-default is-success is-rounded">Info</a>
         </div>
 
         <div class="content">

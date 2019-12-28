@@ -1,0 +1,32 @@
+<%- include ("partials/header") %>
+
+<section class="hero is-primary is-medium">
+
+  <!-- Hero content: will be in the middle -->
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <h1 class="title">
+        <%=events.EventName%>
+      </h1>
+      <h2 class="subtitle">
+        Subtitle
+      </h2>
+    </div>
+  </div>
+
+  <!-- Hero footer: will stick at the bottom -->
+  <div class="hero-foot">
+    <nav class="tabs">
+      <div class="container">
+        <ul>
+          <li class="is-active"><a>Overview</a></li>
+          <li><a>Location</a></li>
+          <li><a>Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</section>
+
+
+<%- include ("partials/footer") %>
