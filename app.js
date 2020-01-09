@@ -1,9 +1,11 @@
 //initialization starts
 
-const express = require("express");
-const app = express();
-const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
+const express = require("express"),
+      app = express(),
+      bodyParser = require("body-parser"),
+      mongoose = require("mongoose"),
+      Event = require("./models/events"),
+      seedDB = require("./seeds");
 
 mongoose.set("useNewUrlParser", true);
 mongoose.set("useFindAndModify", false);
@@ -14,16 +16,10 @@ mongoose.connect("mongodb://localhost/EventTrack");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.set("view engine", "ejs");
+seedDB();
 
 //initialization ends
 
-var eventSchema = new mongoose.Schema({
-  EventName: String,
-  EventVenue: String,
-  EventURL: String
-});
-
-var event = mongoose.model("event", eventSchema);
 
 //addind data to database
 
@@ -60,7 +56,7 @@ app.get("/", function(req, res) {
 });
 
 app.get("/events", function(req, res) {
-  event.find({}, function(err, allEvents) {
+  Event.find({}, function(err, allEvents) {
     if (err) {
       console.log(err);
     } else {
@@ -71,15 +67,17 @@ app.get("/events", function(req, res) {
 
 //Create a new event and add to the Database
 app.post("/events", function(req, res) {
-  var name = req.body.eventName;
-  var venue = req.body.eventVenue;
-  var url = req.body.eventURL;
+  var Name = req.body.eventName;
+  var Venue = req.body.eventVenue;
+  var URL = req.body.eventURL;
+  var Description= req.body.eventDescription;
   var newEvent = {
-    EventName: name,
-    EventVenue: venue,
-    EventURL: url
+    name: Name,
+    venue: Venue,
+    image: URL,
+    description: Description
   };
-  event.create(newEvent, function(err, newlyCreated) {
+  Event.create(newEvent, function(err, newlyCreated) {
     if (err) {
       console.log(err);
     } else {
@@ -93,7 +91,7 @@ app.get("/events/new", function(req, res) {
 });
 
 app.get("/events/:id",function(req,res){
-  event.findById(req.params.id, function(err, foundEvent){
+  Event.findById(req.params.id, function(err, foundEvent){
         if(err){
             console.log(err);
         } else {
