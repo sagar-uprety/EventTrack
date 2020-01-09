@@ -36,6 +36,10 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+app.use(function(req, res, next) {
+  res.locals.currentUser = req.user;
+  next();
+});
 //passport config ends
 
 //initialization ends
@@ -143,7 +147,7 @@ app.post("/register", function(req, res) {
       return res.render("register");
     }
     passport.authenticate("local")(req, res, function() {
-      res.redirect("Events/events");
+      res.redirect("/events");
     });
   });
 });
@@ -154,7 +158,7 @@ app.get("/login", function(req, res) {
 });
 // handling login logic
 app.post("/login", passport.authenticate("local", {
-    successRedirect: "Events/events",
+    successRedirect: "/events",
     failureRedirect: "/login"
   }),
   function(req, res) {}
@@ -163,7 +167,7 @@ app.post("/login", passport.authenticate("local", {
 // logout route
 app.get("/logout", function(req, res) {
   req.logout();
-  res.redirect("Events/events");
+  res.redirect("/events");
 });
 
 function isLoggedIn(req, res, next) {
