@@ -1,0 +1,41 @@
+<%- include ("../partials/header") %>
+
+<div class="columns is-tablet">
+  <div class="column is-half is-offset-one-quarter">
+    <h1>Create a Comment for <%= events.name%> </h1>
+
+    <form action="/events/<%= events._id %>/comments" method="POST">
+      <div class="field">
+        <label class="label">Author</label>
+        <div class="control">
+          <input
+            class="input"
+            type="text"
+            name="comment[author]"
+            placeholder="Author Name"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Text</label>
+        <div class="control">
+          <textarea
+            class="textarea"
+            name= "comment[text]"
+            placeholder="Description"
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="field is-grouped is-grouped-centered">
+        <div class="control">
+          <button class="button is-link">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<%- include ("../partials/footer") %>

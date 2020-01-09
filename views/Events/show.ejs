@@ -1,4 +1,4 @@
-<%- include ("partials/header") %>
+<%- include ("../partials/header") %>
 
 <section class="hero is-primary is-medium">
 
@@ -10,6 +10,12 @@
       </h1>
       <h2 class="subtitle">
          <%=events.description %>
+      </h2>
+
+        <% events.comments.forEach(function(comment){ %>
+        <h2 class="subtitle"></h2>
+        <strong><%= comment.author %></strong> - <%= comment.text %>
+        <% }) %>
       </h2>
     </div>
   </div>
@@ -29,4 +35,4 @@
 </section>
 
 
-<%- include ("partials/footer") %>
+<%- include ("../partials/footer") %>
