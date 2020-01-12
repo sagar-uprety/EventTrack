@@ -9,18 +9,18 @@
         <%=events.name%>
       </h1>
       <h2 class="subtitle">
-        <%=events.description %>
+        <%=events.description%>
       </h2>
 
       <% events.comments.forEach(function(comment){ %>
       <h2 class="subtitle"></h2>
-      <strong><%= comment.author %></strong> - <%= comment.text %>
+      <strong><%=comment.author.username%></strong> - <%=comment.text%>
       <% }) %>
       </h2>
     </div>
 
     <div class="container has-text-centered">
-      <a href="/events/<%= events._id %>/comments/new"
+      <a href="/events/<%=events._id%>/comments/new"
        class="button is-rounded is-success">Add a New Comment</a>
     </div>
   </div>

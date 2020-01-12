@@ -3,6 +3,7 @@ var router = express.Router({mergeParams: true});
 var Event = require("../models/events");
 var Comment = require("../models/comments");
 
+//comments New form
 router.get("/new", isLoggedIn, function(req, res) {
   // find event by id
   Event.findById(req.params.id, function(err, events) {
@@ -14,6 +15,7 @@ router.get("/new", isLoggedIn, function(req, res) {
   });
 });
 
+//Create Comments
 router.post("/", isLoggedIn, function(req, res) {
   //lookup event using ID
   Event.findById(req.params.id, function(err, events) {
@@ -25,10 +27,18 @@ router.post("/", isLoggedIn, function(req, res) {
         if (err) {
           console.log(err);
         } else {
-          events.comments.push(comment);
-          events.save();
-          res.redirect("/events/" + events._id);
-        }
+                 //add username and id to comment
+                 comment.author.id = req.user._id;
+                 comment.author.username = req.user.username;
+                 
+                 //save comment
+                 comment.save();
+
+                 events.comments.push(comment);
+                 events.save();
+                 console.log(comment);
+                 res.redirect("/events/" + events._id);
+               }
       });
     }
   });

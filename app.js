@@ -23,8 +23,8 @@ mongoose.connect("mongodb://localhost/EventTrack");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname +"public"));
-app.set("view engine", "ejs");
-//seedDB(); -- resets database ....uncomment to reset 
+app.set("view engine","ejs");
+//seedDB(); //-- resets database ....uncomment to reset 
 
 //passport config starts
 app.use(

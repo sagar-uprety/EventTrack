@@ -2,22 +2,10 @@
 
 <div class="columns is-tablet">
   <div class="column is-half is-offset-one-quarter">
-    <h1>Create a Comment for <%= events.name%> </h1>
+    <h1>Create a Comment for <%=events.name%> </h1>
 
-    <form action="/events/<%= events._id %>/comments" method="POST">
-      <div class="field">
-        <label class="label">Author</label>
-        <div class="control">
-          <input
-            class="input"
-            type="text"
-            name="comment[author]"
-            placeholder="Author Name"
-            required
-          />
-        </div>
-      </div>
-
+    <form action="/events/<%=events._id%>/comments" method="POST">
+     
       <div class="field">
         <label class="label">Text</label>
         <div class="control">

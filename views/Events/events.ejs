@@ -8,15 +8,15 @@
     <div class="card">
       <div class="card-image">
         <figure class="image is-4by3">
-          <img src=" <%= event.image %>" />
+          <img src=" <%=event.image%>" />
         </figure>
       </div>
       <div class="card-content">
         <div class="media">
           <div class="media-content">
-            <p class="title is-4"><%=event.name %></p>
+            <p class="title is-4"><%=event.name%></p>
           </div>
-          <a href= "/events/<%= event._id %>" class="button is-default is-success is-rounded">Info</a>
+          <a href= "/events/<%=event._id%>" class="button is-default is-success is-rounded">Info</a>
         </div>
 
         <div class="content">
