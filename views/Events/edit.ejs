@@ -2,17 +2,17 @@
 
 <div class="columns is-tablet">
   <div class="column is-half is-offset-one-quarter">
-    <h1>Create an Event</h1>
+    <h1>Update <%=events.name%></h1>
 
-    <form action="/events" method="POST">
+    <form action="/events/<%=events._id%>?_method=PUT" method="POST">
       <div class="field">
         <label class="label">Event Name</label>
         <div class="control">
           <input
             class="input"
             type="text"
-            name="eventName"
-            placeholder="Name Your Event"
+            name="event[name]"
+            value= "<%=events.name%>"
             required
           />
         </div>
@@ -24,8 +24,8 @@
           <input
             class="input"
             type="text"
-            name="eventVenue"
-            placeholder="Venue"
+            name="event[venue]"
+            value= "<%=events.venue%>"
             required
           />
         </div>
@@ -37,8 +37,8 @@
           <input
             class="input"
             type="text"
-            name="eventURL"
-            placeholder="Link"
+            name="event[image]"
+            value= "<%=events.image%>"
             required
           />
         </div>
@@ -65,9 +65,8 @@
         <div class="control">
           <textarea
             class="textarea"
-            name= "eventDescription"
-            placeholder="Describe your evevnt in detail"
-          ></textarea>
+            name= "event[description]"
+          ><%=events.description %>"</textarea>
         </div>
       </div>
 

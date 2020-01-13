@@ -5,6 +5,7 @@ const express = require("express"),
   mongoose = require("mongoose"),
   passport = require("passport"),
   LocalStrategy = require("passport-local"),
+  methodOverride = require("method-override"),
   Event = require("./models/events"),
   Comment = require("./models/comments"),
   User = require("./models/user"),
@@ -21,6 +22,7 @@ mongoose.set("useCreateIndex", true);
 mongoose.set("useUnifiedTopology", true);
 mongoose.connect("mongodb://localhost/EventTrack");
 
+app.use(methodOverride("_method"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname +"public"));
 app.set("view engine","ejs");

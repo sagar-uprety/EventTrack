@@ -9,6 +9,9 @@
         <%=events.name%>
       </h1>
       <h2 class="subtitle">
+        Organized By :<%=events.author.username%>
+      </h2>
+      <h2 class="subtitle">
         <%=events.description%>
       </h2>
 
@@ -22,6 +25,11 @@
     <div class="container has-text-centered">
       <a href="/events/<%=events._id%>/comments/new"
        class="button is-rounded is-success">Add a New Comment</a>
+    </div>
+
+    <div class="container has-text-centered">
+      <a href="/events/<%=events._id%>/edit"
+       class="button is-rounded is-warning">Edit</a>
     </div>
   </div>
 
