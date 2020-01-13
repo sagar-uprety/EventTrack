@@ -59,16 +59,19 @@ router.get("/:id", function(req, res) {
 });
 
 //edit route
-router.get("/:id/edit", function(req,res) {
+router.get("/:id/edit", checkEventOwnership, function(req, res) {
   Event.findById(req.params.id, function(err, foundEvent) {
     res.render("Events/edit", { events: foundEvent });
   });
 });
 
 // UPDATE EVENT ROUTE
-router.put("/:id", function(req, res) {
+router.put("/:id", checkEventOwnership, function(req, res) {
   // find and update the correct campground
-  Event.findByIdAndUpdate(req.params.id, req.body.event, function(err,updatedEvent) {
+  Event.findByIdAndUpdate(req.params.id, req.body.event, function(
+    err,
+    updatedEvent
+  ) {
     if (err) {
       res.redirect("/events");
     } else {
@@ -77,7 +80,41 @@ router.put("/:id", function(req, res) {
     }
   });
 });
+
+// DESTROY EVENT ROUTE
+router.delete("/:id",checkEventOwnership, function(req, res){
+   Event.findByIdAndRemove(req.params.id, function(err){
+      if(err){
+          res.redirect("/events");
+      } else {
+          res.redirect("/events");
+      }
+   });
+});
+
+
+
+
 //middleware
+ function checkEventOwnership (req, res, next) {
+  if (req.isAuthenticated()) {
+    Event.findById(req.params.id, function(err, foundEvent) {
+      if (err) {
+        res.redirect("back");
+      } else {
+        // does user own the campground?
+        if (foundEvent.author.id.equals(req.user._id)) {
+          next();
+        } else {
+          res.redirect("back");
+        }
+      }
+    });
+  } else {
+    res.redirect("back");
+  }
+};
+
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
     return next();

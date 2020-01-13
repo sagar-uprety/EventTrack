@@ -1,7 +1,6 @@
 <%- include ("../partials/header") %>
 
 <section class="hero is-primary is-medium">
-
   <!-- Hero content: will be in the middle -->
   <div class="hero-body">
     <div class="container has-text-centered">
@@ -16,20 +15,22 @@
       </h2>
 
       <% events.comments.forEach(function(comment){ %>
-      <h2 class="subtitle"></h2>
-      <strong><%=comment.author.username%></strong> - <%=comment.text%>
-      <% }) %>
+      <h2 class="subtitle">
+        <strong><%=comment.author.username%></strong> - <%=comment.text%>
       </h2>
+      <% }) %>
     </div>
 
     <div class="container has-text-centered">
-      <a href="/events/<%=events._id%>/comments/new"
-       class="button is-rounded is-success">Add a New Comment</a>
-    </div>
+      <a href="/events/<%=events._id%>/comments/new" class="button is-rounded is-success">Add a New Comment</a>
 
-    <div class="container has-text-centered">
-      <a href="/events/<%=events._id%>/edit"
-       class="button is-rounded is-warning">Edit</a>
+      <% if(currentUser && events.author.id.equals(currentUser._id)){ %>
+        <a href="/events/<%=events._id%>/edit" class="button is-rounded is-warning">EDIT</a>
+
+        <form action="/events/<%=events._id%>?_method=DELETE" method="POST">
+          <button class="button is-rounded is-danger">DELETE</button>
+        </form>
+      <% } %>
     </div>
   </div>
 
@@ -46,6 +47,5 @@
     </nav>
   </div>
 </section>
-
 
 <%- include ("../partials/footer") %>

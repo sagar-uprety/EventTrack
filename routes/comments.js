@@ -36,7 +36,8 @@ router.post("/", isLoggedIn, function(req, res) {
 
                  events.comments.push(comment);
                  events.save();
-                 console.log(comment);
+                 console.log(comment); //console output
+                 
                  res.redirect("/events/" + events._id);
                }
       });
