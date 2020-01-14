@@ -86,5 +86,16 @@
         </div>
       </div>
     </nav>
-  </body>
-</html>
+ 
+<div class="container">        
+    <% if(error && error.length > 0){ %>
+        <div class="notification is-danger">
+          <%=error%>
+        </div>
+    <% } %>
+    <% if(success && success.length > 0){ %>
+        <div class="notification is-primary">
+          <%=success%>
+        </div>
+    <% } %>
+    </div>
