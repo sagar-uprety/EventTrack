@@ -15,10 +15,19 @@
       </h2>
 
       <% events.comments.forEach(function(comment){ %>
-      <h2 class="subtitle">
+      <div class="container">
+        <h2 class="subtitle">
         <strong><%=comment.author.username%></strong> - <%=comment.text%>
-      </h2>
+         <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
+            <a href="/events/<%=events._id%>/comments/<%=comment._id %>/edit" class="button is-rounded is-warning">Edit</a>
+            <form action="/events/<%=events._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
+              <button class="button is-rounded is-danger">DELETE</button>
+            </form>
+         <% } %> 
+
       <% }) %>
+        </h2>
+      </div>
     </div>
 
     <div class="container has-text-centered">
