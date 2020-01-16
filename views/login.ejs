@@ -1,43 +1,86 @@
-<%- include ("./partials/header") %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Tajawal"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css"
+    />
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"
+    ></script>
+    <link rel="stylesheet" type="text/css" href="stylesheets/login.css" />
+  </head>
+  <body>
+    <section class="hero is-fullheight">
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <div class="column is-4 is-offset-4">
+            <div class="box">
+              <p class="subtitle is-4 has-text-grey">
+                Please login to proceed.
+              </p>
+              <br />
+              <form action="/login" method="POST" >
+                <div class="field">
+                  <p class="control has-icons-left has-icons-right">
+                    <input
+                      class="input is-medium"
+                      type="text"
+                      name="username"
+                      placeholder="Username"
+                      required
+                    />
+                    <span class="icon is-medium is-left">
+                      <i class="fas fa-envelope"></i>
+                    </span>
+                    <span class="icon is-medium is-right">
+                      <i class="fas fa-check"></i>
+                    </span>
+                  </p>
+                </div>
 
-<div class="columns is-tablet">
-  <div class="column is-half is-offset-one-quarter">
-    <h1>Login </h1>
-
-    <form action="/login" method="POST">
-      <div class="field">
-        <label class="label">Username</label>
-        <div class="control">
-           <input
-            class="input"
-            type="text"
-            name="username"
-            placeholder="Username"
-            required
-          />
+                <div class="field">
+                  <p class="control has-icons-left">
+                    <input
+                      class="input is-medium"
+                      type="password"
+                      name="password"
+                      placeholder="Password"
+                      required
+                    />
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-lock"></i>
+                    </span>
+                  </p>
+                </div>
+                <button class="button is-block is-info is-large is-fullwidth">
+                  Login</button
+                ><br />
+                <p class="subtitle is-5">Login using Social Media</p>
+                <button class="facebook-button button is-medium">
+                  <i class="fab fa-facebook-f"></i>
+                </button>
+                <button class="google-button button is-medium">
+                  <i class="fab fa-google-plus-g"></i>
+                </button>
+              </form>
+            </div>
+            <p class="has-text-white">
+              Don't have an account yet? <a href="/register" class="has-text-grey"> Sign Up</a> &nbsp;&nbsp;
+              <a href="../">Forgot Password</a> &nbsp;&nbsp;
+            </p>
+          </div>
         </div>
       </div>
-
-      <div class="field">
-        <label class="label">Password</label>
-        <div class="control">
-         <input
-            class="input"
-            type="password"
-            name="password"
-            placeholder="PassWord"
-            required
-          />
-        </div>
-      </div>
-
-      <div class="field is-grouped is-grouped-centered">
-        <div class="control">
-          <button class="button is-link">Submit</button>
-        </div>
-      </div>
-    </form>
-  </div>
-</div>
-
-<%- include ("./partials/footer") %>
+    </section>
+  </body>
+</html>

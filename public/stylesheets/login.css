@@ -1,0 +1,81 @@
+html,
+body {
+  font-family: "Tajawal", serif;
+  font-size: 14px;
+  font-weight: 300;
+}
+
+html {
+  /* background-image: url("https://github.com/aldi/awesome-bulma-templates/raw/master/templates/login/login_background.jpg") !important; */
+  background: #fc466b; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #3f5efb,
+    #fc466b
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #3f5efb,
+    #fc466b
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.hero.is-success {
+  background: #f2f6fa;
+}
+.hero .nav,
+.hero.is-success .nav {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.box {
+  margin-top: 5rem;
+}
+input {
+  font-weight: 300;
+}
+p {
+  font-weight: 700;
+}
+p.subtitle {
+  padding-top: 1rem;
+}
+
+.facebook-button {
+  color: #fff;
+  background-color: #3a589a;
+  width: 50px;
+}
+
+.facebook-button:hover {
+  border-color: #bdbdbd;
+  color: #ffffff;
+}
+
+
+.google-button {
+  color: #fff;
+  background-color: #e9544f;
+  width: 50px;
+}
+
+.google-button:hover {
+  border-color: #bdbdbd;
+  color: #ffffff;
+}
+
+a {
+  color: #fff;
+}
+
+.fa-sign-in-alt {
+  font-size: 36px;
+}
+

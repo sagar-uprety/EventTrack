@@ -1,16 +1,140 @@
 <%- include ("./partials/header") %>
 
-<div class="container">
-  <section class="section">
-    <div class="container">
-      <h1 class="title">
-        Welcome to EventTrack
-      </h1>
-      <button class="button is-success is-rounded">
-      <a href="/events" style="color:white">View All Events </a>
-    </button>
+		<div class="hero-body">
+			<div class="container has-text-centered">
+				<div class="slider-content animated zoomIn">
+					<div>
+						<p class="title is-1 main-text">Welcome to EventTrack</p>
+						<p class="subtitle is-4 main-text">Find Events or Create Your Own</p>
+						<a href="/events" class="button is-info is-large">
+							<span class="icon">
+								<i class="fas fa-search"></i>
+							</span>
+							<span>View Events</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</section>
+
+
+	<!-- Contact Us Section -->
+	<section class="hero" id="contact-us">
+		<div class="hero-body">
+			<div class="container">
+				<div>
+					<div class="content">
+						<h4 class="title is-4">Contact Us</h4>
+					</div>
+					<h6 class="subtitle is-6">If you've any queries feel free to contact us</h6>
+
+					<div class="columns box">
+						<form class="column" action="#">
+							<div class="field">
+								<label class="label">Name</label>
+								<div class="control">
+									<input class="input" type="text" placeholder="Your Name" required="">
+								</div>
+							</div>
+
+							<div class="field">
+								<label class="label">Email</label>
+								<div class="control">
+									<input class="input" type="text" placeholder="Email address" required="">
+								</div>
+							</div>
+
+							<div class="field">
+								<label class="label">Phone Number</label>
+								<div class="control">
+									<input class="input" type="text" placeholder="Phone number" required="">
+								</div>
+							</div>
+
+							<div class="field">
+								<label class="label">Message</label>
+								<div class="control">
+									<textarea class="textarea" type="text" placeholder="Type your message here..."  required=""></textarea>
+								</div>
+							</div>
+
+							<div class="field">
+								<label class="label"></label>
+								<div class="control">
+									<input class="button is-primary" type="submit">
+								</div>
+							</div>
+						</form>
+
+						<div class="column">
+							<iframe width="100%" height="100%" frameborder="0" style="border:0; height: 100%;" src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d2965.0824050173574!2d-93.63905729999999!3d41.998507000000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1s%2C+Ames%2C+IA!5e0!3m2!1sen!2sus!4v1390839289319" allowfullscreen></iframe>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- ./Contact Us Section -->
+
+	<!-- Footer Section -->
+	<footer class="hero">
+		<div class="hero-body">
+			<div class="container">
+				<div class="columns">
+					<div class="column is-4">
+						<div class="content">
+							<h6 class="footer_title title is-6">NEWSLETTER</h6>
+							<p>We love to share new offers and exclusive promotions</p>
+
+							<div class="newsletter">
+								<form action="#" method="POST" class="newsletter-form">
+									<input type="email" name="email" placeholder="Enter your email address">
+									<button>
+										<i class="fa fa-paper-plane"></i>
+									</button>
+								</form>
+							</div>
+						</div>
+					</div>
+
+					<div class="column is-4">
+						<div class="content">
+							<div>
+								<h6 class="footer_title title is-6">SOCIAL MEDIA</h6>
+								<p>Follow the Bulma Hotels on social media</p>
+
+								<button class="facebook-button button is-medium"><i class="fab fa-facebook-f"></i></button>
+								<button class="twitter-button button is-medium"><i class="fab fa-twitter"></i></button>
+								<button class="google-button button is-medium"><i class="fab fa-google-plus-g"></i></button>
+								<button class="linkedin-button button is-medium"><i class="fab fa-linkedin-in"></i></button>
+
+							</div>
+						</div>
+					</div>
+
+					<div class="column is-4">
+						<div class="content">
+							<h6 class="footer_title title is-6">ADDRESS</h6>
+							<p>Reach the destinaiton safely</p>
+
+							<p>Twin Tower Kathmandu 44600 Nepal</p>
+
+							<div>
+								<i class="fa fa-phone"></i> &nbsp;
+								<span>Phone Number</span> &nbsp;
+								<a href="tel:+302109999999">+977 9861656522</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="has-text-centered">
+					&copy; 2020, EventTrack. All rights reserved.<br>
+					<a href="https://www.eventrack.com" style="color:white;">Designed with <i class="fa fa-heart fa-fw" style="font-size: 12px; color:red; margin-right:5px; margin-left:5px;"></i> by team TheGameChangers</a>
+				</div>
+			</div>
     </div>
-  </section>
-  
-</div>
+  </footer>
 <%- include ("./partials/footer") %>
