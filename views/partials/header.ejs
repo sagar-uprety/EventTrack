@@ -1,119 +1,78 @@
-<!-- 
-<div class="container">        
-    <% if(error && error.length > 0){ %>
-        <div class="notification is-danger">
-          <%=error%>
+<nav class="navbar">
+  <div class="navbar-brand">
+    <!-- Brand Logo -->
+    <a class="navbar-item" href="/">
+      <strong>EventTrack</strong>
+    </a>
+
+    <!-- Email -->
+    <a class="navbar-item is-hidden-desktop" href="mailto:info@eventrack.com">
+      <span class="icon" style="color: #333;">
+        <i class="fa fa-lg fa-envelope"></i>
+      </span>
+    </a>
+
+    <!-- Facebook -->
+    <a class="navbar-item is-hidden-desktop" href="#" target="_blank">
+      <span class="icon">
+        <i class="fab fa-facebook-f"></i>
+      </span>
+    </a>
+
+    <!-- Mobile Menu -->
+    <div class="navbar-burger burger" data-target="navMenuBlogHero">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+
+  <!-- Menu -->
+  <div id="navMenuBlogHero" class="navbar-menu">
+    <!-- Left Nav -->
+    <div class="navbar-start">
+      <a class="navbar-item" href="/events">Events</a>
+      <a class="navbar-item" href="#services">Services</a>
+      <a class="navbar-item" href="#about-us">About</a>
+      <a class="navbar-item" href="#contact-us">Contact Us</a>
+    </div>
+    <!-- ./Left Nav -->
+
+    <!-- Right Nav -->
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="field is-grouped">
+          <% if(!currentUser){ %>
+          <p class="control">
+            <a class="button is-primary" href="/register">
+              <span class="icon">
+                <i class="fab fas fa-user-plus"></i>
+              </span>
+              <span>Sign Up</span>
+            </a>
+          </p>
+
+          <p class="control">
+            <a class="button is-success" href="/login">
+              <span class="icon">
+                <i class="fab fas fa-user-circle"></i>
+              </span>
+              <span>Sign In</span>
+            </a>
+          </p>
+          <% } else { %>
+
+          <p class="control">
+            <span class="button is-normal is-success"
+              >Welcome <%=currentUser.username%>
+            </span>
+            <a href="/logout" class="button is-primary is-normal">Logout</a>
+          </p>
+          <% } %>
         </div>
-    <% } %>
-    <% if(success && success.length > 0){ %>
-        <div class="notification is-primary">
-          <%=success%>
-        </div>
-    <% } %>
-</div>  -->
-
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description"
-		content="EventTrack is the best place to search for local and international events. Find you favorite event or add you event to showcase to the world">
-	<title>EventTrack</title>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.20/jquery.fancybox.min.css" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
-	<link rel="stylesheet" href="stylesheets/style.css">
-	<script src="https://code.jquery.com/jquery-3.2.1.min.js"
-		integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-	<script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
-</head>
-
-<body class="layout-default">
-
-	<section class="hero main_hero is-fullheight">
-		<div class="hero-head">
-			<div class="first_nav">
-				<div class="container">
-					<nav class="navbar">
-						<div class="navbar-brand">
-							<!-- Brand Logo -->
-							<a class="navbar-item" href="/">
-								<strong>EventTrack</strong>
-							</a>
-
-							<!-- Email -->
-							<a class="navbar-item is-hidden-desktop" href="mailto:info@eventrack.com">
-								<span class="icon" style="color: #333;">
-									<i class="fa fa-lg fa-envelope"></i>
-								</span>
-							</a>
-
-							<!-- Facebook -->
-							<a class="navbar-item is-hidden-desktop" href="#" target="_blank">
-								<span class="icon">
-									<i class="fab fa-facebook-f"></i>
-								</span>
-							</a>
-
-							<!-- Mobile Menu -->
-							<div class="navbar-burger burger" data-target="navMenuBlogHero">
-								<span></span>
-								<span></span>
-								<span></span>
-							</div>
-						</div>
-
-						<!-- Menu -->
-						<div id="navMenuBlogHero" class="navbar-menu">
-							<!-- Left Nav -->
-							<div class="navbar-start">
-								<a class="navbar-item" href="/events">Events</a>
-								<a class="navbar-item" href="#services">Services</a>
-								<a class="navbar-item" href="#about-us">About</a>
-								<a class="navbar-item" href="#contact-us">Contact Us</a>
-							</div>
-							<!-- ./Left Nav -->
-
-							<!-- Right Nav -->
-							<div class="navbar-end">
-								<div class="navbar-item">
-									<div class="field is-grouped">
-										<% if(!currentUser){ %>
-										<p class="control">
-											<a class="button is-primary" href="/register">
-												<span class="icon">
-													<i class="fab fas fa-user-plus"></i>
-												</span>
-												<span>Sign Up</span>
-											</a>
-										</p>
-
-										<p class="control">
-											<a class="button is-success" href="/login">
-												<span class="icon">
-													<i class="fab fas fa-user-circle"></i>
-												</span>
-												<span>Sign In</span>
-											</a>
-										</p>
-										<% } else { %>
-
-										<p class="control">
-												<span class="button is-normal is-success">Welcome <%=currentUser.username%> </span>
-												<a href="/logout" class="button is-primary is-normal">Logout</a>
-										</p>
-										<% } %>
-									</div>
-								</div>
-							</div>
-							<!-- ./Right Nav -->
-						</div>
-						<!-- ./Menu -->
-					</nav>
-				</div>
-			</div>
-		</div>
+      </div>
+    </div>
+    <!-- ./Right Nav -->
+  </div>
+  <!-- ./Menu -->
+</nav>
