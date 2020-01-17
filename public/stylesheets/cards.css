@@ -109,3 +109,26 @@ color: lemonchiffon;
 .gap {
     margin-top: 5px;
 }
+.media .media-content {
+    margin-bottom: -10px;
+}
+
+/* tabs css */
+.breadcrumb {
+position: relative;
+}
+
+.tab-pane {
+display: none;
+}
+.tab-pane.is-active {
+display: block;
+width: 50%;
+position: relative;
+left: 50%;
+transform: translateX(-50%);
+}
+.is-active {
+display: initial;
+}
+/* tabs css ends */

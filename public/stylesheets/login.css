@@ -1,7 +1,7 @@
 html,
 body {
   font-family: "Tajawal", serif;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 300;
 }
 
@@ -36,13 +36,13 @@ html {
   box-shadow: none;
 }
 .box {
-  margin-top: 5rem;
+  margin-top: 0rem;
 }
-input {
-  font-weight: 300;
+input,textarea{
+  font-weight: 500;
 }
-p {
-  font-weight: 700;
+div {
+  font-weight: 500;
 }
 p.subtitle {
   padding-top: 1rem;
