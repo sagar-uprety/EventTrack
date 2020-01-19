@@ -5,7 +5,7 @@ The project is an interactive web app for finding and listing events with featur
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system. **The final website is located in the Module-4-solution folder at index.html**
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system. **The final appication is located in the root folder at app.js**
 
 ### Prerequisites
 
