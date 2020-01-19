@@ -1,6 +1,5 @@
 # EventTrack
 
-# Restaurant_v_3.0
 Project EventTrack: A common Web Platfrom for Event organizers and attendee
 The project is an interactive web app for finding and listing events with features like event registration, catergorical event selection, location based events etc.
 
