@@ -24,22 +24,22 @@
               Change Event Information
             </p>
             <br>
-            <form action="/events/<%=events.id%>?_method=PUT" method="POST">
+            <form action="/events/<%=events.id%>?_method=PUT" method="POST"  enctype="multipart/form-data">
               <div class="field">
                 <div class="control">
-                  <input class="input" type="text" name="event[name]" value="<%=events.name%>" required>
+                  <input class="input" type="text" name="name" value="<%=events.name%>" required>
                 </div>
               </div>
 
               <div class="field">
                 <div class="control">
-                  <input class="input" type="text" name="event[venue]" value="<%=events.venue%>" required>
+                  <input class="input" type="text" name="venue" value="<%=events.venue%>" required>
                 </div>
               </div>
 
               <div class="field">
                 <div class="control">
-                  <input class="input" type="text" name="event[image]" value="<%=events.image%>" required>
+                  <input class="input" type="text" name="eventURL" value="<%=events.image%>" required>
                 </div>
               </div>
 
@@ -63,7 +63,7 @@
               <div class="field">
                 <label class="label">Description</label>
                 <div class="control">
-                  <textarea class="textarea" name="event[description]" spellcheck="false"><%=events.description %></textarea>
+                  <textarea class="textarea" name="description" spellcheck="false"><%=events.description %></textarea>
                 </div>
               </div>
 
@@ -71,7 +71,7 @@
               <div class="field">
                 <div id="event-upload" class="file has-name is-fullwidth is-success">
                   <label class="file-label">
-                    <input class="file-input" type="file" name="resume">
+                    <input class="file-input" type="file" name="resume" id="image" accept="image/*">
                     <span class="file-cta">
                       <span class="file-icon">
                         <svg class="svg-inline--fa fa-upload fa-w-16" aria-hidden="true" data-prefix="fas"
