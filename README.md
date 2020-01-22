@@ -16,7 +16,7 @@ These instructions will get you a copy of the project up and running on your loc
 * **MongoDB Server**
 
 ### Installation
-```
+```s
 1) Install node.js 
 2) Setup your mongodb server
 4) Setup your port and localhost server
@@ -26,9 +26,9 @@ These instructions will get you a copy of the project up and running on your loc
 npm install
 ```
 ### Testing
-```
+
 Open the project folder and modules as needed. Run the following command in the root folder and view it on Chrome at localhost:3000 
+
 ```
 node app.js
-```
 ```

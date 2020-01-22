@@ -1,8 +1,7 @@
 html,
 body {
-  font-family: "Tajawal", serif;
+  font-family:"helvetica","Roboto",sans-serif;
   font-size: 15px;
-  font-weight: 300;
 }
 
 html {
@@ -39,8 +38,13 @@ html {
   margin-top: 0rem;
 }
 input,textarea{
-  font-weight: 500;
+  font-weight: 300;
 }
+
+.new {
+ font-weight: 500;
+}
+
 div {
   font-weight: 500;
 }
@@ -69,10 +73,6 @@ p.subtitle {
 .google-button:hover {
   border-color: #bdbdbd;
   color: #ffffff;
-}
-
-a {
-  color: #fff;
 }
 
 .fa-sign-in-alt {

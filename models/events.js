@@ -4,13 +4,16 @@ var eventSchema = new mongoose.Schema({
   name: String,
   venue: String,
   image: String,
+  image2: String,
   description: String,
   author: {
     id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User"
     },
-    username: String
+    username: String,
+    email: String,
+    phone: String
   },
   comments: [
     {

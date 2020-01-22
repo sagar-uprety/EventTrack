@@ -7,9 +7,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Add Event</title>
   <link href="https://fonts.googleapis.com/css?family=Tajawal" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/bulma@0.8.0/css/bulma.min.css" />
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
   <link rel="stylesheet" type="text/css" href="../stylesheets/login.css" />
+  <link rel="stylesheet" href="../stylesheets/footer.css" />
 </head>
 
 <body>
@@ -27,21 +29,28 @@
             <form action="/events" method="POST">
               <div class="field">
                 <div class="control">
-                  <input class="input" type="text" name="eventName" placeholder="Name Your Event" required="">
+                  <input class="input new" type="text" name="eventName" placeholder="Name Your Event" required="">
                 </div>
               </div>
 
               <div class="field">
                 <div class="control">
-                  <input class="input" type="text" name="eventVenue" placeholder="Venue" required="">
+                  <input class="input new" type="text" name="eventVenue" placeholder="Venue" required="">
                 </div>
               </div>
 
               <div class="field">
                 <div class="control">
-                  <input class="input" type="text" name="eventURL" placeholder="Paste Your Image URL" required="">
+                  <input class="input new" type="text" name="eventURL" placeholder="Primary Photo Link" required="">
                 </div>
               </div>
+
+               <div class="field">
+                <div class="control">
+                  <input class="input new" type="text" name="eventURL2" placeholder="Secondary Photo Link" required="">
+                </div>
+              </div>
+
 
               <div class="field">
                 <label class="label">Event Catagory</label>
@@ -63,7 +72,7 @@
               <div class="field">
                 <label class="label">Description</label>
                 <div class="control">
-                  <textarea class="textarea" name="eventDescription" placeholder="Describe Your Event"
+                  <textarea class="textarea new" name="eventDescription" placeholder="Describe Your Event"
                     spellcheck="false"></textarea>
                 </div>
               </div>

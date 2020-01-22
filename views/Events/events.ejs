@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>bulma cards</title>
+    <title>Events</title>
     <link rel="shortcut icon" href="../images/fav_icon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://unpkg.com/bulma@0.8.0/css/bulma.min.css" />
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="stylesheets/cards.css">
+    <link rel="stylesheet" href="stylesheets/footer.css" />
 </head>
 
 <body>
@@ -73,7 +74,7 @@
                 </div>
             </div>
         </div>
-            <!-- Developers -->
+            <!-- Cards -->
             <div class="row columns is-multiline">
               <% events.forEach(function(event){ %>
                 <div class="column is-one-third">
@@ -92,6 +93,7 @@
                             </div>
                             <div class="content">
                                 <span class="title is-6"><%=event.venue%></span>
+                                
                                 <p class="columns is-mobile gap">
                                     <span class="column is-6 has-text-centered"><a href= "/events/<%=event._id%>" class="button is-default is-info is-rounded">View Details</a></span>
                                     <span class="column is-6 has-text-centered"><a href= "/events/<%=event._id%>" class="button is-default is-info is-rounded">Register</a> </span> 
@@ -104,8 +106,7 @@
             </div>
             <!-- End Staff -->
         </div>
-    </div>
 
-<script src="js/tabs.js"></script>
+<script src="js/events.js"></script>
 
 <%- include ("../partials/footer") %>

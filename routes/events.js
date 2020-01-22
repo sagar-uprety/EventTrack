@@ -27,15 +27,19 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
   var Name = req.body.eventName;
   var Venue = req.body.eventVenue;
   var URL = req.body.eventURL;
+  var URL2= req.body.eventURL2;
   var Description = req.body.eventDescription;
   var author = {
     id: req.user._id,
-    username: req.user.username
+    username: req.user.username,
+    email: req.user.email,
+    phone: req.user.phone
   };
   var newEvent = {
     name: Name,
     venue: Venue,
     image: URL,
+    image2: URL2,
     description: Description,
     author: author
   };
