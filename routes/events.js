@@ -67,24 +67,6 @@ router.post("/", middleware.isLoggedIn, upload.single('resume'), function(req, r
     });
   });
 });
-// router.post("/", middleware.isLoggedIn, upload.single('image'), function(req, res) {
-//   cloudinary.uploader.upload(req.file.path, function(result) {
-//     // add cloudinary url for the image to the events object under image property
-//     req.body.events.image = result.secure_url;
-//     // add author to events
-//     req.body.events.author = {
-//       id: req.user._id,
-//       username: req.user.username
-//     }
-//     Event.create(req.body.events, function(err, events) {
-//       if (err) {
-//         req.flash('error', err.message);
-//         return res.redirect('back');
-//       }
-//       res.redirect('/events/' + events.id);
-//     });
-//   });
-// });
 
 //event details show page
 router.get("/:id", function(req, res) {
