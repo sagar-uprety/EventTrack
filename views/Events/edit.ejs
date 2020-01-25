@@ -47,17 +47,17 @@
                 <label class="label">Event Catagory</label>
                 <p class="control">
                 </p>
-                <div class="select">
-                  <select>
-                    <option>Science and Tech</option>
+                <div class="select" onchange="selectCateg()">
+                  <select id="select" required>
+                    <option>Networking</option>
                     <option>Educational</option>
-                    <option>Social Service</option>
-                    <option>Community</option>
-                    <option>Dance, Music and Concerts</option>
+                    <option>Social</option>
+                    <option>SciTech</option>
                     <option>Others</option>
                   </select>
                   <p></p>
                 </div>
+                <input type="hidden" id="categ" name="category" value="<%=events.category%>">
               </div>
 
               <div class="field">
@@ -111,6 +111,20 @@
         fileName.textContent = fileInput.files[0].name;
       }
     };
+    var options=document.getElementById("select");
+    var initialCateg=document.getElementById("categ");
+    for(var i=0;i<options.options.length;i++){
+      if(options.options[i].value==initialCateg.value){
+        options.options[i].selected=true;
+      }
+    }
+
+    function selectCateg(){
+      var selected=options.options[options.selectedIndex].text;
+      
+      var categ=document.getElementById("categ")
+      categ.value=selected;
+    }
   </script>
 
 <%- include ("../partials/footer") %>
