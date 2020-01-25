@@ -47,8 +47,8 @@
                 <label class="label">Event Catagory</label>
                 <p class="control">
                 </p>
-                <div class="select">
-                  <select>
+                <div class="select" onchange="selectCateg()">
+                  <select id="select" required>
                     <option>Science and Tech</option>
                     <option>Educational</option>
                     <option>Social Service</option>
@@ -58,6 +58,7 @@
                   </select>
                   <p></p>
                 </div>
+                <input type="hidden" id="categ" name="events[category]" value="Science and Tech">
               </div>
 
               <div class="field">
@@ -112,5 +113,13 @@
         fileName.textContent = fileInput.files[0].name;
       }
     };
+
+    function selectCateg(){
+      var options=document.getElementById("select");
+      var selected=options.options[options.selectedIndex].text;
+      
+      var categ=document.getElementById("categ")
+      categ.value=selected;
+    }
   </script>
   <%- include ("../partials/footer") %>

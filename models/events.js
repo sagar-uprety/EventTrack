@@ -6,6 +6,7 @@ var eventSchema = new mongoose.Schema({
   image: String,
   subImage: String,
   imageId: String,
+  category: String,
   description: String,
   author: {
     id: {
