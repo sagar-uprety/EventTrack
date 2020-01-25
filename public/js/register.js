@@ -1,7 +1,6 @@
 
 var checkbox=document.querySelector("#check");
 var ability=document.querySelector("#submit");
-console.log(password,checkbox,ability)
 ability.disabled=true;
 
 //Password Check
@@ -9,7 +8,6 @@ function checkPassword(){
     var password=document.querySelector("#password").value;
     var retyped=document.querySelector("#retype").value;
     var validity=document.querySelector("#invalid-password");
-    console.log(retyped,validity)
     if(password===retyped) {
         validity.innerHTML="Your Password has matched.";
         validity.classList.add("valid");
@@ -62,6 +60,16 @@ function validateEmail(email) {
     return re.test(email);
 }
 
+//Sex
+function sex(){
+    var radio=document.getElementsByName("radio");
+    var sex=document.getElementById("sex")
+    for(var i=0;i<radio.length;i++){
+        if(radio[i].checked){
+            sex.value=radio[i].value;
+        }
+    }
+}
 //Terms and Conditions
 function terms() {
 
@@ -73,15 +81,15 @@ function terms() {
     }
 }
 
-// //file upload
+//file upload
   
-// const fileInput = document.querySelector("#avatar-upload input[type=file]");
-//     fileInput.onchange = () => {
-//       if (fileInput.files.length > 0) {
-//         const fileName = document.querySelector("#avatar-upload .file-name");
-//         fileName.textContent = fileInput.files[0].name;
-//       }
-//     };
+const fileInput = document.querySelector("#avatar-upload input[type=file]");
+    fileInput.onchange = () => {
+      if (fileInput.files.length > 0) {
+        const fileName = document.querySelector("#avatar-upload .file-name");
+        fileName.textContent = fileInput.files[0].name;
+      }
+    };
 //Check Information
 function checkInfo() {
     if(checkPassword()!=true) {
@@ -91,5 +99,4 @@ function checkInfo() {
     if(event()!=true){
         alert("Please write a valid email.");
     }
-    console.log("Enjoy!");
 }

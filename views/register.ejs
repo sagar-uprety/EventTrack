@@ -36,7 +36,7 @@
           <div class="container">
               <div class="columns is-centered">
                   <div class="column is-10-desktop is-12-widescreen">
-                      <form action="/register" method="POST" class="box">
+                      <form action="/register" method="POST" class="box" enctype="multipart/form-data">
                           <h1 class="title is-2">Sign Up</h1>
                           <div class="field">
                               <label for="name" class="label">Name</label>
@@ -100,7 +100,7 @@
                           </div>
                           <div class="field">
                               <div class="columns">
-                                  <!-- <div class="column">
+                                  <div class="column">
                                       <label for="avatar" class="label">Upload your Profile Picture</label>
                                       <div id="avatar-upload" class="file has-name is-fullwidth is-success">
                                           <label class="file-label">
@@ -124,25 +124,22 @@
                                           </span>
                                           </label>
                                       </div>
-                                  </div> -->
-                                  <div class="column">
-                                      <label for="avatar" class="label">Upload a Profile Image</label>
-                                      <input type="text" class="input" placeholder="Image URL" name="image" id="image" accept="image/*">
                                   </div>
                                   <div class="column">
                                       <label for="sex" class="label">Sex</label>
-                                      <div class="control">
-                                          <label for="male" class="radio">
-                                              <input type="radio" name="radio" required> Male
+                                      <div class="control" onchange="sex()">
+                                          <label for="male" name="sex">
+                                              <input type="radio" name="radio" class="radio" value="Male" required> Male
                                           </label>
-                                          <label for="female" class="radio">
-                                              <input type="radio" name="radio" required> Female
+                                          <label for="female" name="sex">
+                                              <input type="radio" name="radio" class="radio" value="Female" required> Female
                                           </label>
-                                          <label for="other" class="radio">
-                                              <input type="radio" name="radio" required> Other
+                                          <label for="other" name="sex">
+                                              <input type="radio" name="radio" class="radio" value="Other" required> Other
                                           </label>
                                       </div>
                                   </div>
+                                  <input type="hidden" id="sex" name="sex" value="">
                               </div>
                           </div>
                           <div class="field">
