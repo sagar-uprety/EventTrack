@@ -14,15 +14,26 @@ var options = {
 
 var geocoder = NodeGeocoder(options);
 
-//all events
-router.get("/", function(req, res) {
-  Event.find({}, function(err, allEvents) {
-    if (err) {
-      console.log(err);
-    } else {
-      res.render("Events/events", { events: allEvents });
-    }
-  });
+router.get("/", function (req, res) {
+  if (req.query.search) {
+    const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+    Event.find({ name: regex }, function (err, allEvents) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.render("Events/events", { events: allEvents });
+      }
+    });
+  }
+  else {
+    Event.find({}, function (err, allEvents) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.render("Events/events", { events: allEvents });
+      }
+    });
+  }
 });
 
 
@@ -142,5 +153,8 @@ router.delete("/:id", middleware.checkEventOwnership, function(req, res) {
     }
   });
 });
+function escapeRegex(text) {
+  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
 
 module.exports = router;
