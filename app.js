@@ -13,17 +13,7 @@ const express = require("express"),
   Comment = require("./models/comments"),
   User = require("./models/user"),
   seedDB = require("./seeds");
-  
-var NodeGeocoder = require("node-geocoder");
 
-var options = {
-  provider: "google",
-  httpAdapter: "https",
-  apiKey: process.env.GEOCODER_API_KEY,
-  formatter: null
-};
-
-var geocoder = NodeGeocoder(options);
 //requring routes
 var commentRoutes    = require("./routes/comments"),
     eventRoutes = require("./routes/events"),
