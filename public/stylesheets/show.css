@@ -299,3 +299,8 @@ body.preloader-site {
 
 .white
 {color:ghostwhite}
+
+#map {
+  height: 100%;
+  width: 100%;
+}

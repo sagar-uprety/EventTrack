@@ -3,6 +3,17 @@ var router = express.Router();
 var Event = require("../models/events");
 var middleware = require("../middleware");
 
+var NodeGeocoder = require("node-geocoder");
+
+var options = {
+  provider: "google",
+  httpAdapter: "https",
+  apiKey: process.env.GEOCODER_API_KEY,
+  formatter: null
+};
+
+var geocoder = NodeGeocoder(options);
+
 //all events
 router.get("/", function(req, res) {
   Event.find({}, function(err, allEvents) {
@@ -25,7 +36,6 @@ router.get("/new", middleware.isLoggedIn, function(req, res) {
 //Create a new event and add to the Database
 router.post("/", middleware.isLoggedIn, function(req, res) {
   var Name = req.body.eventName;
-  var Venue = req.body.eventVenue;
   var URL = req.body.eventURL;
   var URL2= req.body.eventURL2;
   var Description = req.body.eventDescription;
@@ -35,20 +45,32 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
     email: req.user.email,
     phone: req.user.phone
   };
-  var newEvent = {
-    name: Name,
-    venue: Venue,
-    image: URL,
-    image2: URL2,
-    description: Description,
-    author: author
-  };
-  Event.create(newEvent, function(err, newlyCreated) {
-    if (err) {
+  geocoder.geocode(req.body.eventVenue, function(err, data) {
+    if (err || !data.length) {
+      req.flash("error", "Invalid address");
       console.log(err);
-    } else {
-      res.redirect("/events");
+      return res.redirect("back");
     }
+    var lat = data[0].latitude;
+    var lng = data[0].longitude;
+    var location = data[0].formattedAddress;
+    var newEvent = {
+      name: Name,
+      image: URL,
+      image2: URL2,
+      description: Description,
+      author: author,
+      location: location,
+      lat: lat,
+      lng: lng
+    };
+    Event.create(newEvent, function(err, newlyCreated) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.redirect("/events");
+      }
+    });
   });
 });
 
@@ -77,17 +99,37 @@ router.get("/:id/edit", middleware.checkEventOwnership, function(req, res) {
 // UPDATE EVENT ROUTE
 router.put("/:id", middleware.checkEventOwnership, function(req, res) {
   // find and update the correct campground
-  Event.findByIdAndUpdate(req.params.id, req.body.event, function(
-    err,
-    updatedEvent
-  ) {
-    if (err) {
-      res.redirect("/events");
-    } else {
-      //redirect somewhere(show page)
-      res.redirect("/events/" + req.params.id);
-    }
-  });
+   geocoder.geocode(req.body.location, function(err, data) {
+     if (err || !data.length) {
+       req.flash("error", "Invalid address");
+       return res.redirect("back");
+     }
+     var lat = data[0].latitude;
+     var lng = data[0].longitude;
+     var location = data[0].formattedAddress;
+     var newEvent = {
+       name: Name,
+       venue: Venue,
+       image: URL,
+       image2: URL2,
+       description: Description,
+       author: author,
+       location: location,
+       lat: lat,
+       lng: lng
+     };
+     Event.findByIdAndUpdate(req.params.id, req.body.event, function(
+       err,
+       updatedEvent
+     ) {
+       if (err) {
+         res.redirect("/events");
+       } else {
+         //redirect somewhere(show page)
+         res.redirect("/events/" + req.params.id);
+       }
+     });
+   });
 });
 
 // DESTROY EVENT ROUTE

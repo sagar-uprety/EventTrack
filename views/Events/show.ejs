@@ -4,14 +4,18 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title><%=events.name %></title>
+    <title><%=events.name%></title>
     <!-- Bulma Version 0.8.x-->
     <link
       rel="stylesheet"
       href="https://unpkg.com/bulma@0.8.0/css/bulma.min.css"
     />
     <link rel="stylesheet" type="text/css" href="../../stylesheets/show.css" />
-    <link rel="stylesheet" type="text/css" href="../../stylesheets/footer.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../../stylesheets/footer.css"
+    />
     <script
       src="https://kit.fontawesome.com/2828f7885a.js"
       integrity="sha384-WAsFbnLEQcpCk8lM1UTWesAf5rGTCvb2Y+8LvyjAAcxK1c3s5c0L+SYOgxvc6PWG"
@@ -41,12 +45,18 @@
     <!-- Begin Header -->
     <div class="header-wrapper" id="home">
       <!-- Begin Hero -->
-      <section class="hero is-large" style= "background-image: url(<%=events.image%>)">
+      <section
+        class="hero is-large"
+        style="background-image: url(<%=events.image%>)"
+      >
         <!-- Begin Mobile Nav -->
         <nav class="navbar is-transparent is-hidden-desktop">
           <!-- Begin Burger Menu -->
           <div class="navbar-brand">
-            <div class="navbar-burger burger second-burger" data-target="mobile-nav">
+            <div
+              class="navbar-burger burger second-burger"
+              data-target="mobile-nav"
+            >
               <span></span>
               <span></span>
               <span></span>
@@ -131,7 +141,9 @@
       <div class="section-dark about-me" id="info">
         <div class="container">
           <div class="column is-12 about-me">
-            <h1 class="title has-text-centered section-title">Event Information</h1>
+            <h1 class="title has-text-centered section-title">
+              Event Information
+            </h1>
           </div>
           <div class="columns is-multiline">
             <div
@@ -140,12 +152,12 @@
             >
               <p class="is-larger">
                 <strong>
-                 <%=events.description%>
+                  <%=events.description%>
                 </strong>
               </p>
               <br />
               <p>
-                Organized By :  <%=events.author.username%>
+                Organized By : <%=events.author.username%>
               </p>
               <br />
               <div class="is-divider"></div>
@@ -155,7 +167,7 @@
                     <strong>Give us a Ring</strong>
                   </p>
                   <p class="subheading">
-                    <%=events.author.phone%> 
+                    <%=events.author.phone%>
                   </p>
                 </div>
                 <div class="column">
@@ -191,23 +203,25 @@
       <!-- Begin Location Content -->
       <div class="section-light" id="location">
         <div class="column is-12 about-me">
-            <h1 class="title  has-text-centered section-title"> venue</h1>
+          <h1 class="title has-text-centered section-title">venue</h1>
         </div>
+        <div id="map">
 
+        </div>
       </div>
       <!-- End Location Content -->
 
       <!-- Begin Comment Content -->
       <div class="section-light" id="comment">
         <div class="column is-12 about-me">
-            <h1 class="title  has-text-centered section-title">Comments</h1>
+          <h1 class="title  has-text-centered section-title">Comments</h1>
         </div>
 
         <div class="box section-dark">
-          <% events.comments.forEach(function(comment){ %>
+          <%events.comments.forEach(function(comment){ %>
           <article class="media">
             <figure class="media-left">
-             <i class="fas fa-comment"></i>
+              <i class="fas fa-comment"></i>
             </figure>
             <div class="media-content">
               <div class="content">
@@ -215,63 +229,79 @@
                   <strong><%=comment.author.username%></strong>
                   <br />
                   <%=comment.text%>
-                  <br/>
+                  <br />
                   <small>
-                        <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
-                         <form action="/events/<%=events._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
-                          <button class="button is-normal has-text-danger"><i class="fas fa-heart"></i>Delete</button> 
-                        </form> 
-                         <a href="/events/<%=events._id%>/comments/<%=comment._id %>/edit" class="button has-text-info"><i class="fas fa-heart"></i>Edit</a> 
-                        <% } %> 
-                         <span> 2 hrs</span></small>
+                    <% if(currentUser &&
+                    comment.author.id.equals(currentUser._id)){ %>
+                    <form
+                      action="/events/<%=events._id%>/comments/<%=comment._id%>?_method=DELETE"
+                      method="POST"
+                    >
+                      <button class="button is-normal has-text-danger">
+                        <i class="fas fa-heart"></i>Delete
+                      </button>
+                    </form>
+                    <a
+                      href="/events/<%=events._id%>/comments/<%=comment._id %>/edit"
+                      class="button has-text-info"
+                      ><i class="fas fa-heart"></i>Edit</a
+                    >
+                    <% } %>
+                    <span> 2 hrs</span></small
+                  >
                 </p>
               </div>
             </div>
           </article>
-          <% }) %> 
+          <% }) %>
           <article class="media">
             <figure class="media-left">
-                <i class="fas fa-comment"></i>       
+              <i class="fas fa-comment"></i>
             </figure>
             <div class="media-content">
               <form action="/events/<%=events._id%>/comments" method="POST">
-              <div class="field">
-                <p class="control">
-                  <textarea
-                    class="textarea"
-                    placeholder="Start a discussion..."
-                    name= "comment[text]"
-                  ></textarea>
-                </p>
-              </div>
-              <div class="field">
-                <p class="control">
-                  <button class="button is-black is-outlined">
-                    Post comment
-                  </button>
-                </p>
-              </div>
+                <div class="field">
+                  <p class="control">
+                    <textarea
+                      class="textarea"
+                      placeholder="Start a discussion..."
+                      name="comment[text]"
+                    ></textarea>
+                  </p>
+                </div>
+                <div class="field">
+                  <p class="control">
+                    <button class="button is-black is-outlined">
+                      Post comment
+                    </button>
+                  </p>
+                </div>
               </form>
             </div>
           </article>
         </div>
       </div>
       <!-- End Comment Content -->
-       <% if(currentUser && events.author.id.equals(currentUser._id)){ %>
+      <% if(currentUser && events.author.id.equals(currentUser._id)){ %>
 
-        <div class="section-dark">
-          <div class="column is-12 about-me">
-            <h1 class="title  has-text-centered section-title"> Organizer's Only Section</h1>
+      <div class="section-dark">
+        <div class="column is-12 about-me">
+          <h1 class="title  has-text-centered section-title">
+            Organizer's Only Section
+          </h1>
         </div>
         <div class="container has-text-center">
-        <a href="/events/<%=events._id%>/edit" class="button is-rounded is-warning">Update Event Details</a>
-        <form action="/events/<%=events._id%>?_method=DELETE" method="POST">
-          <button class="button is-rounded is-danger">Delete Event</button>
-        </form>
+          <a
+            href="/events/<%=events._id%>/edit"
+            class="button is-rounded is-warning"
+            >Update Event Details</a
+          >
+          <form action="/events/<%=events._id%>?_method=DELETE" method="POST">
+            <button class="button is-rounded is-danger">Delete Event</button>
+          </form>
         </div>
-        </div>
+      </div>
       <% } %>
-   
     </div>
     <!-- End Main Content -->
 
@@ -289,7 +319,41 @@
       });
     </script>
 
+    <script>
+        function initMap() {
+        var lat = <%=events.lat %>;
+        var lng = <%=events.lng %>;
+        var center = {lat: lat, lng: lng };
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 8,
+            center: center,
+            scrollwheel: false
+        });
+        var contentString = `
+          <strong><%=events.name%><br>
+          <%=events.location%></strong>
+          <p><%=events.description%></p>
+        `
+        var infowindow = new google.maps.InfoWindow({
+          content: contentString
+        });
+        var marker = new google.maps.Marker({
+            position: center,
+            map: map
+        });
+        marker.addListener('click', function() {
+          infowindow.open(map, marker);
+        });
+      }
+    </script>
+    <script
+      async
+      defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDO_ZINoxUQmrJxo8nTa7wkvgAnsWnuPlQ&callback=initMap"
+    ></script>
 
     <!-- Begin Footer -->
     <%- include("../partials/footer") %>
     <!-- End Footer -->
+  </body>
+</html>

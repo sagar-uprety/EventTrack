@@ -6,6 +6,9 @@ var eventSchema = new mongoose.Schema({
   image: String,
   image2: String,
   description: String,
+  location: String,
+  lat: Number,
+  lng: Number,
   author: {
     id: {
       type: mongoose.Schema.Types.ObjectId,
