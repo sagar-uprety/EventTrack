@@ -9,7 +9,17 @@ var UserSchema = new mongoose.Schema({
   password: String,
   image: String,
   imageId: String,
-  sex: String
+  sex: String,
+  registeredEvent: [{
+    id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref:"Event"
+    },
+    name: String,
+    venue: String,
+    subImage: String,
+    category: String
+  }]
 });
 
 UserSchema.plugin(passportLocalMongoose);

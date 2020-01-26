@@ -20,7 +20,17 @@ var eventSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: "Comment"
     }
-  ]
+  ],
+  registeredUser: [{
+    id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref:"User"
+    },
+    name: String,
+    username: String,
+    email: String,
+    sex: String
+  }]
 });
 
 module.exports = mongoose.model("Event", eventSchema);

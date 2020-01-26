@@ -1,5 +1,6 @@
 var express = require("express");
 var router = express.Router();
+var User = require("../models/user");
 var Event = require("../models/events");
 var middleware = require("../middleware");
 var multer = require('multer');
@@ -29,6 +30,7 @@ router.get("/", function(req, res) {
     if (err) {
       console.log(err);
     } else {
+      console.log()
       res.render("Events/events", { events: allEvents });
     }
   });
@@ -93,6 +95,42 @@ router.get("/:id", function(req, res) {
     });
 });
 
+//Registration
+router.get("/registered/:eventId/:userId",middleware.isLoggedIn,function(req,res){
+  Event.findById(req.params.eventId,function(err1,event){
+    if(err1){
+      console.log(err1);
+    }
+    User.findById(req.params.userId,function(err2,user){
+      if(err2){
+        console.log(err2);
+      }
+      else{
+        //stored to events.registeredUser object
+        var newRegisteredUser= {
+        id: user._id,
+        name: user.firstName+ " "+user.lastName,
+        username: user.username,
+        email: user.email,
+        sex: user.sex
+        }
+        event.registeredUser.push(newRegisteredUser)
+        event.save();
+        //stored to users.registeredEvent object
+        var newRegisteredEvent= {
+          id: event._id,
+          name: event.name,
+          venue: event.venue,
+          subImage: event.subImage,
+          category: event.category
+        }
+        user.registeredEvent.push(newRegisteredEvent)
+        user.save();
+        res.redirect("/events");
+      }
+    })
+  })
+})
 //edit route
 router.get("/:id/edit", middleware.checkEventOwnership, function(req, res) {
   Event.findById(req.params.id, function(err, foundEvent) {
