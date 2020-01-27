@@ -68,6 +68,7 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
       if (err) {
         console.log(err);
       } else {
+        console.log(newEvent);
         res.redirect("/events");
       }
     });
@@ -99,7 +100,7 @@ router.get("/:id/edit", middleware.checkEventOwnership, function(req, res) {
 // UPDATE EVENT ROUTE
 router.put("/:id", middleware.checkEventOwnership, function(req, res) {
   // find and update the correct campground
-   geocoder.geocode(req.body.location, function(err, data) {
+   geocoder.geocode(req.body.eventVenue, function(err, data) {
      if (err || !data.length) {
        req.flash("error", "Invalid address");
        return res.redirect("back");
@@ -109,7 +110,6 @@ router.put("/:id", middleware.checkEventOwnership, function(req, res) {
      var location = data[0].formattedAddress;
      var newEvent = {
        name: Name,
-       venue: Venue,
        image: URL,
        image2: URL2,
        description: Description,

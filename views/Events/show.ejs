@@ -203,12 +203,11 @@
       <!-- Begin Location Content -->
       <div class="section-light" id="location">
         <div class="column is-12 about-me">
-          <h1 class="title has-text-centered section-title">venue</h1>
+          <h1 class="title has-text-centered section-title">Venue</h1>
         </div>
-        <div id="map">
-
-        </div>
+        <div id="map"></div>
       </div>
+      
       <!-- End Location Content -->
 
       <!-- Begin Comment Content -->
@@ -319,10 +318,16 @@
       });
     </script>
 
+    <script
+      async
+      defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDO_ZINoxUQmrJxo8nTa7wkvgAnsWnuPlQ&callback=initMap"
+    ></script>
+
     <script>
         function initMap() {
-        var lat = <%=events.lat %>;
-        var lng = <%=events.lng %>;
+        var lat = <%=events.lat%>;
+        var lng = <%=events.lng%>;
         var center = {lat: lat, lng: lng };
         var map = new google.maps.Map(document.getElementById('map'), {
             zoom: 8,
@@ -332,7 +337,6 @@
         var contentString = `
           <strong><%=events.name%><br>
           <%=events.location%></strong>
-          <p><%=events.description%></p>
         `
         var infowindow = new google.maps.InfoWindow({
           content: contentString
@@ -346,11 +350,7 @@
         });
       }
     </script>
-    <script
-      async
-      defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDO_ZINoxUQmrJxo8nTa7wkvgAnsWnuPlQ&callback=initMap"
-    ></script>
+    
 
     <!-- Begin Footer -->
     <%- include("../partials/footer") %>
