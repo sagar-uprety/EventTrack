@@ -60,19 +60,21 @@
             </div>
             <!--targer ids and class to be added-->
 
-            <div class="box">
-                <div class="field has-addons">
-                    <div class="control is-expanded">
-                        <input class="input has-text-centered" type="search" placeholder="» » » » » » find me « « « « « «">
+            <form action="/events" method="GET" class="form-inline">
+                <div class="box">
+                    <div class="field has-addons">
+                        <div class="control is-expanded">
+                            <input class="input has-text-centered" name="search" placeholder="» » » » » » find me « « « « « «">
+                        </div>
+                        <div class="control">
+                            <button class="button is-link">Search</button>
+                        </div>
                     </div>
-                    <div class="control">
-                        <a class="button is-info">Search</a>
+                    <div class="has-text-centered">
+                        <a class="button is-rounded is-link" href="/events/new">Add Your Event</a>
                     </div>
                 </div>
-                <div class="has-text-centered">
-                <a class="button is-rounded is-link" href="/events/new">Add Your Event</a>
-                </div>
-            </div>
+            </form>
         </div>
             <!-- Cards -->
             <div class="row columns is-multiline">
