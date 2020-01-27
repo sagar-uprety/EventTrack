@@ -109,7 +109,7 @@ router.get("/:id/edit", middleware.checkEventOwnership, function(req, res) {
 });
 
 // UPDATE EVENT ROUTE
-router.put("/:id", middleware.checkEventOwnership, function(req, res) {
+router.put("/:id", middleware.checkEventOwnership,function(req, res) {
   // find and update the correct campground
    geocoder.geocode(req.body.eventVenue, function(err, data) {
      if (err || !data.length) {
@@ -119,7 +119,7 @@ router.put("/:id", middleware.checkEventOwnership, function(req, res) {
      var lat = data[0].latitude;
      var lng = data[0].longitude;
      var location = data[0].formattedAddress;
-     var newEvent = {
+     var updatedEvent = {
        name: Name,
        image: URL,
        image2: URL2,
@@ -135,6 +135,7 @@ router.put("/:id", middleware.checkEventOwnership, function(req, res) {
      ) {
        if (err) {
          res.redirect("/events");
+         console.log(error);
        } else {
          //redirect somewhere(show page)
          res.redirect("/events/" + req.params.id);
