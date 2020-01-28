@@ -117,15 +117,15 @@ router.get("/registered/:eventId/:userId",middleware.isLoggedIn,function(req,res
         event.registeredUser.push(newRegisteredUser)
         event.save();
         //stored to users.registeredEvent object
-        // var newRegisteredEvent= {
-        //   id: event._id,
-        //   name: event.name,
-        //   venue: event.venue,
-        //   subImage: event.subImage,
-        //   category: event.category
-        // }
-        // user.registeredEvent.push(newRegisteredEvent)
-        // user.save();
+        var newRegisteredEvent= {
+          id: event._id,
+          name: event.name,
+          venue: event.venue,
+          subImage: event.subImage,
+          category: event.category
+        }
+        user.registeredEvent.push(newRegisteredEvent)
+        user.save();
         res.redirect("/events");
       }
     })
