@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://unpkg.com/bulma@0.8.0/css/bulma.min.css" />
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="stylesheets/cards.css">
+</head>
+
+<body>
+
+<%- include ("../partials/header") %>
+
+<section class="hero is-primary is-medium">
+  <!-- Hero content: will be in the middle -->
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <h1 class="title">
+        <%=events.name%>
+      </h1>
+      <h2 class="subtitle">
+        Organized By :<a href="/users/<%= events.author.id %>"><u><%=events.author.username%></u></a>
+      </h2>
+      <h2 class="subtitle">
+        <%=events.description%>
+      </h2>
+
+      <% events.comments.forEach(function(comment){ %>
+      <div class="container">
+        <h2 class="subtitle">
+        <strong><%=comment.author.username%></strong> - <%=comment.text%>
+         <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
+            <a href="/events/<%=events._id%>/comments/<%=comment._id %>/edit" class="button is-rounded is-warning">Edit</a>
+            <form action="/events/<%=events._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
+              <button class="button is-rounded is-danger">DELETE</button>
+            </form>
+         <% } %> 
+
+      <% }) %>
+        </h2>
+      </div>
+    </div>
+
+    <div class="container has-text-centered">
+      <a href="/events/<%=events._id%>/comments/new" class="button is-rounded is-success">Add a New Comment</a>
+
+      <% if(currentUser && events.author.id.equals(currentUser._id)){ %>
+        <a href="/events/<%=events._id%>/edit" class="button is-rounded is-warning">EDIT</a>
+
+        <form action="/events/<%=events._id%>?_method=DELETE" method="POST">
+          <button class="button is-rounded is-danger">DELETE</button>
+        </form>
+      <% } %>
+    </div>
+  </div>
+
+  <!-- Hero footer: will stick at the bottom -->
+  <div class="hero-foot">
+    <nav class="tabs">
+      <div class="container">
+        <ul>
+          <li class="is-active"><a>Overview</a></li>
+          <li><a>Location</a></li>
+          <li><a>Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</section>
+<section class="hero">
+    <div class="box column is-10 is-offset-1">
+        <h1 class="subtitle has-text-centered">Registered Participants List</h1>
+       <table class="table table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+           <thead>
+               <tr>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Sex</th>
+                </tr>
+           </thead>
+           <tbody>
+                <% events.registeredUser.forEach(function(user){ %>
+                    <tr>
+                        <td><a href="/users/<%=user.id%>"><%=user.name%></a></td>
+                        <td><%=user.username%></td>
+                        <td><a href="mailto:<%=user.email%>"><u><%=user.email%></u></a></td>
+                        <td><%=user.sex%></td>
+                    </tr>    
+                <% })%>
+           </tbody>
+       </table> 
+    </div>
+</section>
+
+<%- include ("../partials/footer") %>

@@ -92,16 +92,30 @@
                             </div>
                             <div class="content">
                                 <span class="title is-6"><%=event.venue%></span>
+                                <span class="is-6 has-text-centered">Participation Number: <%=event.registeredUser.length%></span>
                                 <p class="columns is-mobile gap">
                                     <span class="column is-6 has-text-centered"><a href= "/events/<%=event._id%>" class="button is-default is-info is-rounded">View Details</a></span>
-                                    <% if(!currentUser){ %>
+                                    
+                                    <% if(!currentUser){%>
                                         <span class="column is-6 has-text-centered"><a href= "/login" class="button is-default is-info is-rounded">Register</a> </span> 
-                                    <%} else {%>
-                                        <%if(currentUser._id===event.author.id){%>
-                                            <span class="column is-6 has-text-centered"><a href= "/events/users/<%=currentUser._id%>" class="button is-default is-grey is-rounded">Your Event</a> </span> hello
+                                    <%} else{%>
+                                        <%if(event.author.id.equals(currentUser._id)) {%>
+                                            <span class="column is-6 has-text-centered"><a href= "/events/myevent/<%=event.name%>/<%=event._id%>" class="button is-default is-info is-outlined is-rounded">Your Event</a> </span>                                             
                                         <%} else {%>
-                                            <span class="column is-6 has-text-centered"><a class="button is-default is-success is-rounded">Registered</a> </span> say
-                                    <% } } %> 
+                                            <%if(event.registeredUser.length===0) {%>
+                                                <span class="column is-6 has-text-centered"><a href= "/events/registered/<%=event._id%>/<%=currentUser._id%>" class="button is-default is-info is-rounded">Register</a> </span> 
+                                            <%} else {%>
+                                                <%event.registeredUser.forEach(function(user){%>
+                                                    <!-- no.s of buttons are present in a single line-->
+                                                    <%if(user.id.equals(currentUser._id)){%>
+                                                        <span class="column is-6 has-text-centered"><a href= "/events/<%=event._id%>" class="button is-default is-success is-rounded">Registered</a> </span> 
+                                                    <%} else{%>
+                                                        <span class="column is-6 has-text-centered"><a href= "/events/registered/<%=event._id%>/<%=currentUser._id%>" class="button is-default is-info is-rounded">Register</a> </span> 
+                                                    <% }%>
+                                                <% })%>
+                                            <% }%>
+                                        <% }%>
+                                    <%}%>
                                 </p>
                             </div>
                         </div>
