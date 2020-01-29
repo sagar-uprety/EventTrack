@@ -108,7 +108,7 @@
                                                 <%event.registeredUser.forEach(function(user){%>
                                                     <!-- no.s of buttons are present in a single line-->
                                                     <%if(user.id.equals(currentUser._id)){%>
-                                                        <span class="column is-6 has-text-centered"><a href= "/events/<%=event._id%>" class="button is-default is-success is-rounded">Registered</a> </span> 
+                                                        <span class="column is-6 has-text-centered"><a href= "/events/cancel/<%=event._id%>/<%=currentUser._id%>" class="button is-default is-success is-rounded">Registered</a> </span> 
                                                     <%} else{%>
                                                         <span class="column is-6 has-text-centered"><a href= "/events/registered/<%=event._id%>/<%=currentUser._id%>" class="button is-default is-info is-rounded">Register</a> </span> 
                                                     <% }%>

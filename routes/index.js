@@ -3,6 +3,9 @@ var router = express.Router();
 var passport = require("passport");
 var User = require("../models/user");
 var Event = require("../models/events");
+var async=require("async");
+var nodemailer=require("nodemailer");
+var crypto=require("crypto");
 
 var middleware = require("../middleware");
 var multer = require('multer');
@@ -101,4 +104,121 @@ router.get("/logout", function(req, res) {
   res.redirect("/events");
 });
 
+//forgot-password route
+router.get("/forgot-password",function(req,res){
+  res.render("users/forgotPassword");
+})
+
+router.post("/forgot-password",function(req,res,next){
+  async.waterfall([
+    function(done) {
+      crypto.randomBytes(20,function(err,buf){
+        var token = buf.toString('hex');
+        done(err,token);
+      });
+    },
+    function(token,done){
+      User.findOne({ email: req.body.email},function(err,user){
+        if(!user){
+          req.flash("error", "No account with that email address exists.");
+          return res.redirect("users/forgotPassword");
+        }
+        user.resetPasswordToken=token;
+        user.resetPasswordExpires= Date.now()+3600000; //1hour
+
+        user.save(function(err){
+          done(err,token,user);
+        });
+      });
+    },
+    function(token,user,done){
+      var smtpTransport=nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+          user:'chelseadipu10031905@gmail.com',
+          pass: process.env.GMAILPASS
+        }
+      });
+      var mailOptions={
+        to: user.email,
+        from: 'chelseadipu10031905@gmail.com',
+        subject: 'EventTrack User Account Password Reset',
+        text: 'You are receiving this because you (or someone else) have requested to reset the password of your EventTrack account.\n\n'+
+              'Please click on the following link, or paste this into your browser to complete the process\n\n'+
+              'http://' + req.headers.host + '/reset/'+token+'\n\n'+
+              'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+      };
+      smtpTransport.sendMail(mailOptions,function(err){
+        console.log('mail sent');
+        req.flash('Success','An e-mail has been sent to '+user.email+'with further instructions.');
+        done(err,'done');
+      });
+    }
+  ], function(err){
+    if(err) return next(err);
+    res.redirect('/forgot-password');
+  }
+  )
+})
+
+router.get('/reset/:token',function(req,res){
+  User.findOne({resetPasswordToken: req.params.token, resetPasswordExpires: {$gt: Date.now()}},function(err,user){
+    if(!user){
+      req.flash('error', 'Password reset token is invalid or has expired.');
+      return res.redirect('/forgot-password');
+    }
+    res.render('users/resetPassword',{token:req.params.token});
+  });
+});
+
+router.post('/reset/:token',function(req,res){
+  async.waterfall([
+    function(done){
+      User.findOne({resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now()}},function(err,user){
+        if(!user){
+          req.flash('error','Password reset token is invalid or has expired.');
+          return res.redirect('back');
+        }
+        
+        if(req.body.password===req.body.confirm){
+          user.setPassword(req.body.password,function(err){
+            user.resetPasswordToken=undefined;
+            user.resetPasswordExpires=undefined;
+            user.save(function(err){
+              req.login(user,function(err){
+                done(err,user);
+              });
+            });
+          })
+        } else {
+          req.flash("error","Passwords do not match.");
+          res.redirect('back');
+        }
+      });
+    },
+    function(user,done){
+      var smtpTransport=nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+          user:'chelseadipu10031905@gmail.com',
+          pass: process.env.GMAILPASS
+        }
+      });
+      var mailOptions={
+        to: user.email,
+        from: 'chelseadipu10031905@gmail.com',
+        subject: 'EventTrack User Account Password Changed',
+        text: 'The password to your EventTrack account with username '+user.username+' has been changed.\n\n'+
+              'In case you don\'t recognize this activity please contact the administration of the page. The contact details can be found in the page.\n'
+      };
+      smtpTransport.sendMail(mailOptions,function(err){
+        console.log('mail sent');
+        req.flash('Success','Your Password has been changed successfully!');
+        done(err);
+      });
+    }
+  ], function(err){
+    res.redirect('/events');
+  })
+})
 module.exports = router;
