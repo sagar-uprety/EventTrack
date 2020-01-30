@@ -188,6 +188,7 @@
                 </div>
               </div>
             </div>
+            
             <div class="column is-6 right-image " data-aos="fade-left">
               <img
                 class="is-rounded"
@@ -195,6 +196,9 @@
                 alt="Seconday Event Photo"
               />
             </div>
+
+            <span class="pull-right">Time : <%=moment(events.createdAt).fromNow()%></span><small
+            >
           </div>
         </div>
       </div>
@@ -246,7 +250,8 @@
                       ><i class="fas fa-heart"></i>Edit</a
                     >
                     <% } %>
-                    <span> 2 hrs</span></small
+                     <span class="pull-right">Time : <%=moment(comment.createdAt).fromNow()%></span><small
+            ></small
                   >
                 </p>
               </div>

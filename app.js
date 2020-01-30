@@ -31,7 +31,7 @@ app.use(express.static(__dirname +"/public/"));
 app.set("view engine","ejs");
 app.use(flash());
 // seedDB(); //-- resets database ....uncomment to reset 
-
+app.locals.moment = require('moment');
 //passport config starts
 app.use(
   require("express-session")({
