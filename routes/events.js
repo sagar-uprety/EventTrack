@@ -131,27 +131,17 @@ router.get("/registered/:eventId/:userId",middleware.isLoggedIn,function(req,res
     })
   })
 })
-//Cancel Event Registration Route
-// router.get("/cancel/:eventId/:userId",middleware.isLoggedIn,function(req,res){
-//   Event.registeredUser.find({name: "Ghum Gham"},function(err1,user){
-//     if(err1){
-//       console.log(err1);
-//     }
-//     else{
-//       console.log(user);
-//     }
+// Cancel Event Registration Route
+// router.get("/cancel/:eventId/:regUserId",function(req,res){
+//   //event._id
+//   //event.registeredUser._id
+
+//   Event.findById(req.params.eventId,function(err,foundEvent){
+//     console.log(foundEvent,req.params.eventId)
 //   })
-//   // User.registeredEvent.findAndRemove({id: req.params.eventId},function(err2){
-//   //   if(err2){
-//   //     console.log(err2);
-//   //   }
-//   //   else{
-//   //     console.log("User.registeredEvent Successfully Removed");
-//   //     req.flash("Success","Successfully Removed");
-//   //   }
-//   // })
-//   res.redirect("/events");
+//   res.redirect('/events')
 // })
+
 //edit route
 router.get("/:id/edit", middleware.checkEventOwnership, function(req, res) {
   Event.findById(req.params.id, function(err, foundEvent) {

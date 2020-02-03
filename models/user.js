@@ -12,6 +12,9 @@ var UserSchema = new mongoose.Schema({
   sex: String,
   resetPasswordToken: String,
   resetPasswordExpires: Date,
+  isVerified: Boolean,
+  verificationToken: String,
+  verificationTokenExpires: Date,
   registeredEvent: [{
     id: {
       type: mongoose.Schema.Types.ObjectId,

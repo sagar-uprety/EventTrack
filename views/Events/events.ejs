@@ -94,8 +94,8 @@
                                 <span class="title is-6"><%=event.venue%></span>
                                 <span class="is-6 has-text-centered">Participation Number: <%=event.registeredUser.length%></span>
                                 <p class="columns is-mobile gap">
-                                    <span class="column is-6 has-text-centered"><a href= "/events/<%=event._id%>" class="button is-default is-info is-rounded">View Details</a></span>
-                                    
+                                    <span class="column is-6 has-text-centered"><a href= "/events/<%=event._id%>" class="button is-default is-info is-rounded" class="viewDetails">View Details</a></span>
+                                   
                                     <% if(!currentUser){%>
                                         <span class="column is-6 has-text-centered"><a href= "/login" class="button is-default is-info is-rounded">Register</a> </span> 
                                     <%} else{%>
@@ -106,16 +106,57 @@
                                                 <span class="column is-6 has-text-centered"><a href= "/events/registered/<%=event._id%>/<%=currentUser._id%>" class="button is-default is-info is-rounded">Register</a> </span> 
                                             <%} else {%>
                                                 <%event.registeredUser.forEach(function(user){%>
-                                                    <!-- no.s of buttons are present in a single line-->
                                                     <%if(user.id.equals(currentUser._id)){%>
-                                                        <span class="column is-6 has-text-centered"><a href= "/events/cancel/<%=event._id%>/<%=currentUser._id%>" class="button is-default is-success is-rounded">Registered</a> </span> 
+                                                        <span class="column is-6 has-text-centered"><a href= "/events/cancel/<%=event._id%>/<%=user._id%>" class="button is-default is-success is-rounded register">Registered</a> </span> 
                                                     <%} else{%>
-                                                        <span class="column is-6 has-text-centered"><a href= "/events/registered/<%=event._id%>/<%=currentUser._id%>" class="button is-default is-info is-rounded">Register</a> </span> 
+                                                        <span class="column is-6 has-text-centered"><a href= "/events/registered/<%=event._id%>/<%=currentUser._id%>" class="button is-default is-info is-rounded register">Register</a> </span> 
                                                     <% }%>
                                                 <% })%>
                                             <% }%>
                                         <% }%>
                                     <%}%>
+
+                                    <!-- <%if(!currentUser) {%>
+                                    <span class="column is-6 has-text-centered "><a href= "/login" class="button is-default is-info is-rounded">Register</a> </span> 
+                                    <%} else{%>
+                                        <span class="column is-6 has-text-centered register"><a href= "/events/registered/<%=event._id%>/<%=currentUser._id%>" class="button is-default is-info is-rounded link">Register</a> </span> 
+
+                                        <%if(event.author.id.equals(currentUser._id)) {%>
+                                            <span class="column is-6 has-text-centered"><a href= "/events/myevent/<%=event.name%>/<%=event._id%>" class="button is-default is-info is-outlined is-rounded">Your Event</a> </span>                                             
+                                            <script>
+                                                var view=document.getElementsByClassName('viewDetails');
+                                                var register=document.getElementsByClassName('register');
+
+                                                register.style.display='none';
+                                                view.classList.remove('is-6');
+                                                view.classList.add('is-fullwidth');
+                                            </script>
+                                        <%} else if(event.registeredUser.length!==0) {%>
+                                            <%event.registeredUser.forEach(function(registeredUser){%>
+                                                    <%if(registeredUser.id.equals(currentUser._id)){%>
+                                                    <script>
+                                                        var register=document.getElementsByClassName('register');
+                                                        register.classList.remove('is-info');
+                                                        register.classList.add('is-success');
+
+                                                        register.innerHTML="Registered";
+                                                        register.onclick = function() {
+                                                        document.getElementsByClassName("link").href="/events"; 
+                                                        return false;
+                                                        };
+                                                    </script>
+                                                <%} %>
+                                            <% })%>
+                                        <% } else{%>
+                                            <script>
+                                            var register=document.getElementsByClassName('register');
+                                            register.classList.remove('is-info');
+                                            register.classList.add('is-dark');
+                                        </script>
+                                            <%}%>
+                                        
+                                    <% }%> -->
+
                                 </p>
                             </div>
                         </div>
@@ -126,6 +167,13 @@
             <!-- End Staff -->
         </div>
     </div>
+    <script>
+        var register=document.getElementsByClassName('register');
+        console.log(register);
+        for(var i=0;i<register.length;i++){
+            
+        }
+    </script>
 <script src="js/tabs.js"></script>
 
 <%- include ("../partials/footer") %>

@@ -1,5 +1,6 @@
 var Event = require("../models/events");
 var Comment = require("../models/comments");
+var User = require("../models/user");
 
 // all the middleare goes here
 var middlewareObj = {};
@@ -53,5 +54,18 @@ middlewareObj.isLoggedIn = function(req, res, next) {
   req.flash("error", "You need to be logged in to do that");
   res.redirect("/login");
 };
+
+// middlewareObj.checkUserVerification= function(req,res,next){
+//   User.findOne({username: req.body.username},function(err,user){
+//     if(!user){
+//       req.flash('The account with the username '+req.body.username+ ' does not exist');
+//       console.log('The account with the username '+req.body.username+ ' does not exist');
+//       res.redirect('/login')
+//     }
+//     if(user.isVerified){
+//       res.redirect('/events')
+//     }
+//   })
+// };
 
 module.exports = middlewareObj;
