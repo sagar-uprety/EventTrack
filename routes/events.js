@@ -50,7 +50,7 @@ router.get("/category/:categ",function(req,res){
 });
 
 //create new event form
-router.get("/new", middleware.isLoggedIn, function(req, res) {
+router.get("/new", middleware.isLoggedIn, middleware.checkUserVerification, function(req, res) {
   res.render("Events/newEvent");
 });
 
@@ -96,7 +96,7 @@ router.get("/:id", function(req, res) {
 });
 
 //Registration
-router.get("/registered/:eventId/:userId",middleware.isLoggedIn,function(req,res){
+router.get("/registered/:eventId/:userId",middleware.isLoggedIn,middleware.checkUserVerification,function(req,res){
   Event.findById(req.params.eventId,function(err1,event){
     if(err1){
       console.log(err1);
@@ -131,16 +131,6 @@ router.get("/registered/:eventId/:userId",middleware.isLoggedIn,function(req,res
     })
   })
 })
-// Cancel Event Registration Route
-// router.get("/cancel/:eventId/:regUserId",function(req,res){
-//   //event._id
-//   //event.registeredUser._id
-
-//   Event.findById(req.params.eventId,function(err,foundEvent){
-//     console.log(foundEvent,req.params.eventId)
-//   })
-//   res.redirect('/events')
-// })
 
 //edit route
 router.get("/:id/edit", middleware.checkEventOwnership, function(req, res) {
