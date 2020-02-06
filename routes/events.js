@@ -131,6 +131,32 @@ router.get("/registered/:eventId/:userId",middleware.isLoggedIn,middleware.check
     })
   })
 })
+// Cancel Event Registration Route
+router.get("/cancel/:eventId/:userId",function(req,res){
+  Event.findOne({_id: req.params.eventId},function(err,event){
+    event.registeredUser.forEach(function(user){
+      if(user.id.equals(req.params.userId)){
+        
+        user.remove()
+      }
+    })
+    event.save()
+  })
+
+  User.findOne({_id: req.params.userId},function(err,user){
+    user.registeredEvent.forEach(function(event){
+      if(event.id.equals(req.params.eventId)){
+        event.remove()
+      }
+    })
+    user.save()
+  })
+  req.flash('success','Your registration to has been cancelled.')
+  console.log('success','Your registration to has been cancelled.')
+
+  res.redirect('/events')
+
+})
 
 //edit route
 router.get("/:id/edit", middleware.checkEventOwnership, function(req, res) {
