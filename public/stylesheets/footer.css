@@ -1,0 +1,19 @@
+.footer{
+background-color: #222831;
+color: lemonchiffon;
+font-size: 16px;
+margin-top: 20px;
+}
+
+.footer p, .strong
+{color: lemonchiffon;}
+
+.footer a:hover
+{color: crimson;}
+
+.fa
+{color: lemonchiffon;
+margin: 10px;}
+
+::selection 
+{background-color:#DEF4FF;}

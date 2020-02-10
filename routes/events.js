@@ -24,17 +24,6 @@ cloudinary.config({
   api_key: process.env.CLOUDINARY_API_KEY, 
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
-//all events
-router.get("/", function(req, res) {
-  Event.find({}, function(err, allEvents) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log()
-      res.render("Events/events", { events: allEvents });
-    }
-  });
-});
 
 //Events Display along Categories
 router.get("/category/:categ",function(req,res){
@@ -48,6 +37,40 @@ router.get("/category/:categ",function(req,res){
       }
   })
 });
+var NodeGeocoder = require("node-geocoder");
+
+var options = {
+  provider: "google",
+  httpAdapter: "https",
+  apiKey: process.env.GEOCODER_API_KEY,
+  formatter: null
+};
+
+var geocoder = NodeGeocoder(options);
+
+//all events
+router.get("/", function(req, res) {
+  if(req.query.search){
+    const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+    Event.find({name: regex}, function (err, allEvents) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.render("Events/events", {events: allEvents});
+      }
+    });
+  }
+  else{
+     Event.find({}, function (err, allEvents) {
+       if (err) {
+         console.log(err);
+       } else {
+         res.render("Events/events", {events: allEvents });
+       }
+     });
+  }
+});
+
 
 //create new event form
 router.get("/new", middleware.isLoggedIn, middleware.checkUserVerification, function(req, res) {
@@ -71,14 +94,25 @@ router.post("/", middleware.isLoggedIn, upload.single('resume'), function(req, r
       id: req.user._id,
       username: req.user.username
     }
+    geocoder.geocode(req.body.eventVenue, function(err, data) {
+      if (err || !data.length) {
+        req.flash("error", "Invalid address");
+        console.log(err);
+        return res.redirect("back");
+      }
+      req.body.events.lat = data[0].latitude;
+      req.body.events.lng = data[0].longitude;
+      req.body.events.location = data[0].formattedAddress;
+    });
+    
     Event.create(req.body.events, function(err, events) {
       if (err) {
         req.flash('error', err.message);
         return res.redirect('back');
       }
       res.redirect('/events/' + events.id);
-    });
-  });
+
+  
 });
 
 //event details show page
@@ -179,6 +213,12 @@ router.get("/myevent/:name/:id",middleware.checkEventOwnership,function(req,res)
 
 // UPDATE EVENT ROUTE
 router.put("/:id", middleware.checkEventOwnership, upload.single('resume'), function(req, res) {
+  geocoder.geocode(req.body.eventVenue, function(err, data) {
+    if (err || !data.length) {
+      req.flash("error", "Invalid address");
+      return res.redirect("back");
+    }
+    
   // find and update the correct events
   Event.findById(req.params.id, async function(err, events) {
     if (err) {
@@ -197,16 +237,20 @@ router.put("/:id", middleware.checkEventOwnership, upload.single('resume'), func
         }   
     }
     events.name=req.body.name;
-    events.venue=req.body.venue;
-    events.image=req.body.eventURL;
+    events.image2=req.body.URL2;
+    events.image=req.body.URL;
     events.description=req.body.description;
     events.category=req.body.category;
+    events.lat = data[0].latitude;
+    events.lng = data[0].longitude;
+    events.location = data[0].formattedAddress;
     events.save();
     req.flash("success","Successfully Updated!");
       //redirect somewhere(show page)
       res.redirect("/events/" + req.params.id);
     }
   });
+   });
 });
 
 // DESTROY EVENT ROUTE
@@ -219,5 +263,9 @@ router.delete("/:id", middleware.checkEventOwnership, function(req, res) {
     }
   });
 });
+
+function escapeRegex(text) {
+  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
 
 module.exports = router;

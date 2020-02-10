@@ -2,18 +2,24 @@ var mongoose = require("mongoose");
 
 var eventSchema = new mongoose.Schema({
   name: String,
-  venue: String,
   image: String,
   subImage: String,
   imageId: String,
   category: String,
+  image2: String,
   description: String,
+  location: String,
+  lat: Number,
+  lng: Number,
+  createdAt: { type: Date, default: Date.now },
   author: {
     id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User"
     },
-    username: String
+    username: String,
+    email: String,
+    phone: String
   },
   comments: [
     {

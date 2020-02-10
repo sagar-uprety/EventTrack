@@ -1,5 +1,7 @@
 require('dotenv').config();
 //initialization start
+require('dotenv').config();
+
 const express = require("express"),
   app = express(),
   bodyParser = require("body-parser"),
@@ -29,8 +31,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname +"/public/"));
 app.set("view engine","ejs");
 app.use(flash());
-//seedDB(); //-- resets database ....uncomment to reset 
-
+// seedDB(); //-- resets database ....uncomment to reset 
+app.locals.moment = require('moment');
 //passport config starts
 app.use(
   require("express-session")({
