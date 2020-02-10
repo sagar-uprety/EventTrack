@@ -74,8 +74,6 @@ router.post("/register", upload.single('image'), function(req, res) {
             return res.redirect('back');
           }
           passport.authenticate("local")(req, res, function() {
-            req.flash("success", "Successfully registered! Please verify your account before you proceed."); 
-            console.log("Verfiy Your account.") 
             done(err,token,user);
           });
         });

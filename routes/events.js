@@ -111,8 +111,8 @@ router.post("/", middleware.isLoggedIn, upload.single('resume'), function(req, r
         return res.redirect('back');
       }
       res.redirect('/events/' + events.id);
-
-  
+    })
+  })
 });
 
 //event details show page
@@ -219,38 +219,38 @@ router.put("/:id", middleware.checkEventOwnership, upload.single('resume'), func
       return res.redirect("back");
     }
     
-  // find and update the correct events
-  Event.findById(req.params.id, async function(err, events) {
-    if (err) {
-      req.flash("error",err.message);
-      res.redirect("/events");
-    } else {
-      if(req.file){
-        try{
-          await cloudinary.v2.uploader.destroy(events.imageId);
-          var result= await cloudinary.v2.uploader.upload(req.file.path);
-          events.imageId=result.public_id;
-          events.subImage=result.secure_url;
-        } catch(err){
-          req.flash("error",err.message);
-          return res.redirect("/events");
-        }   
-    }
-    events.name=req.body.name;
-    events.image2=req.body.URL2;
-    events.image=req.body.URL;
-    events.description=req.body.description;
-    events.category=req.body.category;
-    events.lat = data[0].latitude;
-    events.lng = data[0].longitude;
-    events.location = data[0].formattedAddress;
-    events.save();
-    req.flash("success","Successfully Updated!");
-      //redirect somewhere(show page)
-      res.redirect("/events/" + req.params.id);
-    }
+    // find and update the correct events
+    Event.findById(req.params.id, async function(err, events) {
+      if (err) {
+        req.flash("error",err.message);
+        res.redirect("/events");
+      } else {
+        if(req.file){
+          try{
+            await cloudinary.v2.uploader.destroy(events.imageId);
+            var result= await cloudinary.v2.uploader.upload(req.file.path);
+            events.imageId=result.public_id;
+            events.subImage=result.secure_url;
+          } catch(err){
+            req.flash("error",err.message);
+            return res.redirect("/events");
+          }   
+      }
+      events.name=req.body.name;
+      events.image2=req.body.URL2;
+      events.image=req.body.URL;
+      events.description=req.body.description;
+      events.category=req.body.category;
+      events.lat = data[0].latitude;
+      events.lng = data[0].longitude;
+      events.location = data[0].formattedAddress;
+      events.save();
+      req.flash("success","Successfully Updated!");
+        //redirect somewhere(show page)
+        res.redirect("/events/" + req.params.id);
+      }
+    });
   });
-   });
 });
 
 // DESTROY EVENT ROUTE
