@@ -97,6 +97,7 @@ router.get("/:id", function(req, res) {
 
 //Registration
 router.get("/registered/:eventId/:userId",middleware.isLoggedIn,middleware.checkUserVerification,function(req,res){
+
   Event.findById(req.params.eventId,function(err1,event){
     if(err1){
       console.log(err1);
@@ -126,7 +127,7 @@ router.get("/registered/:eventId/:userId",middleware.isLoggedIn,middleware.check
         }
         user.registeredEvent.push(newRegisteredEvent)
         user.save();
-        res.redirect("/events");
+        return res.redirect("back");
       }
     })
   })
@@ -138,6 +139,9 @@ router.get("/cancel/:eventId/:userId",function(req,res){
       if(user.id.equals(req.params.userId)){
         
         user.remove()
+      }else{
+        req.flash('error','User not found.');
+        return res.redirect('back');
       }
     })
     event.save()
@@ -148,14 +152,16 @@ router.get("/cancel/:eventId/:userId",function(req,res){
       if(event.id.equals(req.params.eventId)){
         event.remove()
       }
+      else{
+        req.flash('error','User not found.');
+        return res.redirect('back');
+      }
     })
     user.save()
   })
   req.flash('success','Your registration to has been cancelled.')
   console.log('success','Your registration to has been cancelled.')
-
-  res.redirect('/events')
-
+  res.redirect('back')
 })
 
 //edit route

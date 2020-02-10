@@ -82,8 +82,8 @@
                                     <div class="content">
                                         <span class="title is-6"><%=event.venue%></span>
                                         <p class="columns is-mobile gap">
-                                            <span class="column is-6 has-text-centered"><a href= "/events/<%=event._id%>" class="button is-default is-info is-rounded">View Details</a></span>
-                                            <span class="column is-6 has-text-centered"><a href= "/events/<%=event._id%>" class="button is-default is-success is-rounded">Registered</a> </span> 
+                                            <span class="column is-6 has-text-centered"><a href= "/events/<%=event.id%>" class="button is-default is-info is-rounded">View Details</a></span>
+                                            <span class="column is-6 has-text-centered"><a href= "/events/cancel/<%=event.id%>/<%=currentUser._id%>" class="button is-default is-success is-rounded">Registered</a> </span> 
                                         </p>
                                         </div>
                                 </div>

@@ -17,7 +17,6 @@ const express = require("express"),
 var commentRoutes    = require("./routes/comments"),
     eventRoutes = require("./routes/events"),
     indexRoutes      = require("./routes/index")
-    EventCategRoutes = require("./routes/EventCateg")
 
 mongoose.set("useNewUrlParser", true);
 mongoose.set("useFindAndModify", false);
@@ -57,7 +56,6 @@ app.use(function(req, res, next) {
 app.use("/", indexRoutes);
 app.use("/events", eventRoutes);
 app.use("/events/:id/comments", commentRoutes);
-app.use("/events/category/:categ",EventCategRoutes);
 
 var port = process.env.PORT || 3000;
 app.listen(port, function() {
