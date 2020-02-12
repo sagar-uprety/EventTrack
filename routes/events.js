@@ -35,14 +35,15 @@ cloudinary.config({
 
 //Events Display along Categories
 router.get("/category/:categ",function(req,res){
-  Event.find({category: req.params.categ},function(err,events){
-      if(err){
-          console.log(err);
-          res.redirect('/events');
-      }
-      else{
-          res.render("Events/EventCateg",{ events: events });
-      }
+//Event.find({category: req.params.categ},function(err,events){
+  Event.find({category:req.params.categ}).sort('-createdAt').exec(function(err,events){
+    if(err){
+        console.log(err);
+        res.redirect('/events');
+    }
+    else{
+        res.render("Events/EventCateg",{ events: events });
+    }
   })
 });
 
@@ -57,15 +58,14 @@ router.get("/", function(req, res) {
         res.render("Events/events", {events: allEvents});
       }
     });
-  }
-  else{
-     Event.find({}, function (err, allEvents) {
+  } else{
+    Event.find().sort('-createdAt').exec(function(err,allEvents){
        if (err) {
          console.log(err);
        } else {
          res.render("Events/events", {events: allEvents });
        }
-     });
+    });
   }
 });
 
@@ -111,7 +111,6 @@ router.post("/", middleware.isLoggedIn, upload.single('resume'), function(req, r
           res.redirect("/events/" + events.id);
         });
     });
-    
   })
 });
 
@@ -171,8 +170,7 @@ router.get("/cancel/:eventId/:userId",function(req,res){
   Event.findOne({_id: req.params.eventId},function(err,event){
     event.registeredUser.forEach(function(user){
       if(user.id.equals(req.params.userId)){
-        
-        user.remove()
+        user.remove();
       }else{
         req.flash('error','User not found.');
         return res.redirect('back');
