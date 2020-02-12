@@ -3,6 +3,14 @@ var router = express.Router();
 var User = require("../models/user");
 var Event = require("../models/events");
 var middleware = require("../middleware");
+var NodeGeocoder = require("node-geocoder");
+var options = {
+  provider: "google",
+  httpAdapter: "https",
+  apiKey: process.env.GEOCODER_API_KEY,
+  formatter: null
+};
+var geocoder = NodeGeocoder(options);
 var multer = require('multer');
 var storage = multer.diskStorage({
   filename: function(req, file, callback) {
@@ -37,16 +45,6 @@ router.get("/category/:categ",function(req,res){
       }
   })
 });
-var NodeGeocoder = require("node-geocoder");
-
-var options = {
-  provider: "google",
-  httpAdapter: "https",
-  apiKey: process.env.GEOCODER_API_KEY,
-  formatter: null
-};
-
-var geocoder = NodeGeocoder(options);
 
 //all events
 router.get("/", function(req, res) {
@@ -103,15 +101,17 @@ router.post("/", middleware.isLoggedIn, upload.single('resume'), function(req, r
       req.body.events.lat = data[0].latitude;
       req.body.events.lng = data[0].longitude;
       req.body.events.location = data[0].formattedAddress;
+
+        Event.create(req.body.events, function(err, events) {
+          if (err) {
+            req.flash("error", err.message);
+            return res.redirect("back");
+          }
+          console.log(events);
+          res.redirect("/events/" + events.id);
+        });
     });
     
-    Event.create(req.body.events, function(err, events) {
-      if (err) {
-        req.flash('error', err.message);
-        return res.redirect('back');
-      }
-      res.redirect('/events/' + events.id);
-    })
   })
 });
 
@@ -184,7 +184,7 @@ router.get("/cancel/:eventId/:userId",function(req,res){
   User.findOne({_id: req.params.userId},function(err,user){
     user.registeredEvent.forEach(function(event){
       if(event.id.equals(req.params.eventId)){
-        event.remove()
+        event.remove();
       }
       else{
         req.flash('error','User not found.');

@@ -24,15 +24,15 @@
   </head>
 
   <%- include ("../partials/header") %>
-<body>
 
+  <body>
     <!-- Begin Preloader -->
-    <div class="preloader-wrapper">
+    <!-- <div class="preloader-wrapper">
       <div class="preloader">
         <img src="img/preloader.gif" alt="" />
       </div>
-    </div>
-    <!-- End Preloader-->
+    </div> -->
+    <!-- End Preloader -->
     <!-- Begin Scroll Up Button -->
 
     <form action="#home">
@@ -335,7 +335,7 @@
         var lng = <%=events.lng%>;
         var center = {lat: lat, lng: lng };
         var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 14,
+            zoom: 15,
             center: center,
             scrollwheel: false
         });
@@ -355,8 +355,6 @@
         });
       }
     </script>
-    
-
     <!-- Begin Footer -->
     <%- include("../partials/footer") %>
     <!-- End Footer -->
