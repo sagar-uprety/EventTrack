@@ -225,3 +225,17 @@ a {
 .navbar-item {
     color: #484848;
 }
+#text {
+    text-align: justify;
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-bottom: 2%;
+    padding-top: 2%;
+    font-size: 20px;
+}
+
+.quickview-block {
+    padding-left: 7%;
+    padding-right: 7%;
+    padding-bottom: 7%;
+}
