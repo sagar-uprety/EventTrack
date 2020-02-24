@@ -83,6 +83,8 @@ document.addEventListener("DOMContentLoaded", function() {
       var t = e || window.event;
       27 === t.keyCode && (i(), a());
     });
+
+    
 }),
   $(document).ready(function() {
     $(".open-modal").on("click", function(e) {
