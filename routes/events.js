@@ -127,6 +127,7 @@ router.get("/:id", function(req, res) {
       } else {
         //render show template with that event
         res.render("Events/show", { events: foundEvent });
+        // console.log(foundEvent);
       }
     });
 });
@@ -149,7 +150,8 @@ router.get("/registered/:eventId/:userId",middleware.isLoggedIn,middleware.check
         name: user.firstName+ " "+user.lastName,
         username: user.username,
         email: user.email,
-        sex: user.sex
+        sex: user.sex,
+        contact_no: user.contact_no
         }
         event.registeredUser.push(newRegisteredUser)
         event.save();
@@ -194,8 +196,8 @@ router.get("/cancel/:eventId/:userId",function(req,res){
     })
     user.save()
   })
-  req.flash('success','Your registration to has been cancelled.')
-  console.log('success','Your registration to has been cancelled.')
+  req.flash('success','Your registration has been cancelled.')
+  console.log('success','Your registration has been cancelled.')
   res.redirect('back')
 })
 
@@ -203,12 +205,6 @@ router.get("/cancel/:eventId/:userId",function(req,res){
 router.get("/:id/edit", middleware.checkEventOwnership, function(req, res) {
   Event.findById(req.params.id, function(err, foundEvent) {
     res.render("Events/edit", { events: foundEvent });
-  });
-});
-//Event Information route
-router.get("/myevent/:name/:id",middleware.checkEventOwnership,function(req,res){
-  Event.findById(req.params.id,function(err,foundEvent){
-    res.render("Events/myEvent", { events: foundEvent})
   });
 });
 

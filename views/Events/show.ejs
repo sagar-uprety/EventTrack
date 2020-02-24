@@ -82,22 +82,35 @@
           <h1 class="subtitle">Welcome to</h1>
           <h2 class="title"><%=events.name%></h2>
           <h1 class="subtitle profession">Tagline</h1>
-          <a href="#" class="button is-success is-large">
+
+          <% if(!currentUser){%>
+          <a href="/login" class="button is-success is-large">
             <span class="icon">
               <i class="fas fa-check-square"></i>
             </span>
-            <% if(!currentUser){%>
-            <span><a href= "/login" class="button is-default is-info is-rounded">Register</a> </span> 
-
-            <%} else{%>
-              <%event.registeredUser.forEach(function(user){%>
-              <%if(user.id.equals(currentUser._id)){%>
-                <span><a href= "/events/cancel/<%=event._id%>/<%=currentUser._id%>">Successfully Registered</a></span> 
-              <%} else{%>
-               <span><a href= "/events/registered/<%=event._id%>/<%=currentUser._id%>">Register</a></span> 
-              <% }%>
-              <% })%>
+            <span>Register</span>
           </a>
+          <%} else if (currentUser && events.registeredUser.length!=0){%>
+
+          <%events.registeredUser.forEach(function(user){%>
+          <%if(user.id.equals(currentUser._id)){%>
+          <a href="/events/cancel/<%=events._id%>/<%=currentUser._id%>" class="button is-success is-large">
+            <span class="icon">
+              <i class="fas fa-check-square"></i>
+            </span>
+            <span>Successfully Registered</span>
+          </a>
+          <%}%>
+          <%})%>
+
+          <%} else if (currentUser && events.registeredUser.length==0){%>
+          <a href="/events/registered/<%=events._id%>/<%=currentUser._id%>" class="button is-success is-large">
+            <span class="icon">
+              <i class="fas fa-check-square"></i>
+            </span>
+            <span>Register</span>
+          </a>
+          <%}%>
         </div>
       </div>
       <!-- End Hero Content-->
@@ -146,146 +159,170 @@
             <p class="is-larger">
               <strong>
                 <%=events.description%>
-              </strong>
-            </p>
-            <br />
-            <p>
-              Organized By : <%=events.author.username%>
-            </p>
-            <br />
-            <div class="is-divider"></div>
-            <div class="columns about-links">
-              <div class="column">
-                <p class="heading">
-                  <strong>Give us a Ring</strong>
-                </p>
-                <p class="subheading">
-                  <%=events.author.contact_no%>
-                </p>
-              </div>
-              <div class="column">
-                <p class="heading">
-                  <strong>Email Us</strong>
-                </p>
-                <p class="subheading">
-                  <%=events.author.email%>
-                </p>
-              </div>
-              <div class="column">
-                <p class="heading">
-                  <strong>Venue</strong>
-                </p>
-                <p class="subheading">
-                  <%=events.location%>
-                </p>
-              </div>
+          </strong>
+          </p>
+          <br />
+          <p>
+            Organized By : <%=events.author.username%>
+          </p>
+          <br />
+          <div class="is-divider"></div>
+          <div class="columns about-links">
+            <div class="column">
+              <p class="heading">
+                <strong>Give us a Ring</strong>
+              </p>
+              <p class="subheading">
+                <%=events.author.contact_no%>
+              </p>
             </div>
-            <p>
-              <span>Event Posted : <%=moment(events.createdAt).fromNow()%></span>
-            </p>
-          </div>
-
-          <div class="column is-6 right-image " data-aos="fade-left">
-            <img class="is-rounded" src="<%=events.image2%>" alt="Seconday Event Photo" />
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- End About Me Content -->
-
-    <!-- Begin Location Content -->
-    <div class="section-light" id="location">
-      <div class="column is-12 about-me">
-        <h1 class="title has-text-centered section-title">Venue</h1>
-      </div>
-      <div id="map"></div>
-    </div>
-
-    <!-- End Location Content -->
-
-    <!-- Begin Comment Content -->
-    <div class="section-light" id="comment">
-      <div class="column is-12 about-me">
-        <h1 class="title  has-text-centered section-title">Comments</h1>
-      </div>
-
-      <div class="box section-dark">
-        <%events.comments.forEach(function(comment){ %>
-        <article class="media">
-          <figure class="media-left">
-            <i class="fas fa-comment"></i>
-          </figure>
-          <div class="media-content">
-            <div class="content">
-              <p>
-                <strong><%=comment.author.username%></strong>
-                <br />
-                <%=comment.text%>
-                <br />
-                <small>
-                  <% if(currentUser &&
-                    comment.author.id.equals(currentUser._id)){ %>
-                  <form action="/events/<%=events._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
-                    <button class="button is-normal has-text-danger">
-                      <i class="fas fa-heart"></i>Delete
-                    </button>
-                  </form>
-                  <a href="/events/<%=events._id%>/comments/<%=comment._id %>/edit" class="button has-text-info"><i
-                      class="fas fa-heart"></i>Edit</a>
-                  <% } %>
-                  <span class="pull-right">Time : <%=moment(comment.createdAt).fromNow()%></span><small></small>
+            <div class="column">
+              <p class="heading">
+                <strong>Email Us</strong>
+              </p>
+              <p class="subheading">
+                <%=events.author.email%>
+              </p>
+            </div>
+            <div class="column">
+              <p class="heading">
+                <strong>Venue</strong>
+              </p>
+              <p class="subheading">
+                <%=events.location%>
               </p>
             </div>
           </div>
-        </article>
-        <% }) %>
-        <article class="media">
-          <figure class="media-left">
-            <i class="fas fa-comment"></i>
-          </figure>
-          <div class="media-content">
-            <form action="/events/<%=events._id%>/comments" method="POST">
-              <div class="field">
-                <p class="control">
-                  <textarea class="textarea" placeholder="Start a discussion..." name="comment[text]"></textarea>
-                </p>
-              </div>
-              <div class="field">
-                <p class="control">
-                  <button class="button is-black is-outlined">
-                    Post comment
-                  </button>
-                </p>
-              </div>
-            </form>
-          </div>
-        </article>
-      </div>
-    </div>
-    <!-- End Comment Content -->
-    <% if(currentUser && events.author.id.equals(currentUser._id)){ %>
+          <p>
+            <span>Event Posted : <%=moment(events.createdAt).fromNow()%></span>
+          </p>
+        </div>
 
-    <div class="section-dark">
-      <div class="column is-12 about-me">
-        <h1 class="title  has-text-centered section-title">
-          Organizer's Only Section
-        </h1>
+        <div class="column is-6 right-image " data-aos="fade-left">
+          <img class="is-rounded" src="<%=events.image2%>" alt="Seconday Event Photo" />
+        </div>
       </div>
-      <div class="container has-text-center">
-        <div class="columns is-mobile">
-          <div class="column is-3 is-offset-3 ">
-            <a href="/events/<%=events._id%>/edit" class="button is-rounded is-warning">Update Event Details</a>
+  </div>
+  </div>
+  <!-- End About Me Content -->
+
+  <!-- Begin Location Content -->
+  <div class="section-light" id="location">
+    <div class="column is-12 about-me">
+      <h1 class="title has-text-centered section-title">Venue</h1>
+    </div>
+    <div id="map"></div>
+  </div>
+
+  <!-- End Location Content -->
+
+  <!-- Begin Comment Content -->
+  <div class="section-light" id="comment">
+    <div class="column is-12 about-me">
+      <h1 class="title  has-text-centered section-title">Comments</h1>
+    </div>
+
+    <div class="box section-dark">
+      <%events.comments.forEach(function(comment){ %>
+      <article class="media">
+        <figure class="media-left">
+          <i class="fas fa-comment"></i>
+        </figure>
+        <div class="media-content">
+          <div class="content">
+            <p>
+              <strong><%=comment.author.username%></strong>
+              <br />
+              <%=comment.text%>
+              <br />
+              <small>
+                <% if(currentUser &&
+                    comment.author.id.equals(currentUser._id)){ %>
+                <form action="/events/<%=events._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
+                  <button class="button is-normal has-text-danger">
+                    <i class="fas fa-heart"></i>Delete
+                  </button>
+                </form>
+                <a href="/events/<%=events._id%>/comments/<%=comment._id %>/edit" class="button has-text-info"><i
+                    class="fas fa-heart"></i>Edit</a>
+                <% } %>
+                <span class="pull-right">Time : <%=moment(comment.createdAt).fromNow()%></span><small></small>
+            </p>
           </div>
-          <div class="column is-6">
-            <form action="/events/<%=events._id%>?_method=DELETE" method="POST">
-              <button class="button is-rounded is-danger">Delete Event (Danger)</button>
-            </form>
-          </div>
-          <div class="column is-12"></div>
+        </div>
+      </article>
+      <% }) %>
+      <article class="media">
+        <figure class="media-left">
+          <i class="fas fa-comment"></i>
+        </figure>
+        <div class="media-content">
+          <form action="/events/<%=events._id%>/comments" method="POST">
+            <div class="field">
+              <p class="control">
+                <textarea class="textarea" placeholder="Start a discussion..." name="comment[text]"></textarea>
+              </p>
+            </div>
+            <div class="field">
+              <p class="control">
+                <button class="button is-black is-outlined">
+                  Post comment
+                </button>
+              </p>
+            </div>
+          </form>
+        </div>
+      </article>
+    </div>
+  </div>
+  <!-- End Comment Content -->
+  <% if(currentUser && events.author.id.equals(currentUser._id)){ %>
+  <div class="section-dark">
+    <div class="column is-12 about-me">
+      <h1 class="title  has-text-centered section-title">
+        Organizer's Only Section
+      </h1>
+    </div>
+    <div class="container has-text-center">
+      <div class="columns is-mobile is-multiline">
+        <div class="column is-3 is-offset-3 ">
+          <a href="/events/<%=events._id%>/edit" class="button is-rounded is-warning">Update Event Details</a>
+        </div>
+        <div class="column is-6">
+          <form action="/events/<%=events._id%>?_method=DELETE" method="POST">
+            <button class="button is-rounded is-danger">Delete Event (Danger)</button>
+          </form>
+        </div>
+            <div class="box column is-10 is-offset-1">
+              <h1 class="subtitle has-text-centered">Registered Participants List</h1>
+              <table class="table table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Contact_Info</th>
+                    <th>Sex</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% events.registeredUser.forEach(function(user){ %>
+                  <tr>
+                    <td><a href="/users/<%=user.id%>"><%=user.name%></a></td>
+                    <td><%=user.username%></td>
+                    <td><a href="mailto:<%=user.email%>"><u><%=user.email%></u></a></td>
+                    <td><%=user.contact_no%></td>
+                    <td><%=user.sex%></td>
+                  </tr>
+                  <% })%>
+                </tbody>
+              </table>
+            </div>
+          
         </div>
       </div>
     </div>
-    <% } %>
+  <% } %>
   </div>
   <!-- End Main Content -->
 

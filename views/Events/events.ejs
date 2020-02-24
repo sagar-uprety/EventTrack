@@ -1,175 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Events</title>
-    <link rel="shortcut icon" href="../images/fav_icon.png" type="image/x-icon">
-    <link rel="stylesheet" href="https://unpkg.com/bulma@0.8.0/css/bulma.min.css" />
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <link rel="stylesheet" href="stylesheets/cards.css">
+    <link
+      rel="shortcut icon"
+      href="../images/fav_icon.png"
+      type="image/x-icon"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/bulma@0.8.0/css/bulma.min.css"
+    />
+    <link
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="stylesheets/cards.css" />
     <link rel="stylesheet" href="stylesheets/footer.css" />
-</head>
+  </head>
 
-<body>
-
-        <!-- START NAV -->
-        <%- include ("../partials/header") %>
-        <!-- END NAV -->
+  <body>
+    <!-- START NAV -->
+    <%- include ("../partials/header") %>
+    <!-- END NAV -->
 
     <div class="container">
-        <div id="flow">
-            <span class="flow-1"></span>
-            <span class="flow-2"></span>
-            <span class="flow-3"></span>
+      <div id="flow">
+        <span class="flow-1"></span>
+        <span class="flow-2"></span>
+        <span class="flow-3"></span>
+      </div>
+      <div class="section">
+        <div class="breadcrumb is-boxed is-centered " id="tabs">
+          <ul>
+            <li data-target="pane-1" id="1" class="is-active">
+              <a href="/events/category/Networking">
+                <span class="icon is-small"><i class="fa fa-image"></i></span>
+                <span>Networking</span>
+              </a>
+            </li>
+
+            <li data-target="pane-2" id="2">
+              <a href="/events/category/Educational">
+                <span class="icon is-small"><i class="fab fa-empire"></i></span>
+                <span>Educational</span>
+              </a>
+            </li>
+            <li data-target="pane-3" id="3">
+              <a href="/events/category/Social">
+                <span class="icon is-small"
+                  ><i class="fab fa-superpowers"></i
+                ></span>
+                <span>Social</span>
+              </a>
+            </li>
+            <li data-target="pane-4" id="4">
+              <a href="/events/category/SciTech">
+                <span class="icon is-small"><i class="fa fa-film"></i></span>
+                <span>SciTech</span>
+              </a>
+            </li>
+            <li data-target="pane-5" id="5">
+              <a href="/events/category/Others">
+                <span class="icon is-small"><i class="fa fa-image"></i></span>
+                <span>Others</span>
+              </a>
+            </li>
+          </ul>
         </div>
-        <div class="section">
-            <div class="breadcrumb is-boxed is-centered " id="tabs">
-                <ul>
-                    <li data-target="pane-1" id="1" class="is-active">
-                        <a href="/events/category/Networking">
-                            <span class="icon is-small"><i class="fa fa-image"></i></span>
-                            <span>Networking</span>
-                        </a>
-                    </li>
-                    
-                    <li data-target="pane-2" id="2">
-                        <a href="/events/category/Educational">
-                            <span class="icon is-small"><i class="fab fa-empire"></i></span>
-                            <span>Educational</span>
-                        </a>
-                    </li>
-                    <li data-target="pane-3" id="3">
-                        <a href="/events/category/Social">
-                            <span class="icon is-small"><i class="fab fa-superpowers"></i></span>
-                            <span>Social</span>
-                        </a>
-                    </li>
-                    <li data-target="pane-4" id="4">
-                        <a href="/events/category/SciTech">
-                            <span class="icon is-small"><i class="fa fa-film"></i></span>
-                            <span>SciTech</span>
-                        </a>
-                    </li>
-                    <li data-target="pane-5" id="5">
-                        <a href="/events/category/Others">
-                            <span class="icon is-small"><i class="fa fa-image"></i></span>
-                            <span>Others</span>
-                        </a>
-                    </li>
-                </ul>
+        <!--targer ids and class to be added-->
+
+        <form action="/events" method="GET" class="form-inline">
+          <div class="box">
+            <div class="field has-addons">
+              <div class="control is-expanded">
+                <input
+                  class="input has-text-centered"
+                  name="search"
+                  placeholder="» » » » » » find me « « « « « «"
+                />
+              </div>
+              <div class="control">
+                <button class="button is-link">Search</button>
+              </div>
             </div>
-            <!--targer ids and class to be added-->
-
-            <form action="/events" method="GET" class="form-inline">
-                <div class="box">
-                    <div class="field has-addons">
-                        <div class="control is-expanded">
-                            <input class="input has-text-centered" name="search" placeholder="» » » » » » find me « « « « « «">
-                        </div>
-                        <div class="control">
-                            <button class="button is-link">Search</button>
-                        </div>
-                    </div>
-                    <div class="has-text-centered">
-                        <a class="button is-rounded is-link" href="/events/new">Add Your Event</a>
-                    </div>
-                </div>
-            </form>
-        </div>
-            <!-- Cards -->
-            <div class="row columns is-multiline">
-              <% events.forEach(function(event){ %>
-                <div class="column is-one-third">
-                    <div class="card">
-                        <div class="card-image">
-                            <figure class="image is-4by3">
-                                <img src="<%=event.image%>" alt="Image">
-                            </figure>
-                        </div>
-                        <div class="card-content">
-                            <div class="media">
-                                <div class="media-content">
-                                    <p class="title is-4 no-padding"><%=event.name%></p>
-                                    <p class="gap"><span class="title is-6">Type: <a href="/events/category/<%=event.category%>"><u><%=event.category%></u></a></span></p>
-                                </div>
-                            </div>
-                            <div class="content">
-                                <span class="title is-6"><%=event.venue%></span>
-                                
-                                <p class="columns is-mobile gap">
-                                    <span class="column is-6 has-text-centered"><a href= "/events/<%=event._id%>" class="button is-default is-info is-rounded" class="viewDetails">View Details</a></span>
-                                   
-                                    <% if(!currentUser){%>
-                                        <span class="column is-6 has-text-centered"><a href= "/login" class="button is-default is-info is-rounded">Register</a> </span> 
-                                    <%} else{%>
-                                        <%if(event.author.id.equals(currentUser._id)) {%>
-                                            <span class="column is-6 has-text-centered"><a href= "/events/myevent/<%=event.name%>/<%=event._id%>" class="button is-default is-info is-outlined is-rounded">Your Event</a> </span>                                             
-                                        <%} else {%>
-                                            <%if(event.registeredUser.length===0) {%>
-                                                <span class="column is-6 has-text-centered"><a href= "/events/registered/<%=event._id%>/<%=currentUser._id%>" class="button is-default is-info is-rounded">Register</a> </span> 
-                                            <%} else {%>
-                                                <%event.registeredUser.forEach(function(user){%>
-                                                    <%if(user.id.equals(currentUser._id)){%>
-                                                        <span class="column is-6 has-text-centered"><a href= "/events/cancel/<%=event._id%>/<%=currentUser._id%>" class="button is-default is-success is-rounded register">Registered</a> </span> 
-                                                    <%} else{%>
-                                                         <span class="column is-6 has-text-centered"><a href= "/events/registered/<%=event._id%>/<%=currentUser._id%>" class="button is-default is-info is-rounded register">Register</a> </span> 
-                                                    <% }%>
-                                                <% })%>
-                                            <% }%>
-                                        <% }%>
-                                    <%}%>
-
-                                    <!-- <%if(!currentUser) {%>
-                                    <span class="column is-6 has-text-centered "><a href= "/login" class="button is-default is-info is-rounded">Register</a> </span> 
-                                    <%} else{%>
-                                        <span class="column is-6 has-text-centered register"><a href= "/events/registered/<%=event._id%>/<%=currentUser._id%>" class="button is-default is-info is-rounded link">Register</a> </span> 
-
-                                        <%if(event.author.id.equals(currentUser._id)) {%>
-                                            <span class="column is-6 has-text-centered"><a href= "/events/myevent/<%=event.name%>/<%=event._id%>" class="button is-default is-info is-outlined is-rounded">Your Event</a> </span>                                             
-                                            <script>
-                                                var view=document.getElementsByClassName('viewDetails');
-                                                var register=document.getElementsByClassName('register');
-
-                                                register.style.display='none';
-                                                view.classList.remove('is-6');
-                                                view.classList.add('is-fullwidth');
-                                            </script>
-                                        <%} else if(event.registeredUser.length!==0) {%>
-                                            <%event.registeredUser.forEach(function(registeredUser){%>
-                                                    <%if(registeredUser.id.equals(currentUser._id)){%>
-                                                    <script>
-                                                        var register=document.getElementsByClassName('register');
-                                                        register.classList.remove('is-info');
-                                                        register.classList.add('is-success');
-
-                                                        register.innerHTML="Registered";
-                                                        register.onclick = function() {
-                                                        document.getElementsByClassName("link").href="/events"; 
-                                                        return false;
-                                                        };
-                                                    </script>
-                                                <%} %>
-                                            <% })%>
-                                        <% } else{%>
-                                            <script>
-                                            var register=document.getElementsByClassName('register');
-                                            register.classList.remove('is-info');
-                                            register.classList.add('is-dark');
-                                        </script>
-                                            <%}%>
-                                        
-                                    <% }%> -->
-
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <% }); %>     
+            <div class="has-text-centered">
+              <a class="button is-rounded is-link" href="/events/new"
+                >Add Your Event</a
+              >
             </div>
-            <!-- End Staff -->
+          </div>
+        </form>
+      </div>
+      <!-- Cards -->
+      <div class="row columns is-multiline">
+        <% events.forEach(function(event){ %>
+        <div class="column is-one-third">
+          <div class="card">
+            <div class="card-image">
+              <figure class="image is-4by3">
+                <img src="<%=event.image%>" alt="Image" />
+              </figure>
+            </div>
+            <div class="card-content">
+              <div class="media">
+                <div class="media-content">
+                  <p class="title is-4 no-padding"><%=event.name%></p>
+                  <p class="gap">
+                    <span class="title is-6"
+                      >Category:
+                      <a href="/events/category/<%=event.category%>"
+                        ><u><%=event.category%></u></a
+                      ></span
+                    >
+                  </p>
+                </div>
+              </div>
+              <div class="content">
+                <span class="title is-6"><%=event.venue%></span>
+
+                <p class="columns is-mobile gap">
+                
+                 <% if(currentUser && event.author.id.equals(currentUser._id)){%>
+                     <span class="column is-12 has-text-centered"
+                    ><a
+                      href="/events/<%=event._id%>"
+                      class="button is-default is-primary is-rounded viewDetails"
+                      >Organized Event : Details</a
+                    ></span>
+                <%} else{%>
+                    <span class="column is-12 has-text-centered"
+                    ><a
+                      href="/events/<%=event._id%>"
+                      class="button is-default is-info is-rounded viewDetails"
+                      >More Info / Register </a
+                    ></span>
+                <%}%>
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
+        <% }); %>
+      </div>
+      <!-- End Staff -->
+    </div>
 
-<script src="js/events.js"></script>
+    <script src="js/events.js"></script>
 
-<%- include ("../partials/footer") %>
+    <%- include ("../partials/footer") %>
+  </body>
+</html>
