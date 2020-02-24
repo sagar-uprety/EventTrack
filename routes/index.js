@@ -25,8 +25,13 @@ var imageFilter = function (req, file, cb) {
 var upload = multer({ storage: storage, fileFilter: imageFilter})
 
 var cloudinary = require('cloudinary');
+<<<<<<< HEAD
   cloudinary.config({
   cloud_name: "dso6y4yfz",
+=======
+cloudinary.config({
+  cloud_name: "deepessence",
+>>>>>>> caf7008f3d8c10c0ffc1acf41087b976eed7a368
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET
 });              
@@ -114,14 +119,10 @@ router.post("/register", upload.single('image'), function(req, res) {
       crypto.randomBytes(20,function(err,buf){
         var token = buf.toString('hex');
         done(err,token);
-        if(err){
-          console.log(err);
-        }
       });
     },
     
-    function(token,done){ //generate verification token
-      console.log("123");
+    function(token,done){ 
       cloudinary.v2.uploader.upload(req.file.path, function(err, result) {
         if(err) {
           console.log(err);
