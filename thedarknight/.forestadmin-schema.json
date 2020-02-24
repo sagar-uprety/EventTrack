@@ -23,6 +23,56 @@
       "reference": null,
       "inverseOf": null,
       "validations": []
+    }, {
+      "field": "author",
+      "type": {
+        "fields": [{
+          "field": "id",
+          "type": "String"
+        }, {
+          "field": "username",
+          "type": "String"
+        }]
+      },
+      "defaultValue": null,
+      "enums": null,
+      "integration": null,
+      "isFilterable": true,
+      "isReadOnly": false,
+      "isRequired": false,
+      "isSortable": true,
+      "isVirtual": false,
+      "reference": null,
+      "inverseOf": null,
+      "validations": []
+    }, {
+      "field": "createdAt",
+      "type": "Date",
+      "defaultValue": null,
+      "enums": null,
+      "integration": null,
+      "isFilterable": true,
+      "isReadOnly": false,
+      "isRequired": false,
+      "isSortable": true,
+      "isVirtual": false,
+      "reference": null,
+      "inverseOf": null,
+      "validations": []
+    }, {
+      "field": "text",
+      "type": "String",
+      "defaultValue": null,
+      "enums": null,
+      "integration": null,
+      "isFilterable": true,
+      "isReadOnly": false,
+      "isRequired": false,
+      "isSortable": true,
+      "isVirtual": false,
+      "reference": null,
+      "inverseOf": null,
+      "validations": []
     }],
     "segments": [],
     "actions": []
@@ -157,8 +207,81 @@
       "inverseOf": null,
       "validations": []
     }, {
+      "field": "lat",
+      "type": "Number",
+      "defaultValue": null,
+      "enums": null,
+      "integration": null,
+      "isFilterable": true,
+      "isReadOnly": false,
+      "isRequired": false,
+      "isSortable": true,
+      "isVirtual": false,
+      "reference": null,
+      "inverseOf": null,
+      "validations": []
+    }, {
+      "field": "lng",
+      "type": "Number",
+      "defaultValue": null,
+      "enums": null,
+      "integration": null,
+      "isFilterable": true,
+      "isReadOnly": false,
+      "isRequired": false,
+      "isSortable": true,
+      "isVirtual": false,
+      "reference": null,
+      "inverseOf": null,
+      "validations": []
+    }, {
+      "field": "location",
+      "type": "String",
+      "defaultValue": null,
+      "enums": null,
+      "integration": null,
+      "isFilterable": true,
+      "isReadOnly": false,
+      "isRequired": false,
+      "isSortable": true,
+      "isVirtual": false,
+      "reference": null,
+      "inverseOf": null,
+      "validations": []
+    }, {
       "field": "name",
       "type": "String",
+      "defaultValue": null,
+      "enums": null,
+      "integration": null,
+      "isFilterable": true,
+      "isReadOnly": false,
+      "isRequired": false,
+      "isSortable": true,
+      "isVirtual": false,
+      "reference": null,
+      "inverseOf": null,
+      "validations": []
+    }, {
+      "field": "registeredUser",
+      "type": [{
+        "fields": [{
+          "field": "id",
+          "type": "String"
+        }, {
+          "field": "name",
+          "type": "String"
+        }, {
+          "field": "username",
+          "type": "String"
+        }, {
+          "field": "email",
+          "type": "String"
+        }, {
+          "field": "sex",
+          "type": "String"
+        }]
+      }],
       "defaultValue": null,
       "enums": null,
       "integration": null,
@@ -186,7 +309,16 @@
       "validations": []
     }],
     "segments": [],
-    "actions": []
+    "actions": [{
+      "name": "Verify",
+      "type": "bulk",
+      "baseUrl": null,
+      "endpoint": "/forest/actions/verify",
+      "httpMethod": "POST",
+      "redirect": null,
+      "download": false,
+      "fields": []
+    }]
   }, {
     "name": "users",
     "nameOld": "users",
@@ -310,6 +442,34 @@
       "inverseOf": null,
       "validations": []
     }, {
+      "field": "registeredEvent",
+      "type": [{
+        "fields": [{
+          "field": "id",
+          "type": "String"
+        }, {
+          "field": "name",
+          "type": "String"
+        }, {
+          "field": "subImage",
+          "type": "String"
+        }, {
+          "field": "category",
+          "type": "String"
+        }]
+      }],
+      "defaultValue": null,
+      "enums": null,
+      "integration": null,
+      "isFilterable": true,
+      "isReadOnly": false,
+      "isRequired": false,
+      "isSortable": true,
+      "isVirtual": false,
+      "reference": null,
+      "inverseOf": null,
+      "validations": []
+    }, {
       "field": "salt",
       "type": "String",
       "defaultValue": null,
@@ -389,8 +549,8 @@
     "liana_version": "5.7.0",
     "engine": "nodejs",
     "engine_version": "12.13.1",
-    "framework": "express",
-    "framework_version": "~4.16.3",
-    "orm_version": "5.8.11"
+    "framework": "other",
+    "framework_version": null,
+    "orm_version": "5.8.13"
   }
 }

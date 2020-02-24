@@ -4,13 +4,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: event_track
+    container_name: thedarknight
     environment:
       - APPLICATION_PORT=3310
       - DATABASE_URL=mongodb://host.docker.internal/EventTrack
       - DATABASE_SSL=false
-      - FOREST_AUTH_SECRET=e7eea291f2ee3741027817a7b63866865371395e93a5a51c0ca5943ec71f407cfbc8d0e32df843a90fa3a9fa2da44a19
-      - FOREST_ENV_SECRET=d9cbb01b963f2177866c5bf316c71793dcefa36573cb9d63b8f0d2cc88802c5b
+      - FOREST_AUTH_SECRET=5a73e4b08b37edd31ee0468ca748ee8120c1f3b35abda270fa37e69ee5bb651ddcf32d36cc9336367b99cffc153f20e3
+      - FOREST_ENV_SECRET=8f3a99a7148e5ca8ff96600448888636ece06802f1a14ff9aec4c2d65a1cc9c1
     ports:
       - "3310:3310"
     volumes:

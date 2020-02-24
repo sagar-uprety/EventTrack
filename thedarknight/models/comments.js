@@ -5,6 +5,12 @@ const mongoose = require('mongoose');
 // This section contains the properties of your model, mapped to your collection's properties.
 // Learn more here: https://docs.forestadmin.com/documentation/v/v5/reference-guide/models/enrich-your-models#declaring-a-new-field-in-a-model
 const schema = mongoose.Schema({
+  'author': {
+    id: mongoose.Schema.Types.ObjectId,
+    username: String,
+  },
+  'createdAt': Date,
+  'text': String,
 }, {
   timestamps: false,
 });

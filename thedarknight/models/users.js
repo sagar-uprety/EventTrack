@@ -12,6 +12,12 @@ const schema = mongoose.Schema({
   'imageId': String,
   'isVerified': Boolean,
   'lastName': String,
+  'registeredEvent': [{
+    id: mongoose.Schema.Types.ObjectId,
+    name: String,
+    subImage: String,
+    category: String,
+  }],
   'salt': String,
   'sex': String,
   'username': String,

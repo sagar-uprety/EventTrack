@@ -15,7 +15,17 @@ const schema = mongoose.Schema({
   'image': String,
   'image2': String,
   'imageId': String,
+  'lat': Number,
+  'lng': Number,
+  'location': String,
   'name': String,
+  'registeredUser': [{
+    id: mongoose.Schema.Types.ObjectId,
+    name: String,
+    username: String,
+    email: String,
+    sex: String,
+  }],
   'subImage': String,
 }, {
   timestamps: false,
