@@ -19,7 +19,7 @@ var eventSchema = new mongoose.Schema({
     },
     username: String,
     email: String,
-    contact_no: String
+    contact_no: String,
   },
   comments: [
     {

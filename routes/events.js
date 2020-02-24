@@ -64,7 +64,7 @@ router.get("/", function(req, res) {
          console.log(err);
        } else {
          res.render("Events/events", {events: allEvents });
-         console.log(allEvents);
+    
        }
     });
   }
@@ -91,7 +91,9 @@ router.post("/", middleware.isLoggedIn, upload.single('resume'), function(req, r
     // add author to events
     req.body.events.author = {
       id: req.user._id,
-      username: req.user.username
+      username: req.user.username,
+      email: req.user.email,
+      contact_no: req.user.contact_no
     }
     geocoder.geocode(req.body.eventVenue, function(err, data) {
       if (err || !data.length) {

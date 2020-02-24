@@ -1,362 +1,337 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title><%=events.name%></title>
-    <!-- Bulma Version 0.8.x-->
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/bulma@0.8.0/css/bulma.min.css"
-    />
-    <link rel="stylesheet" type="text/css" href="../../stylesheets/show.css" />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../../stylesheets/footer.css"
-    />
-    <script
-      src="https://kit.fontawesome.com/2828f7885a.js"
-      integrity="sha384-WAsFbnLEQcpCk8lM1UTWesAf5rGTCvb2Y+8LvyjAAcxK1c3s5c0L+SYOgxvc6PWG"
-      crossorigin="anonymous"
-    ></script>
-  </head>
 
-  <%- include ("../partials/header") %>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title><%=events.name%></title>
+  <!-- Bulma Version 0.8.x-->
+  <link rel="stylesheet" href="https://unpkg.com/bulma@0.8.0/css/bulma.min.css" />
+  <link rel="stylesheet" type="text/css" href="../../stylesheets/show.css" />
+  <link rel="stylesheet" type="text/css" href="../../stylesheets/footer.css" />
+  <script src="https://kit.fontawesome.com/2828f7885a.js"
+    integrity="sha384-WAsFbnLEQcpCk8lM1UTWesAf5rGTCvb2Y+8LvyjAAcxK1c3s5c0L+SYOgxvc6PWG"
+    crossorigin="anonymous"></script>
+</head>
 
-  <body>
-    <!-- Begin Preloader -->
-    <!-- <div class="preloader-wrapper">
+<%- include ("../partials/header") %>
+
+<body>
+  <!-- Begin Preloader -->
+  <!-- <div class="preloader-wrapper">
       <div class="preloader">
         <img src="img/preloader.gif" alt="" />
       </div>
     </div> -->
-    <!-- End Preloader -->
-    <!-- Begin Scroll Up Button -->
+  <!-- End Preloader -->
+  <!-- Begin Scroll Up Button -->
 
-    <form action="#home">
-      <button id="toTop" title="Go to top">
-        <i class="fas fa-angle-up"></i>
-      </button>
-    </form>
-    <!-- End Scroll Up Button -->
+  <form action="#home">
+    <button id="toTop" title="Go to top">
+      <i class="fas fa-angle-up"></i>
+    </button>
+  </form>
+  <!-- End Scroll Up Button -->
 
-    <!-- Begin Header -->
-    <div class="header-wrapper" id="home">
-      <!-- Begin Hero -->
-      <section
-        class="hero is-large"
-        style="background-image: url(<%=events.image%>)"
-      >
-        <!-- Begin Mobile Nav -->
-        <nav class="navbar is-transparent is-hidden-desktop">
-          <!-- Begin Burger Menu -->
-          <div class="navbar-brand">
-            <div
-              class="navbar-burger burger second-burger"
-              data-target="mobile-nav"
-            >
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-          </div>
-          <!-- End Burger Menu -->
-          <div id="mobile-nav" class="navbar-menu">
-            <div class="navbar-end">
-              <div class="navbar-item">
-                <a class="navbar-item" href="#home">
-                  Home
-                </a>
-              </div>
-              <div class="navbar-item">
-                <a class="navbar-item" href="#info">
-                  Event Information
-                </a>
-              </div>
-              <div class="navbar-item">
-                <a class="navbar-item" href="#location">
-                  Location
-                </a>
-              </div>
-
-              <div class="navbar-item">
-                <a class="navbar-item" href="#comment">
-                  Contact
-                </a>
-              </div>
-            </div>
-          </div>
-        </nav>
-        <!-- End Mobile Nav -->
-        <!-- Begin Hero Content-->
-        <div class="hero-body">
-          <div class="container has-text-centered">
-            <h1 class="subtitle">Welcome to</h1>
-            <h2 class="title"><%=events.name%></h2>
-            <h1 class="subtitle profession">Tagline</h1>
-            <a href="#" class="button is-success is-large">
-              <span class="icon">
-                <i class="fas fa-check-square"></i>
-              </span>
-              <span>Register</span>
-            </a>
+  <!-- Begin Header -->
+  <div class="header-wrapper" id="home">
+    <!-- Begin Hero -->
+    <section class="hero is-large" style="background-image: url(<%=events.image%>)">
+      <!-- Begin Mobile Nav -->
+      <nav class="navbar is-transparent is-hidden-desktop">
+        <!-- Begin Burger Menu -->
+        <div class="navbar-brand">
+          <div class="navbar-burger burger second-burger" data-target="mobile-nav">
+            <span></span>
+            <span></span>
+            <span></span>
           </div>
         </div>
-        <!-- End Hero Content-->
+        <!-- End Burger Menu -->
+        <div id="mobile-nav" class="navbar-menu">
+          <div class="navbar-end">
+            <div class="navbar-item">
+              <a class="navbar-item" href="#home">
+                Home
+              </a>
+            </div>
+            <div class="navbar-item">
+              <a class="navbar-item" href="#info">
+                Event Information
+              </a>
+            </div>
+            <div class="navbar-item">
+              <a class="navbar-item" href="#location">
+                Location
+              </a>
+            </div>
 
-        <!-- Begin Hero Menu -->
-        <div class="hero-foot ">
-          <div class="hero-foot--wrapper">
-            <div class="columns">
-              <div class="column is-12 hero-menu-desktop has-text-centered">
-                <ul>
-                  <li class="is-active">
-                    <a href="#home">Home</a>
-                  </li>
-                  <li>
-                    <a href="#info">Event Information</a>
-                  </li>
-                  <li>
-                    <a href="#location">Location</a>
-                  </li>
-                  <li>
-                    <a href="#comment">Contact</a>
-                  </li>
-                </ul>
-              </div>
+            <div class="navbar-item">
+              <a class="navbar-item" href="#comment">
+                Contact
+              </a>
             </div>
           </div>
         </div>
-        <!-- End Hero Menu -->
-      </section>
-      <!-- End Hero -->
-    </div>
-    <!-- End Header -->
+      </nav>
+      <!-- End Mobile Nav -->
+      <!-- Begin Hero Content-->
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <h1 class="subtitle">Welcome to</h1>
+          <h2 class="title"><%=events.name%></h2>
+          <h1 class="subtitle profession">Tagline</h1>
+          <a href="#" class="button is-success is-large">
+            <span class="icon">
+              <i class="fas fa-check-square"></i>
+            </span>
+            <% if(!currentUser){%>
+            <span><a href= "/login" class="button is-default is-info is-rounded">Register</a> </span> 
 
-    <!-- Begin Main Content -->
-    <div class="main-content">
-      <!-- Begin Event Infomarmation Section -->
-      <div class="section-dark about-me" id="info">
-        <div class="container">
-          <div class="column is-12 about-me">
-            <h1 class="title has-text-centered section-title">
-              Event Information
-            </h1>
-          </div>
-          <div class="columns is-multiline">
-            <div
-              class="column is-6 has-vertically-aligned-content"
-              data-aos="fade-right"
-            >
-              <p class="is-larger">
-                <strong>
-                  <%=events.description%>
-                </strong>
-              </p>
-              <br />
-              <p>
-                Organized By : <%=events.author.username%>
-              </p>
-              <br />
-              <div class="is-divider"></div>
-              <div class="columns about-links">
-                <div class="column">
-                  <p class="heading">
-                    <strong>Give us a Ring</strong>
-                  </p>
-                  <p class="subheading">
-                    <%=events.author.contact_no%>
-                  </p>
-                </div>
-                <div class="column">
-                  <p class="heading">
-                    <strong>Email Us</strong>
-                  </p>
-                  <p class="subheading">
-                    <%=events.author.email%>
-                  </p>
-                </div>
-                <div class="column">
-                  <p class="heading">
-                    <strong>Venue</strong>
-                  </p>
-                  <p class="subheading">
-                    <%=events.location%>
-                  </p>
-                </div>
-              </div>
-            </div>
-            
-            <div class="column is-6 right-image " data-aos="fade-left">
-              <img
-                class="is-rounded"
-                src="<%=events.image2%>"
-                alt="Seconday Event Photo"
-              />
-            </div>
+            <%} else{%>
+              <%event.registeredUser.forEach(function(user){%>
+              <%if(user.id.equals(currentUser._id)){%>
+                <span><a href= "/events/cancel/<%=event._id%>/<%=currentUser._id%>">Successfully Registered</a></span> 
+              <%} else{%>
+               <span><a href= "/events/registered/<%=event._id%>/<%=currentUser._id%>">Register</a></span> 
+              <% }%>
+              <% })%>
+          </a>
+        </div>
+      </div>
+      <!-- End Hero Content-->
 
-            <span class="pull-right">Time : <%=moment(events.createdAt).fromNow()%></span><small
-            >
+      <!-- Begin Hero Menu -->
+      <div class="hero-foot ">
+        <div class="hero-foot--wrapper">
+          <div class="columns">
+            <div class="column is-12 hero-menu-desktop has-text-centered">
+              <ul>
+                <li class="is-active">
+                  <a href="#home">Home</a>
+                </li>
+                <li>
+                  <a href="#info">Event Information</a>
+                </li>
+                <li>
+                  <a href="#location">Location</a>
+                </li>
+                <li>
+                  <a href="#comment">Contact</a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
-      <!-- End About Me Content -->
+      <!-- End Hero Menu -->
+    </section>
+    <!-- End Hero -->
+  </div>
+  <!-- End Header -->
 
-      <!-- Begin Location Content -->
-      <div class="section-light" id="location">
+  <!-- Begin Main Content -->
+  <div class="main-content">
+    <!-- Begin Event Infomarmation Section -->
+    <div class="section-dark about-me" id="info">
+      <div class="container">
         <div class="column is-12 about-me">
-          <h1 class="title has-text-centered section-title">Venue</h1>
+          <h1 class="title has-text-centered section-title">
+            Event Information
+          </h1>
         </div>
-        <div id="map"></div>
-      </div>
-      
-      <!-- End Location Content -->
-
-      <!-- Begin Comment Content -->
-      <div class="section-light" id="comment">
-        <div class="column is-12 about-me">
-          <h1 class="title  has-text-centered section-title">Comments</h1>
-        </div>
-
-        <div class="box section-dark">
-          <%events.comments.forEach(function(comment){ %>
-          <article class="media">
-            <figure class="media-left">
-              <i class="fas fa-comment"></i>
-            </figure>
-            <div class="media-content">
-              <div class="content">
-                <p>
-                  <strong><%=comment.author.username%></strong>
-                  <br />
-                  <%=comment.text%>
-                  <br />
-                  <small>
-                    <% if(currentUser &&
-                    comment.author.id.equals(currentUser._id)){ %>
-                    <form
-                      action="/events/<%=events._id%>/comments/<%=comment._id%>?_method=DELETE"
-                      method="POST"
-                    >
-                      <button class="button is-normal has-text-danger">
-                        <i class="fas fa-heart"></i>Delete
-                      </button>
-                    </form>
-                    <a
-                      href="/events/<%=events._id%>/comments/<%=comment._id %>/edit"
-                      class="button has-text-info"
-                      ><i class="fas fa-heart"></i>Edit</a
-                    >
-                    <% } %>
-                     <span class="pull-right">Time : <%=moment(comment.createdAt).fromNow()%></span><small
-            ></small
-                  >
+        <div class="columns is-multiline">
+          <div class="column is-6 has-vertically-aligned-content" data-aos="fade-right">
+            <p class="is-larger">
+              <strong>
+                <%=events.description%>
+              </strong>
+            </p>
+            <br />
+            <p>
+              Organized By : <%=events.author.username%>
+            </p>
+            <br />
+            <div class="is-divider"></div>
+            <div class="columns about-links">
+              <div class="column">
+                <p class="heading">
+                  <strong>Give us a Ring</strong>
+                </p>
+                <p class="subheading">
+                  <%=events.author.contact_no%>
+                </p>
+              </div>
+              <div class="column">
+                <p class="heading">
+                  <strong>Email Us</strong>
+                </p>
+                <p class="subheading">
+                  <%=events.author.email%>
+                </p>
+              </div>
+              <div class="column">
+                <p class="heading">
+                  <strong>Venue</strong>
+                </p>
+                <p class="subheading">
+                  <%=events.location%>
                 </p>
               </div>
             </div>
-          </article>
-          <% }) %>
-          <article class="media">
-            <figure class="media-left">
-              <i class="fas fa-comment"></i>
-            </figure>
-            <div class="media-content">
-              <form action="/events/<%=events._id%>/comments" method="POST">
-                <div class="field">
-                  <p class="control">
-                    <textarea
-                      class="textarea"
-                      placeholder="Start a discussion..."
-                      name="comment[text]"
-                    ></textarea>
-                  </p>
-                </div>
-                <div class="field">
-                  <p class="control">
-                    <button class="button is-black is-outlined">
-                      Post comment
-                    </button>
-                  </p>
-                </div>
-              </form>
-            </div>
-          </article>
-        </div>
-      </div>
-      <!-- End Comment Content -->
-      <% if(currentUser && events.author.id.equals(currentUser._id)){ %>
+            <p>
+              <span>Event Posted : <%=moment(events.createdAt).fromNow()%></span>
+            </p>
+          </div>
 
-      <div class="section-dark">
-        <div class="column is-12 about-me">
-          <h1 class="title  has-text-centered section-title">
-            Organizer's Only Section
-          </h1>
-        </div>
-        <div class="container has-text-center">
-          <a
-            href="/events/<%=events._id%>/edit"
-            class="button is-rounded is-warning"
-            >Update Event Details</a
-          >
-          <form action="/events/<%=events._id%>?_method=DELETE" method="POST">
-            <button class="button is-rounded is-danger">Delete Event</button>
-          </form>
+          <div class="column is-6 right-image " data-aos="fade-left">
+            <img class="is-rounded" src="<%=events.image2%>" alt="Seconday Event Photo" />
+          </div>
         </div>
       </div>
-      <% } %>
     </div>
-    <!-- End Main Content -->
+    <!-- End About Me Content -->
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="../../js/show.js"></script>
-    <link
-      href="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.css"
-      rel="stylesheet"
-    />
-    <script src="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js"></script>
-    <script>
-      AOS.init({
-        easing: "ease-out",
-        duration: 800
+    <!-- Begin Location Content -->
+    <div class="section-light" id="location">
+      <div class="column is-12 about-me">
+        <h1 class="title has-text-centered section-title">Venue</h1>
+      </div>
+      <div id="map"></div>
+    </div>
+
+    <!-- End Location Content -->
+
+    <!-- Begin Comment Content -->
+    <div class="section-light" id="comment">
+      <div class="column is-12 about-me">
+        <h1 class="title  has-text-centered section-title">Comments</h1>
+      </div>
+
+      <div class="box section-dark">
+        <%events.comments.forEach(function(comment){ %>
+        <article class="media">
+          <figure class="media-left">
+            <i class="fas fa-comment"></i>
+          </figure>
+          <div class="media-content">
+            <div class="content">
+              <p>
+                <strong><%=comment.author.username%></strong>
+                <br />
+                <%=comment.text%>
+                <br />
+                <small>
+                  <% if(currentUser &&
+                    comment.author.id.equals(currentUser._id)){ %>
+                  <form action="/events/<%=events._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
+                    <button class="button is-normal has-text-danger">
+                      <i class="fas fa-heart"></i>Delete
+                    </button>
+                  </form>
+                  <a href="/events/<%=events._id%>/comments/<%=comment._id %>/edit" class="button has-text-info"><i
+                      class="fas fa-heart"></i>Edit</a>
+                  <% } %>
+                  <span class="pull-right">Time : <%=moment(comment.createdAt).fromNow()%></span><small></small>
+              </p>
+            </div>
+          </div>
+        </article>
+        <% }) %>
+        <article class="media">
+          <figure class="media-left">
+            <i class="fas fa-comment"></i>
+          </figure>
+          <div class="media-content">
+            <form action="/events/<%=events._id%>/comments" method="POST">
+              <div class="field">
+                <p class="control">
+                  <textarea class="textarea" placeholder="Start a discussion..." name="comment[text]"></textarea>
+                </p>
+              </div>
+              <div class="field">
+                <p class="control">
+                  <button class="button is-black is-outlined">
+                    Post comment
+                  </button>
+                </p>
+              </div>
+            </form>
+          </div>
+        </article>
+      </div>
+    </div>
+    <!-- End Comment Content -->
+    <% if(currentUser && events.author.id.equals(currentUser._id)){ %>
+
+    <div class="section-dark">
+      <div class="column is-12 about-me">
+        <h1 class="title  has-text-centered section-title">
+          Organizer's Only Section
+        </h1>
+      </div>
+      <div class="container has-text-center">
+        <div class="columns is-mobile">
+          <div class="column is-3 is-offset-3 ">
+            <a href="/events/<%=events._id%>/edit" class="button is-rounded is-warning">Update Event Details</a>
+          </div>
+          <div class="column is-6">
+            <form action="/events/<%=events._id%>?_method=DELETE" method="POST">
+              <button class="button is-rounded is-danger">Delete Event (Danger)</button>
+            </form>
+          </div>
+          <div class="column is-12"></div>
+        </div>
+      </div>
+    </div>
+    <% } %>
+  </div>
+  <!-- End Main Content -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="../../js/show.js"></script>
+  <link href="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.css" rel="stylesheet" />
+  <script src="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      easing: "ease-out",
+      duration: 800
+    });
+  </script>
+
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDO_ZINoxUQmrJxo8nTa7wkvgAnsWnuPlQ&callback=initMap"></script>
+
+  <script>
+    function initMap() {
+      var lat = <%=events.lat%>;
+      var lng = <%=events.lng%>;
+      var center = { lat: lat, lng: lng };
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 15,
+        center: center,
+        scrollwheel: false
       });
-    </script>
-
-    <script
-      async
-      defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDO_ZINoxUQmrJxo8nTa7wkvgAnsWnuPlQ&callback=initMap"
-    ></script>
-
-    <script>
-        function initMap() {
-        var lat = <%=events.lat%>;
-        var lng = <%=events.lng%>;
-        var center = {lat: lat, lng: lng };
-        var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 15,
-            center: center,
-            scrollwheel: false
-        });
-        var contentString = `
+      var contentString = `
           <strong><%=events.name%><br>
           <%=events.location%></strong>
         `
-        var infowindow = new google.maps.InfoWindow({
-          content: contentString
-        });
-        var marker = new google.maps.Marker({
-            position: center,
-            map: map
-        });
-        marker.addListener('click', function() {
-          infowindow.open(map, marker);
-        });
-      }
-    </script>
-    <!-- Begin Footer -->
-    <%- include("../partials/footer") %>
-    <!-- End Footer -->
-  </body>
+      var infowindow = new google.maps.InfoWindow({
+        content: contentString
+      });
+      var marker = new google.maps.Marker({
+        position: center,
+        map: map
+      });
+      marker.addListener('click', function () {
+        infowindow.open(map, marker);
+      });
+    }
+  </script>
+  <!-- Begin Footer -->
+  <%- include("../partials/footer") %>
+  <!-- End Footer -->
+</body>
+
 </html>
