@@ -1,6 +1,8 @@
+require("dotenv").config();
 var express = require("express");
 var router = express.Router();
 var passport = require("passport");
+const Strategy = require("passport-facebook").Strategy;
 var User = require("../models/user");
 var Event = require("../models/events");
 var middleware = require("../middleware");
@@ -27,8 +29,76 @@ var cloudinary = require('cloudinary');
   cloud_name: "dso6y4yfz",
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET
+});              
+/* passport.use(
+  new Strategy(
+    {
+      clientID: process.env["FACEBOOK_CLIENT_ID"],
+      clientSecret: process.env["FACEBOOK_CLIENT_SECRET"],
+      callbackURL: "http://localhost:3000/user/return",
+      profile: ["id", "displayName"]
+    },
+    function(accessToken, refreshToken, profile, done) {
+      //Check the DB to find a User with the profile.id
+      User.findOne({ facebook_id: profile.id }, function(err, user) {
+        if (err) {
+          console.log(err); // handle errors!
+        }
+
+        if (user) {
+          done(null, user); //Login if User already exists
+        } else {
+          //else create a new User
+          user = new User({
+            facebook_id: profile.id, //pass in the id and displayName params from Facebook
+            firstname: profile.displayName
+          });
+          user.save(function(err) {
+            //Save User if there are no errors else redirect to login.
+            if (err) {
+              console.log(err); // handle errors!
+            } else {
+              console.log("saving user ...");
+              done(null, user);
+            }
+          });
+        }
+      });
+    }
+  )
+);
+
+router.get("/", function(req, res) {
+  res.render("index");
 });
 
+router.use(passport.initialize());
+router.use(passport.session());
+
+//User gets here upon successful login
+router.get("/events", (req, res) => {
+  // res.json({ user: user });
+  console.log("Successfully logged in");
+});
+
+//This is so you know if a Login attempt failed
+router.get("/login", (req, res) => {
+  res.json({ msg: "login failed" });
+});
+
+//This endpoint connects the User to Facebook
+router.get("/login/facebook", passport.authenticate("facebook"));
+
+//This endpoint is the Facebook Callback URL and on success or failure returns a response to the app
+router.get(
+  "/return",
+  passport.authenticate("facebook", {
+    failureRedirect: "/login"
+  }),
+  (req, res) => {
+    res.redirect("/events");
+  }
+);  */
 router.get("/", function(req, res) {
   res.render("index");
 });
@@ -58,7 +128,6 @@ router.post("/register", upload.single('image'), function(req, res) {
           req.flash('error', err.message);
           return res.redirect('back');
         }
-        console.log("5");
         var newUser = new User({
           firstName: req.body.firstName,
           lastName: req.body.lastName,
@@ -223,7 +292,7 @@ router.get("/users/:id", function(req,res){
         res.redirect("/");
       }
       res.render("users/show",{user:foundUser, events:events})
-    })
+    }) 
   })
 })
 
