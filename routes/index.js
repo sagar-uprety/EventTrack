@@ -2,7 +2,7 @@ require("dotenv").config();
 var express = require("express");
 var router = express.Router();
 var passport = require("passport");
-const Strategy = require("passport-facebook").Strategy;
+// const Strategy = require("passport-facebook").Strategy;
 var User = require("../models/user");
 var Event = require("../models/events");
 var middleware = require("../middleware");
@@ -25,13 +25,8 @@ var imageFilter = function (req, file, cb) {
 var upload = multer({ storage: storage, fileFilter: imageFilter})
 
 var cloudinary = require('cloudinary');
-<<<<<<< HEAD
   cloudinary.config({
   cloud_name: "dso6y4yfz",
-=======
-cloudinary.config({
-  cloud_name: "deepessence",
->>>>>>> caf7008f3d8c10c0ffc1acf41087b976eed7a368
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET
 });              
@@ -119,10 +114,14 @@ router.post("/register", upload.single('image'), function(req, res) {
       crypto.randomBytes(20,function(err,buf){
         var token = buf.toString('hex');
         done(err,token);
+        if(err){
+          console.log(err);
+        }
       });
     },
     
-    function(token,done){ 
+    function(token,done){ //generate verification token
+      console.log("Verification Token generated");
       cloudinary.v2.uploader.upload(req.file.path, function(err, result) {
         if(err) {
           console.log(err);
@@ -134,6 +133,7 @@ router.post("/register", upload.single('image'), function(req, res) {
           lastName: req.body.lastName,
           email: req.body.email,
           username: req.body.username,
+          contact_no: req.body.contact_no,
           image: result.secure_url,
           imageId: result.public_id,
           sex: req.body.sex,
@@ -174,7 +174,7 @@ router.post("/register", upload.single('image'), function(req, res) {
               'If you did not create the account, please ignore this email.\n'
       };
       smtpTransport.sendMail(mailOptions,function(err){
-        console.log('mail sent');
+        console.log('Verification email sent');
         req.flash('Success','Your verification token has been sent to '+req.body.email+'. Please follow the instructions as per the mail.');
         done(err,'done');
       });

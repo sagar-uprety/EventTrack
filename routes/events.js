@@ -64,6 +64,7 @@ router.get("/", function(req, res) {
          console.log(err);
        } else {
          res.render("Events/events", {events: allEvents });
+         console.log(allEvents);
        }
     });
   }
