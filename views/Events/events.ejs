@@ -96,71 +96,39 @@
                             <div class="content">
                                 <span class="title is-6"><%=event.venue%></span>
                                 
-                                <p class="columns is-mobile gap">
+                                <div class="columns is-mobile gap">
                                     <span class="column is-6 has-text-centered"><a href= "/events/<%=event._id%>" class="button is-default is-info is-rounded" class="viewDetails">View Details</a></span>
-                                   
+                                   <div class="column is-6 has-text-centered">
                                     <% if(!currentUser){%>
-                                        <span class="column is-6 has-text-centered"><a href= "/login" class="button is-default is-info is-rounded">Register</a> </span> 
+                                        <span><a href= "/login" class="button is-default is-info is-rounded">Register</a> </span> 
                                     <%} else{%>
                                         <%if(event.author.id.equals(currentUser._id)) {%>
-                                            <span class="column is-6 has-text-centered"><a href= "/events/myevent/<%=event.name%>/<%=event._id%>" class="button is-default is-info is-outlined is-rounded">Your Event</a> </span>                                             
+                                            <span><a href= "/events/myevent/<%=event.name%>/<%=event._id%>" class="button is-default is-info is-outlined is-rounded">Your Event</a> </span>                                             
                                         <%} else {%>
                                             <%if(event.registeredUser.length===0) {%>
-                                                <span class="column is-6 has-text-centered"><a href= "/events/registered/<%=event._id%>/<%=currentUser._id%>" class="button is-default is-info is-rounded">Register</a> </span> 
+                                                <span><a href= "/events/registered/<%=event._id%>/<%=currentUser._id%>" class="button is-default is-info is-rounded" >Register</a> </span> 
                                             <%} else {%>
                                                 <%event.registeredUser.forEach(function(user){%>
                                                     <%if(user.id.equals(currentUser._id)){%>
-                                                        <span class="column is-6 has-text-centered"><a href= "/events/cancel/<%=event._id%>/<%=currentUser._id%>" class="button is-default is-success is-rounded register">Registered</a> </span> 
-                                                    <%} else{%>
-                                                        <span class="column is-6 has-text-centered"><a href= "/events/registered/<%=event._id%>/<%=currentUser._id%>" class="button is-default is-info is-rounded register">Register</a> </span> 
-                                                    <% }%>
+                                                        <span><a href= "/events/cancel/<%=event._id%>/<%=currentUser._id%>" class="button is-default is-success is-rounded count" id="count">Registered</a> </span> 
+                                                    <%} %>
                                                 <% })%>
+                                                <span><a href= "/events/registered/<%=event._id%>/<%=currentUser._id%>" class="button is-default is-info is-rounded extra">Register</a> </span> 
+                                                
                                             <% }%>
                                         <% }%>
                                     <%}%>
-
-                                    <!-- <%if(!currentUser) {%>
-                                    <span class="column is-6 has-text-centered "><a href= "/login" class="button is-default is-info is-rounded">Register</a> </span> 
-                                    <%} else{%>
-                                        <span class="column is-6 has-text-centered register"><a href= "/events/registered/<%=event._id%>/<%=currentUser._id%>" class="button is-default is-info is-rounded link">Register</a> </span> 
-
-                                        <%if(event.author.id.equals(currentUser._id)) {%>
-                                            <span class="column is-6 has-text-centered"><a href= "/events/myevent/<%=event.name%>/<%=event._id%>" class="button is-default is-info is-outlined is-rounded">Your Event</a> </span>                                             
-                                            <script>
-                                                var view=document.getElementsByClassName('viewDetails');
-                                                var register=document.getElementsByClassName('register');
-
-                                                register.style.display='none';
-                                                view.classList.remove('is-6');
-                                                view.classList.add('is-fullwidth');
-                                            </script>
-                                        <%} else if(event.registeredUser.length!==0) {%>
-                                            <%event.registeredUser.forEach(function(registeredUser){%>
-                                                    <%if(registeredUser.id.equals(currentUser._id)){%>
-                                                    <script>
-                                                        var register=document.getElementsByClassName('register');
-                                                        register.classList.remove('is-info');
-                                                        register.classList.add('is-success');
-
-                                                        register.innerHTML="Registered";
-                                                        register.onclick = function() {
-                                                        document.getElementsByClassName("link").href="/events"; 
-                                                        return false;
-                                                        };
-                                                    </script>
-                                                <%} %>
-                                            <% })%>
-                                        <% } else{%>
-                                            <script>
-                                            var register=document.getElementsByClassName('register');
-                                            register.classList.remove('is-info');
-                                            register.classList.add('is-dark');
-                                        </script>
-                                            <%}%>
-                                        
-                                    <% }%> -->
-
-                                </p>
+                                    <script>
+                                        var count=document.querySelector('#count');
+                                        var extra=document.querySelectorAll('.extra');
+                                        for(i=0;i<extra.length;i++){
+                                            if(count===""){
+                                                console.log('abc')
+                                            }
+                                        }
+                                    </script>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

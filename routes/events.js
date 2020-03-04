@@ -191,8 +191,7 @@ router.get("/cancel/:eventId/:userId",function(req,res){
     })
     user.save()
   })
-  req.flash('success','Your registration to has been cancelled.')
-  console.log('success','Your registration to has been cancelled.')
+  console.log('success','Your registration has been cancelled.')
   res.redirect('back')
 })
 

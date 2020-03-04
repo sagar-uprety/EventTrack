@@ -75,13 +75,14 @@
             </h6>
 
             <div class="columns box">
-              <form class="column" action="#">
+              <form class="column" action="/query" method="POST">
                 <div class="field">
                   <label class="label">Name</label>
                   <div class="control">
                     <input
                       class="input"
                       type="text"
+                      name="name"
                       placeholder="Your Name"
                       required=""
                     />
@@ -93,7 +94,8 @@
                   <div class="control">
                     <input
                       class="input"
-                      type="text"
+                      type="email"
+                      name="email"
                       placeholder="Email address"
                       required=""
                     />
@@ -106,7 +108,9 @@
                     <input
                       class="input"
                       type="text"
+                      name="phone"
                       placeholder="Phone number"
+                      pattern="(?=.*\d).{10,10}"
                       required=""
                     />
                   </div>
@@ -118,6 +122,7 @@
                     <textarea
                       class="textarea"
                       type="text"
+                      name="message"
                       placeholder="Type your message here..."
                       required=""
                     ></textarea>
@@ -127,7 +132,7 @@
                 <div class="field">
                   <label class="label"></label>
                   <div class="control">
-                    <input class="button is-primary" type="submit" />
+                    <input class="button is-primary" type="submit"/>
                   </div>
                 </div>
               </form>

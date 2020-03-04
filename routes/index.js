@@ -77,6 +77,8 @@ router.post("/register", upload.single('image'), function(req, res) {
             return res.redirect('back');
           }
           passport.authenticate("local")(req, res, function() {
+            req.f
+            res.redirect('/events');
             done(err,token,user);
           });
         });
@@ -347,6 +349,39 @@ router.post('/reset/:token',function(req,res){
     }
   ], function(err){
     res.redirect('/events');
+  })
+})
+
+router.post('/query',function(req,res){
+  async.waterfall([
+    function(done){
+      var smtpTransport=nodemailer.createTransport({
+        service:'Gmail',
+        auth: {
+          user:'eventtrackssnd@gmail.com',
+          pass:process.env.GMAILPASS
+        }
+      });
+      var mailOptions={
+        to:'ds.ed347@gmail.com',
+        from:'eventtrackssnd@gmail.com',
+        subject: 'EventTrack User wants to contact you.',
+        text: 'From: '+req.body.name+'\n'+
+              'Email: '+req.body.email+'\n'+
+              'Phone: '+req.body.phone+'\n'+
+              'Message: '+req.body.message+'\n'
+      }
+      console.log(mailOptions)
+      smtpTransport.sendMail(mailOptions,function(err){
+        console.log('mail sent to '+mailOptions.to);
+        req.flash('Success','Your message has been sent. You will be contacted soon.');
+        done(err);
+      res.redirect('/') 
+      });
+    }
+  ],function(err){
+    req.flash('Error','An error has occurred. Please try again.')
+    res.redirect('/');
   })
 })
 module.exports = router;
