@@ -26,10 +26,10 @@
               Enter Event Information
             </p>
             <br>
-            <form action="/events" method="POST">
+            <form action="/events" method="POST" enctype="multipart/form-data">
               <div class="field">
                 <div class="control">
-                  <input class="input new" type="text" name="eventName" placeholder="Name Your Event" required="">
+                  <input class="input new" type="text" name="events[name]" placeholder="Name Your Event" required="">
                 </div>
               </div>
 
@@ -41,13 +41,13 @@
 
               <div class="field">
                 <div class="control">
-                  <input class="input new" type="text" name="eventURL" placeholder="Primary Photo Link" required="">
+                  <input class="input new" type="text" name="events[image]" placeholder="Paste Your Image URL" required="">
                 </div>
               </div>
 
                <div class="field">
                 <div class="control">
-                  <input class="input new" type="text" name="eventURL2" placeholder="Secondary Photo Link" required="">
+                  <input class="input new" type="text" name="events[image2]" placeholder="Secondary Photo Link" required="">
                 </div>
               </div>
 
@@ -56,23 +56,23 @@
                 <label class="label">Event Catagory</label>
                 <p class="control">
                 </p>
-                <div class="select">
-                  <select>
-                    <option>Science and Tech</option>
+                <div class="select" onchange="selectCateg()">
+                  <select id="select" required>
+                    <option>Networking</option>
                     <option>Educational</option>
-                    <option>Social Service</option>
-                    <option>Community</option>
-                    <option>Dance, Music and Concerts</option>
+                    <option>Social</option>
+                    <option>SciTech</option>
                     <option>Others</option>
                   </select>
                   <p></p>
                 </div>
+                <input type="hidden" id="categ" name="events[category]" value="Networking">
               </div>
 
               <div class="field">
                 <label class="label">Description</label>
                 <div class="control">
-                  <textarea class="textarea new" name="eventDescription" placeholder="Describe Your Event"
+                  <textarea class="textarea" name="events[description]" placeholder="Describe Your Event"
                     spellcheck="false"></textarea>
                 </div>
               </div>
@@ -81,7 +81,7 @@
               <div class="field">
                 <div id="event-upload" class="file has-name is-fullwidth is-success">
                   <label class="file-label">
-                    <input class="file-input" type="file" name="resume">
+                    <input class="file-input" type="file" name="resume" id="image" accept="image/*" required>
                     <span class="file-cta">
                       <span class="file-icon">
                         <svg class="svg-inline--fa fa-upload fa-w-16" aria-hidden="true" data-prefix="fas"
@@ -121,5 +121,13 @@
         fileName.textContent = fileInput.files[0].name;
       }
     };
+
+    function selectCateg(){
+      var options=document.getElementById("select");
+      var selected=options.options[options.selectedIndex].text;
+      
+      var categ=document.getElementById("categ")
+      categ.value=selected;
+    }
   </script>
   <%- include ("../partials/footer") %>

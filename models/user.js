@@ -2,10 +2,31 @@ var mongoose = require("mongoose");
 var passportLocalMongoose = require("passport-local-mongoose");
 
 var UserSchema = new mongoose.Schema({
-  username: String,
+  firstName: String,
+  lastName: String,
+  // facebook_id: String,
+  email: {type: String, unique: true, required: true},
+  username: {type: String, unique: true, required: true},
   password: String,
-  email: String,
-  phone: String
+  contact_no: String,
+  image: String,
+  imageId: String,
+  sex: String,
+  resetPasswordToken: String,
+  resetPasswordExpires: Date,
+  isVerified: Boolean,
+  verificationToken: String,
+  verificationTokenExpires: Date,
+  registeredEvent: [{
+    id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref:"Event"
+    },
+    name: String,
+    venue: String,
+    subImage: String,
+    category: String
+  }]
 });
 
 UserSchema.plugin(passportLocalMongoose);

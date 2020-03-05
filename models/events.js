@@ -3,6 +3,9 @@ var mongoose = require("mongoose");
 var eventSchema = new mongoose.Schema({
   name: String,
   image: String,
+  subImage: String,
+  imageId: String,
+  category: String,
   image2: String,
   description: String,
   location: String,
@@ -16,14 +19,24 @@ var eventSchema = new mongoose.Schema({
     },
     username: String,
     email: String,
-    phone: String
+    contact_no: String,
   },
   comments: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Comment"
     }
-  ]
+  ],
+  registeredUser: [{
+    id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref:"User"
+    },
+    name: String,
+    username: String,
+    email: String,
+    sex: String
+  }]
 });
 
 module.exports = mongoose.model("Event", eventSchema);

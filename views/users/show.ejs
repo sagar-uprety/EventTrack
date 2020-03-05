@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://unpkg.com/bulma@0.8.0/css/bulma.min.css" />
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="stylesheets/cards.css">
+    
+</head>
+
+<body>
+
+<%- include ("../partials/header") %>
+<div class="hero is-medium">
+    <div class="box column is-10 is-offset-1">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-4 is-centered">
+                    <figure class="image">
+                        <img class="is-rounded" src="<%=user.image%>" alt="Profile Image"  style="width: 15rem; height: 15rem;">
+                    </figure>
+                </div>
+                <div class="column">
+                    <h1 class="title" style="color: black;"><%= user.firstName+ " " +user.lastName %></h1>
+                    <br>
+                    <p><label for="email" class="label">Email:<a href="mailto:<%=user.email%>"><u><%=user.email%></u></a></label></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box column is-10 is-offset-1">
+        <%if(events.length!==0){%>
+            <fieldset class="box subtitle"><legend class="box" style="background-color: grey; color: white">Created Events</legend>
+                <div class="row columns is-multiline">
+                    <% events.forEach(function(event){ %>
+                        <div class="column is-one-third">
+                            <div class="card">
+                                <div class="card-image">
+                                    <figure class="image is-4by3">
+                                        <img src="<%=event.image%>" alt="Image">
+                                    </figure>
+                                </div>
+                                <div class="card-content">
+                                    <div class="media">
+                                        <div class="media-content">
+                                            <p class="title is-4 no-padding"><%=event.name%></p>
+                                            <p class="gap"><span class="title is-6">Type: <a href="/events/category/<%=event.category%>"><u><%=event.category%></u></a></span></p>
+                                        </div>
+                                    </div>
+                                    <div class="content">
+                                        <span class="title is-6"><%=event.venue%></span>
+                                        <p class="columns is-mobile gap">
+                                            <span class="column is-6 has-text-centered"><a href= "/events/<%=event._id%>" class="button is-default is-info is-rounded">View Details</a></span>
+                                            <span class="column is-6 has-text-centered"><a href= "/events/myevent/<%=event.name%>/<%=event._id%>" class="button is-default is-info is-outlined is-rounded">Your Event</a> </span>
+                                        </p>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% }); %>     
+                </div>
+            </fieldset>
+        <%}%>
+        <%if(user.registeredEvent.length!==0){%>
+            <fieldset class="box subtitle"><legend class="box" style="background-color: grey; color: white">Registered Events</legend>
+                <div class="row columns is-multiline">
+                    <% user.registeredEvent.forEach(function(event){ %>
+                        <div class="column is-one-third">
+                            <div class="card">
+                                <div class="card-image">
+                                    <figure class="image is-4by3">
+                                        <img src="<%=event.subImage%>" alt="Image">
+                                    </figure>
+                                </div>
+                                <div class="card-content">
+                                    <div class="media">
+                                        <div class="media-content">
+                                            <p class="title is-4 no-padding"><%=event.name%></p>
+                                            <p class="gap"><span class="title is-6">Type: <a href="/events/category/<%=event.category%>"><u><%=event.category%></u></a></span></p>
+                                        </div>
+                                    </div>
+                                    <div class="content">
+                                        <span class="title is-6"><%=event.venue%></span>
+                                        <p class="columns is-mobile gap">
+                                            <span class="column is-6 has-text-centered"><a href= "/events/<%=event.id%>" class="button is-default is-info is-rounded">View Details</a></span>
+                                            <span class="column is-6 has-text-centered"><a href= "/events/cancel/<%=event.id%>/<%=currentUser._id%>" class="button is-default is-success is-rounded">Registered</a> </span> 
+                                        </p>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% }); %>     
+                </div>
+            </fieldset>    
+        <%}%>
+    </div>
+</div>
+
+<%- include ("../partials/footer") %>

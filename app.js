@@ -1,5 +1,5 @@
-//initialization start
 require('dotenv').config();
+//initialization start
 
 const express = require("express"),
   app = express(),
@@ -8,6 +8,7 @@ const express = require("express"),
   flash =  require("connect-flash"),
   passport = require("passport"),
   LocalStrategy = require("passport-local"),
+  Strategy = require('passport-facebook').Strategy,
   methodOverride = require("method-override"),
   Event = require("./models/events"),
   Comment = require("./models/comments"),
@@ -57,7 +58,6 @@ app.use(function(req, res, next) {
 app.use("/", indexRoutes);
 app.use("/events", eventRoutes);
 app.use("/events/:id/comments", commentRoutes);
-
 
 var port = process.env.PORT || 3000;
 app.listen(port, function() {

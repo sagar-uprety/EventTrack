@@ -63,9 +63,9 @@
           <% } else { %>
 
           <p class="control">
-            <span class="button is-normal is-success"
+            <a class="button is-normal is-success" href="/users/<%=currentUser.id%>"
               >Welcome <%=currentUser.username.toUpperCase()%>
-            </span>
+            </a>
             <a href="/logout" class="button is-primary is-normal">Logout</a>
           </p>
           <% } %>
@@ -76,3 +76,29 @@
   </div>
   <!-- ./Menu -->
 </nav>
+
+
+<div class="hero column is-10 is-offset-1">
+  <%if(error && error.length> 0){%>
+  <div class="box messageBox is-narrow" style="background-color:blue;" role="alert">
+  <%=error%>
+</div>
+<%}%>
+<%if(success && success.length> 0){%>
+  <div class="box messageBox is-narrow" style="background-color:aquamarine;" role="alert">
+  <%=success%>
+</div>
+<%}%>
+</div>
+
+<style>
+  .messageBox{
+    border:#333;
+    border-radius: 5px;
+    z-index: 4;
+    line-height: 1px;
+  }
+  </style>
+
+
+

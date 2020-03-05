@@ -21,7 +21,7 @@
     <section class="hero is-fullheight">
       <div class="hero-body">
         <div class="container has-text-centered">
-          <div class="column is-4 is-offset-4">
+          <div class="column is-desktop is-4 is-offset-4">
             <div class="box">
               <p class="subtitle is-4 has-text-grey">
                 Please login to proceed.
@@ -64,17 +64,19 @@
                   Login</button
                 ><br />
                 <p class="subtitle is-5">Login using Social Media</p>
-                <button class="facebook-button button is-medium">
+                <a href="/login/facebook" class="facebook-button button is-medium">
                   <i class="fab fa-facebook-f"></i>
-                </button>
-                <button class="google-button button is-medium">
-                  <i class="fab fa-google-plus-g"></i>
-                </button>
+                </a>
               </form>
             </div>
             <p class="has-text-white">
-              Don't have an account yet? <a href="/register" class="has-text-grey"> Sign Up</a> &nbsp;&nbsp;
-              <a href="../">Forgot Password</a> &nbsp;&nbsp;
+              Don't have an account yet? <a href="/register" class="has-text-grey"> Sign Up</a> &nbsp;
+              <a href="/forgot-password">Forgot Password</a> 
+            </p>
+            <hr>
+            <p class="has-text-white">
+              Got an unverified account?
+              <a href="/verify" style="color: blue;"><u>Verify Your Account</u></a> &nbsp;&nbsp;
             </p>
           </div>
         </div>

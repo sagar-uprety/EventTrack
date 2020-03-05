@@ -1,0 +1,17 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: event_track
+    environment:
+      - APPLICATION_PORT=3310
+      - DATABASE_URL=mongodb://host.docker.internal/EventTrack
+      - DATABASE_SSL=false
+      - FOREST_AUTH_SECRET=e7eea291f2ee3741027817a7b63866865371395e93a5a51c0ca5943ec71f407cfbc8d0e32df843a90fa3a9fa2da44a19
+      - FOREST_ENV_SECRET=d9cbb01b963f2177866c5bf316c71793dcefa36573cb9d63b8f0d2cc88802c5b
+    ports:
+      - "3310:3310"
+    volumes:
+      - ./:/usr/src/app
