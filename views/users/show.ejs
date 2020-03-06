@@ -21,9 +21,19 @@
                     </figure>
                 </div>
                 <div class="column">
-                    <h1 class="title" style="color: black;"><%= user.firstName+ " " +user.lastName %></h1>
+                    <div class="columns">
+                        <h1 class="column is-narrow title" style="color: black;"><%= user.firstName+ " " +user.lastName %></h1>
+                        <p class="column">
+                            <%if(!user.isVerified) {%>
+                                <a class="button is-link" href="/<%=user._id%>/verify">Verify</a>
+                            <%} else {%>
+                                <a class="button is-success">Verified</a>
+                            <%}%>
+                        </p>
+                    </div>
                     <br>
-                    <p><label for="email" class="label">Email:<a href="mailto:<%=user.email%>"><u><%=user.email%></u></a></label></p>
+                    <p><label for="email" style="color: #363636; font-size: 1rem; font-weight: 700;">Email: </label><a href="mailto:<%=user.email%>" name="email"><u><%=user.email%></u></a></p>
+                    <p><label for="contact" style="color: #363636; font-size: 1rem; font-weight: 700;">Contact No.: </label><%=user.contact_no%></p>
                 </div>
             </div>
         </div>
@@ -50,10 +60,14 @@
                                     <div class="content">
                                         <span class="title is-6"><%=event.venue%></span>
                                         <p class="columns is-mobile gap">
-                                            <span class="column is-6 has-text-centered"><a href= "/events/<%=event._id%>" class="button is-default is-info is-rounded">View Details</a></span>
-                                            <span class="column is-6 has-text-centered"><a href= "/events/myevent/<%=event.name%>/<%=event._id%>" class="button is-default is-info is-outlined is-rounded">Your Event</a> </span>
+                                            <span class="column is-12 has-text-centered"
+                                            ><a
+                                                href="/events/<%=event._id%>"
+                                                class="button is-default is-primary is-rounded viewDetails"
+                                                >Organized Event : Details</a
+                                            ></span>
                                         </p>
-                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -82,10 +96,14 @@
                                     <div class="content">
                                         <span class="title is-6"><%=event.venue%></span>
                                         <p class="columns is-mobile gap">
-                                            <span class="column is-6 has-text-centered"><a href= "/events/<%=event.id%>" class="button is-default is-info is-rounded">View Details</a></span>
-                                            <span class="column is-6 has-text-centered"><a href= "/events/cancel/<%=event.id%>/<%=currentUser._id%>" class="button is-default is-success is-rounded">Registered</a> </span> 
+                                           <span class="column is-12 has-text-centered"
+                                               ><a
+                                                 href="/events/<%=event._id%>"
+                                                 class="button is-default is-info is-rounded viewDetails"
+                                                 >More Info / Register </a
+                                           ></span>
                                         </p>
-                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

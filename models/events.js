@@ -35,6 +35,7 @@ var eventSchema = new mongoose.Schema({
     name: String,
     username: String,
     email: String,
+    contact_no: String,
     sex: String
   }]
 });
