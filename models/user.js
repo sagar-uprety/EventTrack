@@ -25,7 +25,13 @@ var UserSchema = new mongoose.Schema({
     name: String,
     venue: String,
     subImage: String,
-    category: String
+    category: String,
+    author:{
+      id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+      }
+    }
   }]
 });
 

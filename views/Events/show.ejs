@@ -90,27 +90,31 @@
             </span>
             <span>Register</span>
           </a>
-          <%} else if (currentUser && events.registeredUser.length!=0){%>
+          <%} else if(currentUser && !events.author.id.equals(currentUser._id)){%>
+            
+            <%if (events.registeredUser.length!=0){%>
 
-          <%events.registeredUser.forEach(function(user){%>
-          <%if(user.id.equals(currentUser._id)){%>
-          <a href="/events/cancel/<%=events._id%>/<%=currentUser._id%>" class="button is-success is-large">
-            <span class="icon">
-              <i class="fas fa-check-square"></i>
-            </span>
-            <span>Successfully Registered</span>
-          </a>
-          <%}%>
-          <%})%>
+              <%events.registeredUser.forEach(function(user){%>
+                <%if(user.id.equals(currentUser._id)){%>
+                <a href="/events/cancel/<%=events._id%>/<%=currentUser._id%>" class="button is-success is-large">
+                  <span class="icon">
+                    <i class="fas fa-check-square"></i>
+                  </span>
+                  <span>Successfully Registered</span>
+                </a>
+                <%}%>
+              <%})%>
 
-          <%} else if (currentUser && events.registeredUser.length==0){%>
-          <a href="/events/registered/<%=events._id%>/<%=currentUser._id%>" class="button is-success is-large">
-            <span class="icon">
-              <i class="fas fa-check-square"></i>
-            </span>
-            <span>Register</span>
-          </a>
+            <%} else if (currentUser && events.registeredUser.length==0){%>
+            <a href="/events/registered/<%=events._id%>/<%=currentUser._id%>" class="button is-success is-large">
+              <span class="icon">
+                <i class="fas fa-check-square"></i>
+              </span>
+              <span>Register</span>
+            </a>
+            <%}%>
           <%}%>
+
         </div>
       </div>
       <!-- End Hero Content-->
@@ -163,7 +167,7 @@
           </p>
           <br />
           <p>
-            Organized By : <%=events.author.username%>
+            Organized By : <a href="/users/<%=events.author.id%>"><u><%=events.author.username%></u></a>
           </p>
           <br />
           <div class="is-divider"></div>
@@ -181,7 +185,7 @@
                 <strong>Email Us</strong>
               </p>
               <p class="subheading">
-                <%=events.author.email%>
+                <a href="mailto:<%=events.author.email%>"><%=events.author.email%></a>
               </p>
             </div>
             <div class="column">
@@ -230,24 +234,55 @@
         </figure>
         <div class="media-content">
           <div class="content">
-            <p>
-              <strong><%=comment.author.username%></strong>
-              <br />
-              <%=comment.text%>
-              <br />
-              <small>
-                <% if(currentUser &&
-                    comment.author.id.equals(currentUser._id)){ %>
-                <form action="/events/<%=events._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
-                  <button class="button is-normal has-text-danger">
-                    <i class="fas fa-heart"></i>Delete
-                  </button>
-                </form>
-                <a href="/events/<%=events._id%>/comments/<%=comment._id %>/edit" class="button has-text-info"><i
-                    class="fas fa-heart"></i>Edit</a>
-                <% } %>
-                <span class="pull-right">Time : <%=moment(comment.createdAt).fromNow()%></span><small></small>
-            </p>
+            <%if(events.author.id.equals(comment.author.id)){%>
+              <p>
+                <p class="columns">
+                  <a class="column is-narrow" href="/users/<%=comment.author.id%>"><strong><%=comment.author.username%></strong></a>
+                  <a class="column button is-success is-outlined is-narrow"><i class="fas fa-star"></i>Organizer</a>
+                </p>
+                <%=comment.text%>
+                <br />
+                <small>
+                  <% if(currentUser &&
+                      comment.author.id.equals(currentUser._id)){ %>
+                      <div class="columns">
+                        <div class="column is-narrow">
+                          <form action="/events/<%=events._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
+                            <button class="button is-normal has-text-danger">
+                              <i class="fas fa-heart"></i>Delete
+                            </button>
+                          </form>
+                        </div>
+                        <div class="column is-narrow">
+                        <a href="/events/<%=events._id%>/comments/<%=comment._id %>/edit" class="button has-text-info"><i
+                            class="fas fa-heart"></i>Edit</a>
+                        </div>
+                      </div>
+                  <% } %>
+                  <span class="pull-right">Time : <%=moment(comment.createdAt).fromNow()%></span></small>
+              </p>
+            <%} else{%>
+              <p>
+                <a class="column is-narrow" href="/users/<%=comment.author.id%>"><strong><%=comment.author.username%></strong></a>
+
+                <br />
+                <%=comment.text%>
+                <br />
+                <small>
+                  <% if(currentUser &&
+                      comment.author.id.equals(currentUser._id)){ %>
+                  <form action="/events/<%=events._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
+                    <button class="button is-normal has-text-danger">
+                      <i class="fas fa-heart"></i>Delete
+                    </button>
+                  </form>
+                  <a href="/events/<%=events._id%>/comments/<%=comment._id %>/edit" class="button has-text-info"><i
+                      class="fas fa-heart"></i>Edit</a>
+                  <% } %>
+                  <span class="pull-right">Time : <%=moment(comment.createdAt).fromNow()%></span><small></small>
+              </p>
+              </p>
+            <%}%>
           </div>
         </div>
       </article>

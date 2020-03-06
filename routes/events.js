@@ -161,7 +161,10 @@ router.get("/registered/:eventId/:userId",middleware.isLoggedIn,middleware.check
           name: event.name,
           venue: event.venue,
           subImage: event.subImage,
-          category: event.category
+          category: event.category,
+          author:{
+            id: event.author.id
+          }
         }
         user.registeredEvent.push(newRegisteredEvent)
         user.save();
