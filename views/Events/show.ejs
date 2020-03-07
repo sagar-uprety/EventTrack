@@ -81,7 +81,7 @@
         <div class="container has-text-centered">
           <h1 class="subtitle">Welcome to</h1>
           <h2 class="title"><%=events.name%></h2>
-          <h1 class="subtitle profession">Tagline</h1>
+          <!-- <h1 class="subtitle profession">Tagline</h1> -->
 
           <% if(!currentUser){%>
           <a href="/login" class="button is-success is-large">
@@ -96,16 +96,23 @@
 
               <%events.registeredUser.forEach(function(user){%>
                 <%if(user.id.equals(currentUser._id)){%>
-                <a href="/events/cancel/<%=events._id%>/<%=currentUser._id%>" class="button is-success is-large">
+                <a href="/events/cancel/<%=events._id%>/<%=currentUser._id%>" class="button is-success is-large registered">
                   <span class="icon">
                     <i class="fas fa-check-square"></i>
                   </span>
                   <span>Successfully Registered</span>
                 </a>
+                <%} else if(!user.id.equals(currentUser._id)){%>
+                  <a href="/events/registered/<%=events._id%>/<%=currentUser._id%>" class="button is-success is-large register">
+                    <span class="icon">
+                      <i class="fas fa-check-square"></i>
+                    </span>
+                    <span>Register</span>
+                  </a>
                 <%}%>
               <%})%>
 
-            <%} else if (currentUser && events.registeredUser.length==0){%>
+            <%} else if (events.registeredUser.length==0){%>
             <a href="/events/registered/<%=events._id%>/<%=currentUser._id%>" class="button is-success is-large">
               <span class="icon">
                 <i class="fas fa-check-square"></i>
@@ -114,9 +121,23 @@
             </a>
             <%}%>
           <%}%>
-
+          
         </div>
       </div>
+      <script>
+        var registered= document.getElementsByClassName('registered')
+        var register=document.getElementsByClassName('register')
+        if(registered.length!==0){
+          for(var i=0;i<register.length;i++){
+            register[i].style.display='none';
+          }
+        }
+        if(register.length>1){
+          for(var i=1;i<register.length;i++){
+            register[i].style.display="none";
+          }
+        }
+      </script>
       <!-- End Hero Content-->
 
       <!-- Begin Hero Menu -->
@@ -238,7 +259,7 @@
               <p>
                 <p class="columns">
                   <a class="column is-narrow" href="/users/<%=comment.author.id%>"><strong><%=comment.author.username%></strong></a>
-                  <a class="column button is-success is-outlined is-narrow"><i class="fas fa-star"></i>Organizer</a>
+                  <a class="column button is-success is-outlined is-narrow is-small"><i class="fas fa-star"></i>Organizer</a>
                 </p>
                 <%=comment.text%>
                 <br />
@@ -249,13 +270,12 @@
                         <div class="column is-narrow">
                           <form action="/events/<%=events._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
                             <button class="button is-normal has-text-danger">
-                              <i class="fas fa-heart"></i>Delete
+                              Delete
                             </button>
                           </form>
                         </div>
                         <div class="column is-narrow">
-                        <a href="/events/<%=events._id%>/comments/<%=comment._id %>/edit" class="button has-text-info"><i
-                            class="fas fa-heart"></i>Edit</a>
+                        <a href="/events/<%=events._id%>/comments/<%=comment._id %>/edit" class="button has-text-info">Edit</a>
                         </div>
                       </div>
                   <% } %>
@@ -273,11 +293,11 @@
                       comment.author.id.equals(currentUser._id)){ %>
                   <form action="/events/<%=events._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
                     <button class="button is-normal has-text-danger">
-                      <i class="fas fa-heart"></i>Delete
+                      Delete
                     </button>
                   </form>
-                  <a href="/events/<%=events._id%>/comments/<%=comment._id %>/edit" class="button has-text-info"><i
-                      class="fas fa-heart"></i>Edit</a>
+                  <a href="/events/<%=events._id%>/comments/<%=comment._id %>/edit" class="button has-text-info">
+                      Edit</a>
                   <% } %>
                   <span class="pull-right">Time : <%=moment(comment.createdAt).fromNow()%></span><small></small>
               </p>

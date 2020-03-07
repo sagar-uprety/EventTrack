@@ -179,9 +179,6 @@ router.get("/cancel/:eventId/:userId",function(req,res){
     event.registeredUser.forEach(function(user){
       if(user.id.equals(req.params.userId)){
         user.remove();
-      }else{
-        req.flash('error','User not found.');
-        return res.redirect('back');
       }
     })
     event.save()
@@ -189,12 +186,9 @@ router.get("/cancel/:eventId/:userId",function(req,res){
 
   User.findOne({_id: req.params.userId},function(err,user){
     user.registeredEvent.forEach(function(event){
+    
       if(event.id.equals(req.params.eventId)){
         event.remove();
-      }
-      else{
-        req.flash('error','User not found.');
-        return res.redirect('back');
       }
     })
     user.save()
