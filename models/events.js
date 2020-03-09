@@ -7,6 +7,7 @@ var eventSchema = new mongoose.Schema({
   imageId: String,
   category: String,
   image2: String,
+  eventDate: Date,
   description: String,
   location: String,
   lat: Number,

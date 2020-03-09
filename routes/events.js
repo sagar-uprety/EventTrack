@@ -1,5 +1,6 @@
 var express = require("express");
 var router = express.Router();
+var moment= require("moment")
 var User = require("../models/user");
 var Event = require("../models/events");
 var middleware = require("../middleware");
@@ -88,6 +89,11 @@ router.post("/", middleware.isLoggedIn, upload.single('resume'), function(req, r
     req.body.events.subImage = result.secure_url;
     // add image's public_id to events object
     req.body.events.imageId = result.public_id;
+    //add event date
+    var date=req.body.day+'/'+req.body.month+'/'+req.body.year+' '+req.body.hour+':'+req.body.minute
+    req.body.events.eventDate = moment(date,"DD/MM/YYYY HH:mm").toString()
+    console.log(req.body.events.eventDate)
+    
     // add author to events
     req.body.events.author = {
       id: req.user._id,
@@ -235,6 +241,10 @@ router.put("/:id", middleware.checkEventOwnership, upload.single('resume'), func
       events.image=req.body.URL;
       events.description=req.body.description;
       events.category=req.body.category;
+      //update event date
+      var date=req.body.day+'/'+req.body.month+'/'+req.body.year+' '+req.body.hour+':'+req.body.minute
+      events.eventDate= moment(date,"DD/MM/YYYY HH:mm").toString();
+
       events.lat = data[0].latitude;
       events.lng = data[0].longitude;
       events.location = data[0].formattedAddress;
