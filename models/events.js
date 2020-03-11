@@ -13,6 +13,7 @@ var eventSchema = new mongoose.Schema({
   lat: Number,
   lng: Number,
   createdAt: { type: Date, default: Date.now },
+  status: Boolean,
   author: {
     id: {
       type: mongoose.Schema.Types.ObjectId,

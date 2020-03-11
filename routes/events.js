@@ -36,8 +36,7 @@ cloudinary.config({
 
 //Events Display along Categories
 router.get("/category/:categ",function(req,res){
-//Event.find({category: req.params.categ},function(err,events){
-  Event.find({category:req.params.categ}).sort('-createdAt').exec(function(err,events){
+  Event.find({category:req.params.categ, eventDate: {$gt: Date.now()}}).sort('-createdAt').exec(function(err,events){
     if(err){
         console.log(err);
         res.redirect('/events');
@@ -60,16 +59,39 @@ router.get("/", function(req, res) {
       }
     });
   } else{
-    Event.find().sort('-createdAt').exec(function(err,allEvents){
-       if (err) {
-         console.log(err);
-       } else {
-         res.render("Events/events", {events: allEvents });
-    
-       }
+    Event.find({eventDate: {$lte: Date.now()}},function(err,events){
+      if(err) {
+        console.log(err);
+      } else{
+        events.forEach(function(event){
+          event.status=false;
+          event.save();
+        })
+      }
+    })
+    Event.find({eventDate: {$gt: Date.now()}},function(err,events){
+      if(err) {
+        console.log(err);
+      } else{
+        events.forEach(function(event){
+          event.status=true;
+          event.save();
+        })
+      }
+    })
+    Event.find({status: true}).sort('eventDate').exec(function(err,events) {
+      if(err){
+        console.log(err);
+      } else{
+        events.forEach(function(event){
+          console.log(event.eventDate)
+        })
+         res.render("Events/events", {events: events });
+      }
     });
   }
 });
+
 
 
 //create new event form
