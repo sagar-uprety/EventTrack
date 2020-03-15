@@ -78,7 +78,7 @@
                     <div class="card">
                         <div class="card-image">
                             <figure class="image is-4by3">
-                                <img src="<%=event.subImage%>" alt="Image">
+                                <img src="<%=event.image%>" alt="Image">
                             </figure>
                         </div>
                         <div class="card-content">
@@ -91,27 +91,23 @@
                             <div class="content">
                                 <span class="title is-6"><%=event.venue%></span>
                                 <p class="columns is-mobile gap">
-                                    <span class="column is-6 has-text-centered"><a href= "/events/<%=event._id%>" class="button is-default is-info is-rounded">View Details</a></span>
-                                    <% if(!currentUser){%>
-                                        <span class="column is-6 has-text-centered"><a href= "/login" class="button is-default is-info is-rounded">Register</a> </span> 
-                                    <%} else{%>
-                                        <%if(event.author.id.equals(currentUser._id)) {%>
-                                            <span class="column is-6 has-text-centered"><a href= "/events/myevent/<%=event.name%>/<%=event._id%>" class="button is-default is-info is-outlined is-rounded">Your Event</a> </span>                                             
-                                        <%} else {%>
-                                            <%if(event.registeredUser.length===0) {%>
-                                                <span class="column is-6 has-text-centered"><a href= "/events/registered/<%=event._id%>/<%=currentUser._id%>" class="button is-default is-info is-rounded">Register</a> </span> 
-                                            <%} else {%>
-                                                <%event.registeredUser.forEach(function(user){%>
-                                                    <%if(user.id.equals(currentUser._id)){%>
-                                                        <span class="column is-6 has-text-centered"><a href= "/events/cancel/<%=event._id%>/<%=currentUser._id%>" class="button is-default is-success is-rounded register">Registered</a> </span> 
-                                                    <%} else{%>
-                                                        <span class="column is-6 has-text-centered"><a href= "/events/registered/<%=event._id%>/<%=currentUser._id%>" class="button is-default is-info is-rounded register">Register</a> </span> 
-                                                    <% }%>
-                                                <% })%>
-                                            <% }%>
-                                        <% }%>
-                                    <%}%> 
-                                </p>
+                
+                                    <% if(currentUser && event.author.id.equals(currentUser._id)){%>
+                                        <span class="column is-12 has-text-centered"
+                                       ><a
+                                         href="/events/<%=event._id%>"
+                                         class="button is-default is-primary is-rounded viewDetails"
+                                         >Organized Event : Details</a
+                                       ></span>
+                                   <%} else{%>
+                                       <span class="column is-12 has-text-centered"
+                                       ><a
+                                         href="/events/<%=event._id%>"
+                                         class="button is-default is-info is-rounded viewDetails"
+                                         >More Info / Register </a
+                                       ></span>
+                                   <%}%>
+                                   </p>
                                 </div>
                         </div>
                     </div>

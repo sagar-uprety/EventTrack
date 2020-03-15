@@ -26,7 +26,7 @@ var upload = multer({ storage: storage, fileFilter: imageFilter})
 
 var cloudinary = require('cloudinary');
   cloudinary.config({
-  cloud_name: "dso6y4yfz",
+  cloud_name: "deepessence",
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET
 });              
@@ -109,96 +109,51 @@ router.get("/register", function(req, res) {
 });
 //handle sign up logic
 router.post("/register", upload.single('image'), function(req, res) {
-  async.waterfall([
-    function(done) {
-      crypto.randomBytes(20,function(err,buf){
-        var token = buf.toString('hex');
-        done(err,token);
-        if(err){
-          console.log(err);
-        }
-      });
-    },
-    
-    function(token,done){ //generate verification token
-      console.log("Verification Token generated");
-      cloudinary.v2.uploader.upload(req.file.path, function(err, result) {
-        if(err) {
-          console.log(err);
-          req.flash('error', err.message);
-          return res.redirect('back');
-        }
-        var newUser = new User({
-          firstName: req.body.firstName,
-          lastName: req.body.lastName,
-          email: req.body.email,
-          username: req.body.username,
-          contact_no: req.body.contact_no,
-          image: result.secure_url,
-          imageId: result.public_id,
-          sex: req.body.sex,
-          isVerified:false,
-          verificationToken: token,
-          verificationTokenExpires: Date.now()+86400000 //1day
-        });
-     
-        console.log(newUser)
-        User.register(newUser, req.body.password, function(err, user) {
-          if (err) {
-            req.flash("error", err.message);
-            console.log(err)
-            return res.redirect('back');
-          }
-          passport.authenticate("local")(req, res, function() {
-            done(err,token,user);
-          });
-        });
-      });
-    },      
-    function(token,user,done){
-      var smtpTransport=nodemailer.createTransport({
-        service: 'Gmail',
-        auth: {
-          user:'eventtrackssnd@gmail.com',
-          pass: process.env.GMAILPASS
-        }
-      });
-      var mailOptions={
-        to: req.body.email,
-        from: 'eventtrackssnd@gmail.com',
-        subject: 'EventTrack User Account Verification.',
-        text: 'This is to verify your EventTrack user account.\n\n'+
-              'Please click on the following link, or paste this into your browser to complete the process\n\n'+
-              'http://' + req.headers.host + '/verify/'+token+'\n\n'+
-              'The above verification link is valid only for a day.\n\n'+
-              'If you did not create the account, please ignore this email.\n'
-      };
-      smtpTransport.sendMail(mailOptions,function(err){
-        console.log('Verification email sent');
-        req.flash('Success','Your verification token has been sent to '+req.body.email+'. Please follow the instructions as per the mail.');
-        done(err,'done');
-      });
+  cloudinary.v2.uploader.upload(req.file.path, function(err, result) {
+    if(err) {
+      console.log(err);
+      req.flash('error', err.message);
+      return res.redirect('back');
     }
-  ], function(err){
-    if(err) return next(err);
-    res.send('Please verify your account before you proceed.');
-  }
-  )
+    var newUser = new User({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      username: req.body.username,
+      contact_no: req.body.contact_no,
+      image: result.secure_url,
+      imageId: result.public_id,
+      sex: req.body.sex,
+      isVerified:false
+    });
+  
+    console.log(newUser)
+    User.register(newUser, req.body.password, function(err, user) {
+      if (err) {
+        req.flash("error", err.message);
+        console.log(err)
+        return res.redirect('back');
+      }
+      passport.authenticate("local")(req, res, function() {
+        req.flash("success", "Welcome to EventTrack " + user.username);  
+        res.redirect('/users/' + user.id);
+        // done(err,token,user);
+      });
+    });
+  });
 });
 //Account verification
-router.get("/verify",function(req,res){
-  res.render('users/verify');
-});
-router.post("/verify",function(req,res,next){
+router.get("/:id/verify",function(req,res,next){
   async.waterfall([
     function(done) {
       crypto.randomBytes(20,function(err,buf){
         var token = buf.toString('hex');
+        console.log(token)
         done(err,token);
       });
     },
     function(token,done){
-      User.findOne({ email: req.body.email},function(err,user){
+      User.findOne({ _id: req.params.id},function(err,user){
         if(!user){
           req.flash("error", "No account with that email address exists.");
           console.log('no account')
@@ -238,7 +193,7 @@ router.post("/verify",function(req,res,next){
     }
   ], function(err){
     if(err) return next(err);
-    res.redirect('/login');
+    res.redirect('back');
   }
   )
 });

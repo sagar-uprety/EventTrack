@@ -7,11 +7,13 @@ var eventSchema = new mongoose.Schema({
   imageId: String,
   category: String,
   image2: String,
+  eventDate: Date,
   description: String,
   location: String,
   lat: Number,
   lng: Number,
   createdAt: { type: Date, default: Date.now },
+  status: Boolean,
   author: {
     id: {
       type: mongoose.Schema.Types.ObjectId,
@@ -35,6 +37,7 @@ var eventSchema = new mongoose.Schema({
     name: String,
     username: String,
     email: String,
+    contact_no: String,
     sex: String
   }]
 });

@@ -1,5 +1,6 @@
 var express = require("express");
 var router = express.Router();
+var moment= require("moment")
 var User = require("../models/user");
 var Event = require("../models/events");
 var middleware = require("../middleware");
@@ -28,15 +29,14 @@ var upload = multer({ storage: storage, fileFilter: imageFilter})
 
 var cloudinary = require('cloudinary');
 cloudinary.config({
-  cloud_name: "dso6y4yfz",
+  cloud_name: "deepessence",
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
 //Events Display along Categories
 router.get("/category/:categ",function(req,res){
-//Event.find({category: req.params.categ},function(err,events){
-  Event.find({category:req.params.categ}).sort('-createdAt').exec(function(err,events){
+  Event.find({category:req.params.categ, eventDate: {$gt: Date.now()}}).sort('-createdAt').exec(function(err,events){
     if(err){
         console.log(err);
         res.redirect('/events');
@@ -59,16 +59,39 @@ router.get("/", function(req, res) {
       }
     });
   } else{
-    Event.find().sort('-createdAt').exec(function(err,allEvents){
-       if (err) {
-         console.log(err);
-       } else {
-         res.render("Events/events", {events: allEvents });
-    
-       }
+    Event.find({eventDate: {$lte: Date.now()}},function(err,events){
+      if(err) {
+        console.log(err);
+      } else{
+        events.forEach(function(event){
+          event.status=false;
+          event.save();
+        })
+      }
+    })
+    Event.find({eventDate: {$gt: Date.now()}},function(err,events){
+      if(err) {
+        console.log(err);
+      } else{
+        events.forEach(function(event){
+          event.status=true;
+          event.save();
+        })
+      }
+    })
+    Event.find({status: true}).sort('eventDate').exec(function(err,events) {
+      if(err){
+        console.log(err);
+      } else{
+        events.forEach(function(event){
+          console.log(event.eventDate)
+        })
+         res.render("Events/events", {events: events });
+      }
     });
   }
 });
+
 
 
 //create new event form
@@ -88,13 +111,25 @@ router.post("/", middleware.isLoggedIn, upload.single('resume'), function(req, r
     req.body.events.subImage = result.secure_url;
     // add image's public_id to events object
     req.body.events.imageId = result.public_id;
+    //add event date
+    var date=req.body.day+'/'+req.body.month+'/'+req.body.year+' '+req.body.hour+':'+req.body.minute
+    req.body.events.eventDate = moment(date,"DD/MM/YYYY HH:mm").toString()
+    
+    var current=moment(Date.now()).format("DD/MM/YYYY HH:mm")
+    if(date>current){
+      req.body.events.status=true;
+    } else if(date<current){
+      req.body.events.status=false;
+    }
+
     // add author to events
     req.body.events.author = {
       id: req.user._id,
       username: req.user.username,
       email: req.user.email,
       contact_no: req.user.contact_no
-    }
+    } 
+
     geocoder.geocode(req.body.eventVenue, function(err, data) {
       if (err || !data.length) {
         req.flash("error", "Invalid address");
@@ -161,7 +196,10 @@ router.get("/registered/:eventId/:userId",middleware.isLoggedIn,middleware.check
           name: event.name,
           venue: event.venue,
           subImage: event.subImage,
-          category: event.category
+          category: event.category,
+          author:{
+            id: event.author.id
+          }
         }
         user.registeredEvent.push(newRegisteredEvent)
         user.save();
@@ -176,9 +214,6 @@ router.get("/cancel/:eventId/:userId",function(req,res){
     event.registeredUser.forEach(function(user){
       if(user.id.equals(req.params.userId)){
         user.remove();
-      }else{
-        req.flash('error','User not found.');
-        return res.redirect('back');
       }
     })
     event.save()
@@ -186,12 +221,9 @@ router.get("/cancel/:eventId/:userId",function(req,res){
 
   User.findOne({_id: req.params.userId},function(err,user){
     user.registeredEvent.forEach(function(event){
+    
       if(event.id.equals(req.params.eventId)){
         event.remove();
-      }
-      else{
-        req.flash('error','User not found.');
-        return res.redirect('back');
       }
     })
     user.save()
@@ -238,6 +270,10 @@ router.put("/:id", middleware.checkEventOwnership, upload.single('resume'), func
       events.image=req.body.URL;
       events.description=req.body.description;
       events.category=req.body.category;
+      //update event date
+      var date=req.body.day+'/'+req.body.month+'/'+req.body.year+' '+req.body.hour+':'+req.body.minute
+      events.eventDate= moment(date,"DD/MM/YYYY HH:mm").toString();
+
       events.lat = data[0].latitude;
       events.lng = data[0].longitude;
       events.location = data[0].formattedAddress;

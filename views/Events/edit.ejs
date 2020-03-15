@@ -50,7 +50,37 @@
                   <input class="input new" type="text" name="URL2" value="<%=events.image2%>" required="">
                 </div>
               </div>
-
+              <div class="field">
+                <div class="columns is-variable is-3">
+                  <div class="column is-6">
+                    <label for="date" class="label">Event Date (DD-MM-YYYY)</label>
+                    <div class="columns is-variable is-1">
+                      <div class="column is-one-quarter">
+                        <input type="text" id="day" class="input" placeholder="Day" name="day" pattern="(?=.*\d).{1,2}" required>
+                      </div>
+                      <div class="column is-one-quarter">
+                        <input type="text" id="month" class="input" placeholder="Month" name="month" pattern="(?=.*\d).{1,2}" required>
+                      </div>
+                      <div class="column is-half">
+                        <input type="text" id="year" class="input" placeholder="Year" name="year" pattern="(?=.*\d).{4,4}" required>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="column is-6">
+                    <label for="time" class="label">Time (HH : MM)</label>
+                    <div class="field">
+                      <div class="columns is-variable is-2">
+                        <div class="column is-one-quarter">
+                          <input type="text" id="hour" class="input" placeholder="Hour" name="hour" pattern="(?=.*\d).{1,2}" required>
+                        </div>
+                        <div class="column is-one-quarter">
+                          <input type="text" id="minute" class="input" placeholder="Minute" name='minute' pattern="(?=.*\d).{1,2}" required>
+                        </div>
+                      </div>
+                    </div>    
+                  </div>
+                </div>
+              </div>
               <div class="field">
                 <label class="label">Event Catagory</label>
                 <p class="control">
