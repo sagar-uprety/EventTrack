@@ -29,7 +29,7 @@ var upload = multer({ storage: storage, fileFilter: imageFilter})
 
 var cloudinary = require('cloudinary');
 cloudinary.config({
-  cloud_name: "dso6y4yfz",
+  cloud_name: "deepessence",
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
@@ -114,15 +114,22 @@ router.post("/", middleware.isLoggedIn, upload.single('resume'), function(req, r
     //add event date
     var date=req.body.day+'/'+req.body.month+'/'+req.body.year+' '+req.body.hour+':'+req.body.minute
     req.body.events.eventDate = moment(date,"DD/MM/YYYY HH:mm").toString()
-    console.log(req.body.events.eventDate)
     
+    var current=moment(Date.now()).format("DD/MM/YYYY HH:mm")
+    if(date>current){
+      req.body.events.status=true;
+    } else if(date<current){
+      req.body.events.status=false;
+    }
+
     // add author to events
     req.body.events.author = {
       id: req.user._id,
       username: req.user.username,
       email: req.user.email,
       contact_no: req.user.contact_no
-    }
+    } 
+
     geocoder.geocode(req.body.eventVenue, function(err, data) {
       if (err || !data.length) {
         req.flash("error", "Invalid address");
