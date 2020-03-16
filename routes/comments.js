@@ -4,19 +4,8 @@ var Event = require("../models/events");
 var Comment = require("../models/comments");
 var middleware = require("../middleware");
 
-//comments New form
-router.get("/new", middleware.isLoggedIn, function(req, res) {
-  // find event by id
-  Event.findById(req.params.id, function(err, events) {
-    if (err) {
-      console.log(err);
-    } else {
-      res.render("Comments/new", { events: events });
-    }
-  });
-});
 
-//Create Comments
+//Create Comments POST LOGIC (HIT from Comments Section of Showcase)
 router.post("/", middleware.isLoggedIn, function(req, res) {
   //lookup event using ID
   Event.findById(req.params.id, function(err, events) {
@@ -47,7 +36,7 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
   });
 });
 
-// COMMENT EDIT ROUTE
+// SHOW UPDATE/EDIT COMMENT PAGE
 router.get("/:comment_id/edit", middleware.checkCommentOwnership, function(
   req,
   res
@@ -64,7 +53,7 @@ router.get("/:comment_id/edit", middleware.checkCommentOwnership, function(
   });
 });
 
-// COMMENT UPDATE
+// UPDATE/EDIT COMMENT PUT LOGIC
 router.put("/:comment_id", middleware.checkCommentOwnership, function(
   req,
   res
@@ -80,7 +69,8 @@ router.put("/:comment_id", middleware.checkCommentOwnership, function(
     }
   });
 });
-// COMMENT DESTROY ROUTE
+
+// COMMENT DELETE ROUTE
 router.delete("/:comment_id", middleware.checkCommentOwnership, function(
   req,
   res

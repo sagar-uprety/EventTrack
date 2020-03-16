@@ -2,13 +2,12 @@ require("dotenv").config();
 var express = require("express");
 var router = express.Router();
 var passport = require("passport");
-// const Strategy = require("passport-facebook").Strategy;
-var User = require("../models/user");
-var Event = require("../models/events");
-var middleware = require("../middleware");
 var async=require("async");
 var nodemailer=require("nodemailer");
 var crypto=require("crypto");
+var User = require("../models/user");
+var Event = require("../models/events");
+var middleware = require("../middleware");
 var multer = require('multer');
 var storage = multer.diskStorage({
   filename: function(req, file, callback) {
@@ -26,88 +25,42 @@ var upload = multer({ storage: storage, fileFilter: imageFilter})
 
 var cloudinary = require('cloudinary');
   cloudinary.config({
-  cloud_name: "deepessence",
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET
-});              
-/* passport.use(
-  new Strategy(
-    {
-      clientID: process.env["FACEBOOK_CLIENT_ID"],
-      clientSecret: process.env["FACEBOOK_CLIENT_SECRET"],
-      callbackURL: "http://localhost:3000/user/return",
-      profile: ["id", "displayName"]
-    },
-    function(accessToken, refreshToken, profile, done) {
-      //Check the DB to find a User with the profile.id
-      User.findOne({ facebook_id: profile.id }, function(err, user) {
-        if (err) {
-          console.log(err); // handle errors!
-        }
+    cloud_name: "dso6y4yfz",
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+  });              
 
-        if (user) {
-          done(null, user); //Login if User already exists
-        } else {
-          //else create a new User
-          user = new User({
-            facebook_id: profile.id, //pass in the id and displayName params from Facebook
-            firstname: profile.displayName
-          });
-          user.save(function(err) {
-            //Save User if there are no errors else redirect to login.
-            if (err) {
-              console.log(err); // handle errors!
-            } else {
-              console.log("saving user ...");
-              done(null, user);
-            }
-          });
-        }
-      });
-    }
-  )
-);
-
+//Home Page Display
 router.get("/", function(req, res) {
   res.render("index");
 });
 
-router.use(passport.initialize());
-router.use(passport.session());
-
-//User gets here upon successful login
-router.get("/events", (req, res) => {
-  // res.json({ user: user });
-  console.log("Successfully logged in");
+// Show Login Page
+router.get("/login", function(req, res) {
+  res.render("login");
 });
 
-//This is so you know if a Login attempt failed
-router.get("/login", (req, res) => {
-  res.json({ msg: "login failed" });
-});
-
-//This endpoint connects the User to Facebook
-router.get("/login/facebook", passport.authenticate("facebook"));
-
-//This endpoint is the Facebook Callback URL and on success or failure returns a response to the app
-router.get(
-  "/return",
-  passport.authenticate("facebook", {
+// Handle Login POST request
+router.post("/login", passport.authenticate("local", {
+    successRedirect: "/events",
     failureRedirect: "/login"
   }),
-  (req, res) => {
-    res.redirect("/events");
-  }
-);  */
-router.get("/", function(req, res) {
-  res.render("index");
+  function(req, res) {}
+);
+
+// Logout route
+router.get("/logout", function(req, res) {
+  req.logout();
+  req.flash("success", "Logged you out!");
+  res.redirect("/events");
 });
 
-//SHOW REGISTER FORM
+//SHOW USER REGISTER (SIGN UP) FORM
 router.get("/register", function(req, res) {
   res.render("register");
 });
-//handle sign up logic
+
+//Handle Sign Up POST logic
 router.post("/register", upload.single('image'), function(req, res) {
   cloudinary.v2.uploader.upload(req.file.path, function(err, result) {
     if(err) {
@@ -142,7 +95,8 @@ router.post("/register", upload.single('image'), function(req, res) {
     });
   });
 });
-//Account verification
+
+//Account verification (Once the user clicks on verify button on user dashboard)
 router.get("/:id/verify",function(req,res,next){
   async.waterfall([
     function(done) {
@@ -198,8 +152,7 @@ router.get("/:id/verify",function(req,res,next){
   )
 });
 
-//Verification token
-
+//Verfiy the user (From eMail) using verification token
 router.get("/verify/:token",function(req,res){
   async.waterfall([
     function(done){
@@ -223,19 +176,8 @@ router.get("/verify/:token",function(req,res){
     res.redirect('/events');
   })
 })
-// show login form
-router.get("/login", function(req, res) {
-  res.render("login");
-});
-// handling login logic
-router.post("/login", passport.authenticate("local", {
-    successRedirect: "/events",
-    failureRedirect: "/login"
-  }),
-  function(req, res) {}
-);
 
-//User Profile
+//Show User Profile (Dashboard)
 router.get("/users/:id", function(req,res){
   User.findById(req.params.id,function(err,foundUser){
     if(err){
@@ -252,19 +194,14 @@ router.get("/users/:id", function(req,res){
   })
 })
 
-// logout route
-router.get("/logout", function(req, res) {
-  req.logout();
-  req.flash("success", "Logged you out!");
-  res.redirect("/events");
-});
 
 
-//forgot-password route
+//Show Forgot-password Page (where user enters his email)
 router.get("/forgot-password",function(req,res){
   res.render("users/forgotPassword");
 })
 
+//Handle Forgot Password POST Logics
 router.post("/forgot-password",function(req,res,next){
   async.waterfall([
     function(done) {
@@ -317,6 +254,7 @@ router.post("/forgot-password",function(req,res,next){
   )
 })
 
+//CREATE NEW PASSWORD SHOW PAGE (ACCESSBILE From e-mail link) //RESET-PASS
 router.get('/reset/:token',function(req,res){
   User.findOne({resetPasswordToken: req.params.token, resetPasswordExpires: {$gt: Date.now()}},function(err,user){
     if(!user){
@@ -327,6 +265,7 @@ router.get('/reset/:token',function(req,res){
   });
 });
 
+//RESET PASSWORD POST LOGIC (After NEW password is entered)
 router.post('/reset/:token',function(req,res){
   async.waterfall([
     function(done){
@@ -377,4 +316,5 @@ router.post('/reset/:token',function(req,res){
     res.redirect('/events');
   })
 })
+
 module.exports = router;

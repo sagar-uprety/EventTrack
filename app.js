@@ -1,4 +1,5 @@
 require('dotenv').config();
+
 //initialization start
 
 const express = require("express"),
@@ -33,7 +34,8 @@ app.set("view engine","ejs");
 app.use(flash());
 // seedDB(); //-- resets database ....uncomment to reset 
 app.locals.moment = require('moment');
-//passport config starts
+
+//passport config starts for authentication
 app.use(
   require("express-session")({
     secret: "Once again Rusty wins cutest dog!",
@@ -54,12 +56,14 @@ app.use(function(req, res, next) {
   next();
 });
 //passport config ends
+
 //initialization ends
+
 app.use("/", indexRoutes);
 app.use("/events", eventRoutes);
 app.use("/events/:id/comments", commentRoutes);
 
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 3000; 
 app.listen(port, function() {
   console.log("Server Has Started!");
 });

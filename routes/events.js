@@ -29,25 +29,12 @@ var upload = multer({ storage: storage, fileFilter: imageFilter})
 
 var cloudinary = require('cloudinary');
 cloudinary.config({
-  cloud_name: "deepessence",
+  cloud_name: "dso6y4yfz",
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-//Events Display along Categories
-router.get("/category/:categ",function(req,res){
-  Event.find({category:req.params.categ, eventDate: {$gt: Date.now()}}).sort('-createdAt').exec(function(err,events){
-    if(err){
-        console.log(err);
-        res.redirect('/events');
-    }
-    else{
-        res.render("Events/EventCateg",{ events: events });
-    }
-  })
-});
-
-//all events
+//EVENTS DISPLAY PAGE (ALL EVENTS)
 router.get("/", function(req, res) {
   if(req.query.search){
     const regex = new RegExp(escapeRegex(req.query.search), 'gi');
@@ -92,15 +79,13 @@ router.get("/", function(req, res) {
   }
 });
 
-
-
-//create new event form
+//ADD Your EVENT FORM PAGE
 router.get("/new", middleware.isLoggedIn, middleware.checkUserVerification, function(req, res) {
   res.render("Events/newEvent");
 });
 
 
-//Create a new event and add to the Database
+//EVENT CREATION (ADD YOUR EVENT) POST HANDLING 
 router.post("/", middleware.isLoggedIn, upload.single('resume'), function(req, res) {
   cloudinary.v2.uploader.upload(req.file.path, function(err, result) {
     if(err) {
@@ -129,7 +114,7 @@ router.post("/", middleware.isLoggedIn, upload.single('resume'), function(req, r
       email: req.user.email,
       contact_no: req.user.contact_no
     } 
-
+    //FOR Google Maps Display
     geocoder.geocode(req.body.eventVenue, function(err, data) {
       if (err || !data.length) {
         req.flash("error", "Invalid address");
@@ -152,7 +137,71 @@ router.post("/", middleware.isLoggedIn, upload.single('resume'), function(req, r
   })
 });
 
-//event details show page
+//SHOW UPDATE/EDIT Event Details PAGE (Organizer only)
+router.get("/:id/edit", middleware.checkEventOwnership, function(req, res) {
+  Event.findById(req.params.id, function(err, foundEvent) {
+    res.render("Events/edit", { events: foundEvent });
+  });
+});
+
+// UPDATE EVENT PUT LOGIC
+router.put("/:id", middleware.checkEventOwnership, upload.single('resume'), function(req, res) {
+  geocoder.geocode(req.body.eventVenue, function(err, data) {
+    if (err || !data.length) {
+      req.flash("error", "Invalid address");
+      return res.redirect("back");
+    }
+    
+    // find and update the correct events
+    Event.findById(req.params.id, async function(err, events) {
+      if (err) {
+        req.flash("error",err.message);
+        res.redirect("/events");
+      } else {
+        if(req.file){
+          try{
+            await cloudinary.v2.uploader.destroy(events.imageId);
+            var result= await cloudinary.v2.uploader.upload(req.file.path);
+            events.imageId=result.public_id;
+            events.subImage=result.secure_url;
+          } catch(err){
+            req.flash("error",err.message);
+            return res.redirect("/events");
+          }   
+      }
+      events.name=req.body.name;
+      events.image2=req.body.URL2;
+      events.image=req.body.URL;
+      events.description=req.body.description;
+      events.category=req.body.category;
+      //update event date
+      var date=req.body.day+'/'+req.body.month+'/'+req.body.year+' '+req.body.hour+':'+req.body.minute
+      events.eventDate= moment(date,"DD/MM/YYYY HH:mm").toString();
+
+      events.lat = data[0].latitude;
+      events.lng = data[0].longitude;
+      events.location = data[0].formattedAddress;
+      events.save();
+      req.flash("success","Successfully Updated!");
+
+      res.redirect("/events/" + req.params.id);
+      }
+    });
+  });
+});
+
+// DELETE EVENT ROUTE
+router.delete("/:id", middleware.checkEventOwnership, function(req, res) {
+  Event.findByIdAndRemove(req.params.id, function(err) {
+    if (err) {
+      res.redirect("/events");
+    } else {
+      res.redirect("/events");
+    }
+  });
+});
+
+//EVENTS SHOWCASE PAGE (Event Details)
 router.get("/:id", function(req, res) {
   Event.findById(req.params.id)
     .populate("comments")
@@ -167,7 +216,20 @@ router.get("/:id", function(req, res) {
     });
 });
 
-//Registration
+//Events Display (Specific Categories)
+router.get("/category/:categ",function(req,res){
+  Event.find({category:req.params.categ, eventDate: {$gt: Date.now()}}).sort('-createdAt').exec(function(err,events){
+    if(err){
+        console.log(err);
+        res.redirect('/events');
+    }
+    else{
+        res.render("Events/EventCateg",{ events: events });
+    }
+  })
+});
+
+//Participant Registration (CLicking on Register Button of Showcase)
 router.get("/registered/:eventId/:userId",middleware.isLoggedIn,middleware.checkUserVerification,function(req,res){
 
   Event.findById(req.params.eventId,function(err1,event){
@@ -208,7 +270,8 @@ router.get("/registered/:eventId/:userId",middleware.isLoggedIn,middleware.check
     })
   })
 })
-// Cancel Event Registration Route
+
+// Cancel Participant Registration 
 router.get("/cancel/:eventId/:userId",function(req,res){
   Event.findOne({_id: req.params.eventId},function(err,event){
     event.registeredUser.forEach(function(user){
@@ -233,71 +296,8 @@ router.get("/cancel/:eventId/:userId",function(req,res){
   res.redirect('back')
 })
 
-//edit route
-router.get("/:id/edit", middleware.checkEventOwnership, function(req, res) {
-  Event.findById(req.params.id, function(err, foundEvent) {
-    res.render("Events/edit", { events: foundEvent });
-  });
-});
-
-// UPDATE EVENT ROUTE
-router.put("/:id", middleware.checkEventOwnership, upload.single('resume'), function(req, res) {
-  geocoder.geocode(req.body.eventVenue, function(err, data) {
-    if (err || !data.length) {
-      req.flash("error", "Invalid address");
-      return res.redirect("back");
-    }
-    
-    // find and update the correct events
-    Event.findById(req.params.id, async function(err, events) {
-      if (err) {
-        req.flash("error",err.message);
-        res.redirect("/events");
-      } else {
-        if(req.file){
-          try{
-            await cloudinary.v2.uploader.destroy(events.imageId);
-            var result= await cloudinary.v2.uploader.upload(req.file.path);
-            events.imageId=result.public_id;
-            events.subImage=result.secure_url;
-          } catch(err){
-            req.flash("error",err.message);
-            return res.redirect("/events");
-          }   
-      }
-      events.name=req.body.name;
-      events.image2=req.body.URL2;
-      events.image=req.body.URL;
-      events.description=req.body.description;
-      events.category=req.body.category;
-      //update event date
-      var date=req.body.day+'/'+req.body.month+'/'+req.body.year+' '+req.body.hour+':'+req.body.minute
-      events.eventDate= moment(date,"DD/MM/YYYY HH:mm").toString();
-
-      events.lat = data[0].latitude;
-      events.lng = data[0].longitude;
-      events.location = data[0].formattedAddress;
-      events.save();
-      req.flash("success","Successfully Updated!");
-        //redirect somewhere(show page)
-        res.redirect("/events/" + req.params.id);
-      }
-    });
-  });
-});
-
-// DESTROY EVENT ROUTE
-router.delete("/:id", middleware.checkEventOwnership, function(req, res) {
-  Event.findByIdAndRemove(req.params.id, function(err) {
-    if (err) {
-      res.redirect("/events");
-    } else {
-      res.redirect("/events");
-    }
-  });
-});
-
-function escapeRegex(text) {
+//search input function --to find what the user has typed in search bar
+function escapeRegex(text) { 
   return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 };
 
