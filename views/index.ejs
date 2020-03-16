@@ -188,13 +188,14 @@
             </h6>
             <%if(!currentUser){%>
             <div class="columns box">
-              <form class="column" action="#">
+              <form class="column" action="/query" method="POST">
                 <div class="field">
                   <label class="label">Name</label>
                   <div class="control">
                     <input
                       class="input"
                       type="text"
+                      name="name"
                       placeholder="Your Name"
                       required=""
                     />
@@ -207,6 +208,7 @@
                     <input
                       class="input"
                       type="text"
+                      name="email"
                       placeholder="Email address"
                       required=""
                     />
@@ -219,6 +221,7 @@
                     <input
                       class="input"
                       type="text"
+                      name="phone"
                       placeholder="Phone number"
                       required=""
                     />
@@ -231,6 +234,7 @@
                     <textarea
                       class="textarea"
                       type="text"
+                      name="message"
                       placeholder="Type your message here..."
                       required=""
                     ></textarea>
@@ -258,7 +262,7 @@
             </div>
             <%} else if(currentUser){%>
             <div class="columns box">
-              <form class="column" action="#">
+              <form class="column" action="/query" method="POST">
                 <div class="field">
                   <label class="label">Name</label>
                   <div class="control">
@@ -266,6 +270,7 @@
                       class="input"
                       type="text"
                       placeholder="Your Name"
+                      name="name"
                       value="<%=currentUser.firstName%> <%=currentUser.lastName%>"
                       required=""
                     />
@@ -278,6 +283,7 @@
                     <input
                       class="input"
                       type="text"
+                      name="email"
                       placeholder="Email address"
                       value="<%=currentUser.email%>"
                       required=""
@@ -291,6 +297,7 @@
                     <input
                       class="input"
                       type="text"
+                      name="phone"
                       placeholder="Phone number"
                       value="<%=currentUser.contact_no%>"
                       required=""
@@ -304,6 +311,7 @@
                     <textarea
                       class="textarea"
                       type="text"
+                      name="message"
                       placeholder="Type your message here..."
                       required=""
                     ></textarea>

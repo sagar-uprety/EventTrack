@@ -25,7 +25,7 @@ var upload = multer({ storage: storage, fileFilter: imageFilter})
 
 var cloudinary = require('cloudinary');
   cloudinary.config({
-    cloud_name: "dso6y4yfz",
+    cloud_name: "deepessence",
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET
   });              
@@ -316,5 +316,36 @@ router.post('/reset/:token',function(req,res){
     res.redirect('/events');
   })
 })
-
+router.post('/query',function(req,res){
+  async.waterfall([
+    function(done){
+      var smtpTransport=nodemailer.createTransport({
+        service:'Gmail',
+        auth: {
+          user:'eventtrackssnd@gmail.com',
+          pass:process.env.GMAILPASS
+        }
+      });
+      var mailOptions={
+        to:'ds.ed347@gmail.com',
+        from:'eventtrackssnd@gmail.com',
+        subject: 'EventTrack User wants to contact you.',
+        text: 'From: '+req.body.name+'\n'+
+              'Email: '+req.body.email+'\n'+
+              'Phone: '+req.body.phone+'\n'+
+              'Message: '+req.body.message+'\n'
+      }
+      console.log(mailOptions)
+      smtpTransport.sendMail(mailOptions,function(err){
+        console.log('mail sent to '+mailOptions.to);
+        req.flash('Success','Your message has been sent. You will be contacted soon.');
+        done(err);
+      res.redirect('/') 
+      });
+    }
+  ],function(err){
+    req.flash('Error','An error has occurred. Please try again.')
+    res.redirect('/');
+  })
+})
 module.exports = router;
