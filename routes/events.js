@@ -131,7 +131,7 @@ router.post("/", middleware.isLoggedIn, upload.single('resume'), function(req, r
             return res.redirect("back");
           }
           console.log(events);
-          res.redirect("/events/" + events.id);
+          res.redirect("/events/");
         });
     });
   })
