@@ -34,19 +34,9 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-//Events Display along Categories
-router.get("/category/:categ",function(req,res){
-  Event.find({category:req.params.categ, eventDate: {$gt: Date.now()}}).sort('-createdAt').exec(function(err,events){
-    if(err){
-        console.log(err);
-        res.redirect('/events');
-    }
-    else{
-        res.render("Events/EventCateg",{ events: events });
-    }
-  })
-});
-
+function escapeRegex(text) {
+  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
 //all events
 router.get("/", function(req, res) {
   if(req.query.search){
@@ -139,9 +129,22 @@ router.post("/", middleware.isLoggedIn, upload.single('resume'), function(req, r
             return res.redirect("back");
           }
           console.log(events);
-          res.redirect("/events/" + events.id);
+          res.redirect("/events/");
         });
     });
+  })
+});
+
+//Events Display along Categories
+router.get("/category/:categ",function(req,res){
+  Event.find({category:req.params.categ, eventDate: {$gt: Date.now()}}).sort('-createdAt').exec(function(err,events){
+    if(err){
+        console.log(err);
+        res.redirect('/events');
+    }
+    else{
+        res.render("Events/EventCateg",{ events: events });
+    }
   })
 });
 
@@ -160,7 +163,72 @@ router.get("/:id", function(req, res) {
     });
 });
 
-//Registration
+//UPDATE EVENT GET Route
+router.get("/:id/edit", middleware.checkEventOwnership, function(req, res) {
+  Event.findById(req.params.id, function(err, foundEvent) {
+    res.render("Events/edit", { events: foundEvent });
+  });
+});
+
+// UPDATE EVENT PUT ROUTE
+router.put("/:id", middleware.checkEventOwnership, upload.single('resume'), function(req, res) {
+  geocoder.geocode(req.body.eventVenue, function(err, data) {
+    if (err || !data.length) {
+      req.flash("error", "Invalid address");
+      return res.redirect("back");
+    }
+    
+    // find and update the correct events
+    Event.findById(req.params.id, async function(err, events) {
+      if (err) {
+        req.flash("error",err.message);
+        res.redirect("/events");
+      } else {
+        if(req.file){
+          try{
+            await cloudinary.v2.uploader.destroy(events.imageId);
+            var result= await cloudinary.v2.uploader.upload(req.file.path);
+            events.imageId=result.public_id;
+            events.subImage=result.secure_url;
+          } catch(err){
+            req.flash("error",err.message);
+            return res.redirect("/events");
+          }   
+      }
+      events.name=req.body.name;
+      events.image2=req.body.URL2;
+      events.image=req.body.URL;
+      events.description=req.body.description;
+      events.category=req.body.category;
+      //update event date
+      var date=req.body.day+'/'+req.body.month+'/'+req.body.year+' '+req.body.hour+':'+req.body.minute
+      events.eventDate= moment(date,"DD/MM/YYYY HH:mm").toString();
+
+      events.lat = data[0].latitude;
+      events.lng = data[0].longitude;
+      events.location = data[0].formattedAddress;
+      events.save();
+      req.flash("success","Successfully Updated!");
+        //redirect somewhere(show page)
+        res.redirect("/events/" + req.params.id);
+      }
+    });
+  });
+});
+
+// DESTROY EVENT ROUTE
+router.delete("/:id", middleware.checkEventOwnership, function(req, res) {
+  Event.findByIdAndRemove(req.params.id, function(err) {
+    if (err) {
+      res.redirect("/events");
+    } else {
+      res.redirect("/events");
+    }
+  });
+});
+
+
+//participants Registration
 router.get("/registered/:eventId/:userId",middleware.isLoggedIn,middleware.checkUserVerification,function(req,res){
 
   Event.findById(req.params.eventId,function(err1,event){
@@ -226,72 +294,6 @@ router.get("/cancel/:eventId/:userId",function(req,res){
   res.redirect('back')
 })
 
-//edit route
-router.get("/:id/edit", middleware.checkEventOwnership, function(req, res) {
-  Event.findById(req.params.id, function(err, foundEvent) {
-    res.render("Events/edit", { events: foundEvent });
-  });
-});
-
-// UPDATE EVENT ROUTE
-router.put("/:id", middleware.checkEventOwnership, upload.single('resume'), function(req, res) {
-  geocoder.geocode(req.body.eventVenue, function(err, data) {
-    if (err || !data.length) {
-      req.flash("error", "Invalid address");
-      return res.redirect("back");
-    }
-    
-    // find and update the correct events
-    Event.findById(req.params.id, async function(err, events) {
-      if (err) {
-        req.flash("error",err.message);
-        res.redirect("/events");
-      } else {
-        if(req.file){
-          try{
-            await cloudinary.v2.uploader.destroy(events.imageId);
-            var result= await cloudinary.v2.uploader.upload(req.file.path);
-            events.imageId=result.public_id;
-            events.subImage=result.secure_url;
-          } catch(err){
-            req.flash("error",err.message);
-            return res.redirect("/events");
-          }   
-      }
-      events.name=req.body.name;
-      events.image2=req.body.URL2;
-      events.image=req.body.URL;
-      events.description=req.body.description;
-      events.category=req.body.category;
-      //update event date
-      var date=req.body.day+'/'+req.body.month+'/'+req.body.year+' '+req.body.hour+':'+req.body.minute
-      events.eventDate= moment(date,"DD/MM/YYYY HH:mm").toString();
-
-      events.lat = data[0].latitude;
-      events.lng = data[0].longitude;
-      events.location = data[0].formattedAddress;
-      events.save();
-      req.flash("success","Successfully Updated!");
-        //redirect somewhere(show page)
-        res.redirect("/events/" + req.params.id);
-      }
-    });
-  });
-});
-
-// DESTROY EVENT ROUTE
-router.delete("/:id", middleware.checkEventOwnership, function(req, res) {
-  Event.findByIdAndRemove(req.params.id, function(err) {
-    if (err) {
-      res.redirect("/events");
-    } else {
-      res.redirect("/events");
-    }
-  });
-});
-
-function escapeRegex(text) {
-  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
-};
+//
 
 module.exports = router;
