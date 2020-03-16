@@ -177,6 +177,13 @@ router.put("/:id", middleware.checkEventOwnership, upload.single('resume'), func
       //update event date
       var date=req.body.day+'/'+req.body.month+'/'+req.body.year+' '+req.body.hour+':'+req.body.minute
       events.eventDate= moment(date,"DD/MM/YYYY HH:mm").toString();
+      
+      var current=moment(Date.now()).format("DD/MM/YYYY HH:mm")
+      if(date>current){
+        events.status=true;
+      } else if(date<current){
+        events.status=false;
+      }
 
       events.lat = data[0].latitude;
       events.lng = data[0].longitude;
