@@ -24,7 +24,14 @@ mongoose.set("useNewUrlParser", true);
 mongoose.set("useFindAndModify", false);
 mongoose.set("useCreateIndex", true);
 mongoose.set("useUnifiedTopology", true);
-mongoose.connect("mongodb://localhost/EventTrack");
+
+mongoose.connect(
+  "mongodb+srv://"+process.env.MONGO_USERNAME+":"+process.env.MONGO_PASSWORD+"@"+process.env.MONGO_HOSTNAME+"?retryWrites=true&w=majority",
+).then(
+  () => {console.log('MongoDB Connected.');},
+  err => {console.log(err.message);}
+);
+
 
 app.use(methodOverride("_method"));
 app.use(bodyParser.urlencoded({ extended: true }));

@@ -26,9 +26,9 @@ var upload = multer({ storage: storage, fileFilter: imageFilter})
 
 var cloudinary = require('cloudinary');
   cloudinary.config({
-  cloud_name: "deepessence",
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET
 });              
 /* passport.use(
   new Strategy(
@@ -171,13 +171,13 @@ router.get("/:id/verify",function(req,res,next){
       var smtpTransport=nodemailer.createTransport({
         service: 'Gmail',
         auth: {
-          user:'eventtrackssnd@gmail.com',
-          pass: process.env.GMAILPASS
+          user: process.env.ADMIN_MAIL,
+          pass: process.env.ADMIN_PASSWORD,
         }
       });
       var mailOptions={
         to: user.email,
-        from: 'eventtrackssnd@gmail.com',
+        from: process.env.ADMIN_MAIL,
         subject: 'EventTrack User Account Verification.',
         text: 'This is to verify your EventTrack user account.\n\n'+
               'Please click on the following link, or paste this into your browser to complete the process\n\n'+
