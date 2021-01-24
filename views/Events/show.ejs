@@ -13,6 +13,17 @@
   <script src="https://kit.fontawesome.com/2828f7885a.js"
     integrity="sha384-WAsFbnLEQcpCk8lM1UTWesAf5rGTCvb2Y+8LvyjAAcxK1c3s5c0L+SYOgxvc6PWG"
     crossorigin="anonymous"></script>
+    <style>
+      
+.hero .title, .hero .subtitle{
+  text-shadow: 4px 4px 8px black;
+}
+
+.hero .subtitle{
+  font-size: 1.7rem;
+}
+
+    </style>
 </head>
 
 <%- include ("../partials/header") %>
@@ -154,9 +165,9 @@
                 <li>
                   <a href="#info">Event Information</a>
                 </li>
-                <li>
+                <!-- <li>
                   <a href="#location">Location</a>
-                </li>
+                </li> -->
                 <li>
                   <a href="#comment">Contact</a>
                 </li>
@@ -237,12 +248,12 @@
   <!-- End About Me Content -->
 
   <!-- Begin Location Content -->
-  <div class="section-light" id="location">
+  <!-- <div class="section-light" id="location">
     <div class="column is-12 about-me">
       <h1 class="title has-text-centered section-title">Venue</h1>
     </div>
     <div id="map"></div>
-  </div>
+  </div> -->
 
   <!-- End Location Content -->
 
@@ -398,7 +409,7 @@
       duration: 800
     });
   </script>
-
+<!-- 
   <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDO_ZINoxUQmrJxo8nTa7wkvgAnsWnuPlQ&callback=initMap"></script>
 
@@ -427,7 +438,7 @@
         infowindow.open(map, marker);
       });
     }
-  </script>
+  </script> -->
   <!-- Begin Footer -->
   <%- include("../partials/footer") %>
   <!-- End Footer -->

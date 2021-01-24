@@ -6,8 +6,29 @@ body{
     line-height:1.5;
     background-color:#f0f0f0
 }
+
+.navbar{
+  /* background-color: white; */
+}
+
+.navbar .navbar-brand .navbar-item, .navbar .navbar-menu .navbar-start > .navbar-item{
+  color: white;
+}
+
+.navbar .navbar-brand .navbar-item:hover, .navbar .navbar-menu .navbar-start > .navbar-item:hover{
+  color: grey;
+}
+
+.hero .hero-body .slider-content .text-content{
+  padding-bottom: 5rem;
+}
+
+.hero .hero-body .slider-content .text-content > p{
+  text-shadow: 4px 4px 5px grey;
+}
+
 .main_hero {
-    background-image: url("https://github.com/aldi/awesome-bulma-templates/raw/master/templates/hotel/hotel_background.jpg");
+    background-image: url("https://3.bp.blogspot.com/-gzK7-1J1MY0/XApE_kdgUII/AAAAAAAAByQ/lVW1Kw6C8yQQPel46nKJe5rFTnJHGahMwCHMYCw/s1600/79-maldives-hd-wallpapers-background-images-wallpaper-abyss.jpg");
     background-size: cover;
 }
 

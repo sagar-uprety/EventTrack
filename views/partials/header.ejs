@@ -7,7 +7,7 @@
 
     <!-- Email -->
     <a class="navbar-item is-hidden-desktop" href="mailto:info@eventrack.com">
-      <span class="icon" style="color: #333;">
+      <span class="icon" style="color: #333">
         <i class="fa fa-lg fa-envelope"></i>
       </span>
     </a>
@@ -63,7 +63,9 @@
           <% } else { %>
 
           <p class="control">
-            <a class="button is-normal is-success" href="/users/<%=currentUser.id%>"
+            <a
+              class="button is-normal is-success"
+              href="/users/<%=currentUser.id%>"
               >Welcome <%=currentUser.username.toUpperCase()%>
             </a>
             <a href="/logout" class="button is-primary is-normal">Logout</a>
@@ -77,28 +79,33 @@
   <!-- ./Menu -->
 </nav>
 
-
+<%if(error && error.length> 0){%>
 <div class="hero column is-10 is-offset-1">
-  <%if(error && error.length> 0){%>
-  <div class="box messageBox is-narrow" style="background-color:blue;" role="alert">
-  <%=error%>
+  <div
+    class="box messageBox is-narrow"
+    style="background-color: blue"
+    role="alert"
+  >
+    <%=error%>
+  </div>
+</div>
+<%}%> <%if(success && success.length> 0){%>
+<div class="hero column is-10 is-offset-1">
+  <div
+    class="box messageBox is-narrow"
+    style="background-color: aquamarine"
+    role="alert"
+  >
+    <%=success%>
+  </div>
 </div>
 <%}%>
-<%if(success && success.length> 0){%>
-  <div class="box messageBox is-narrow" style="background-color:aquamarine;" role="alert">
-  <%=success%>
-</div>
-<%}%>
-</div>
 
 <style>
-  .messageBox{
-    border:#333;
+  .messageBox {
+    border: #333;
     border-radius: 5px;
     z-index: 4;
     line-height: 1px;
   }
-  </style>
-
-
-
+</style>

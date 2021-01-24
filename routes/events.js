@@ -8,7 +8,7 @@ var NodeGeocoder = require("node-geocoder");
 var options = {
   provider: "google",
   httpAdapter: "https",
-  apiKey: process.env.GEOCODER_API_KEY,
+  // apiKey: process.env.GEOCODER_API_KEY,
   formatter: null
 };
 var geocoder = NodeGeocoder(options);
@@ -83,9 +83,6 @@ router.get("/", function(req, res) {
       if(err){
         console.log(err);
       } else{
-        events.forEach(function(event){
-          console.log(event.eventDate)
-        })
          res.render("Events/events", {events: events });
       }
     });
@@ -130,15 +127,15 @@ router.post("/", middleware.isLoggedIn, upload.single('resume'), function(req, r
       contact_no: req.user.contact_no
     } 
 
-    geocoder.geocode(req.body.eventVenue, function(err, data) {
-      if (err || !data.length) {
-        req.flash("error", "Invalid address");
-        console.log(err);
-        return res.redirect("back");
-      }
-      req.body.events.lat = data[0].latitude;
-      req.body.events.lng = data[0].longitude;
-      req.body.events.location = data[0].formattedAddress;
+    // geocoder.geocode(req.body.eventVenue, function(err, data) {
+    //   if (err || !data.length) {
+    //     req.flash("error", "Invalid address");
+    //     console.log(err);
+    //     return res.redirect("back");
+    //   }
+    //   req.body.events.lat = data[0].latitude;
+    //   req.body.events.lng = data[0].longitude;
+    //   req.body.events.location = data[0].formattedAddress;
 
         Event.create(req.body.events, function(err, events) {
           if (err) {
@@ -148,7 +145,7 @@ router.post("/", middleware.isLoggedIn, upload.single('resume'), function(req, r
           console.log(events);
           res.redirect("/events/" + events.id);
         });
-    });
+    // });
   })
 });
 
