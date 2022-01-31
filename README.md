@@ -29,7 +29,7 @@ node app.js
 
 All contributions (code and non-code) are highly appreciated. Please go throught the following steps to make contributions.
 
-* Comment on exisiting issue or Open up a new issues [here](https://github.com/sagar-uprety/EventTrack/issues)
+* Comment on exisiting issue or open up a new issues [here](https://github.com/sagar-uprety/EventTrack/issues)
 * Fork this repository
 * Clone the forked repository
 * Make your changes
