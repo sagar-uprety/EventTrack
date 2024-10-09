@@ -1,10 +1,10 @@
 # EventTrack
 
-EventTrack is a common web platfrom for event organizers and attendee for finding and listing events with several features like event registration, catergorical event selection, location based events and many more.
+EventTrack is a common web platfrom for event organizers and attendee for finding and listing events with several features like event registration, catergorical event selection, location based events and many more. This repo is the API for the application made with Node.JSand ExpressJS Web Framework.
 
 ### Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system. **The final appication is located in the root folder at app.js**
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system. **Entrypoint for this API is located in the root folder at app.js**
 
 ### Prerequisites
 
